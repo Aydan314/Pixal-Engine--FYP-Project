@@ -127,13 +127,46 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CodeBlock.cpp" />
+    <ClCompile Include="FileHandler.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameSceneManager.cpp" />
+    <ClCompile Include="GUIButton.cpp" />
+    <ClCompile Include="GUICanvas.cpp" />
+    <ClCompile Include="GUIText.cpp" />
+    <ClCompile Include="GUITextBlock.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Texture2D.cpp" />
+    <ClCompile Include="TextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Audio.h" />
+    <ClInclude Include="AudioManager.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CodeBlock.h" />
+    <ClInclude Include="Commons.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="FileHandler.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GameSceneManager.h" />
+    <ClInclude Include="GUIButton.h" />
+    <ClInclude Include="GUICanvas.h" />
+    <ClInclude Include="GUIText.h" />
+    <ClInclude Include="GUITextBlock.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Texture2D.h" />
+    <ClInclude Include="TextureLoader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Pixal Engine (FYP Project).rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

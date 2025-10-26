@@ -1,2 +1,10 @@
-﻿  Main.cpp
+﻿  CodeBlock.cpp
+C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\CodeBlock.cpp(16,37): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\CodeBlock.cpp(16,37): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\CodeBlock.cpp(16,61): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\CodeBlock.cpp(16,61): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\CodeBlock.cpp(16,65): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\CodeBlock.cpp(16,65): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\CodeBlock.cpp(16,72): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\CodeBlock.cpp(16,72): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
   Pixal Engine (FYP Project).vcxproj -> C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\x64\Debug\Pixal Engine (FYP Project).exe
