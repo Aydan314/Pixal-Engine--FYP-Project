@@ -16,7 +16,7 @@ GameObject::GameObject(SDL_Renderer* renderer, SpriteSheetTexture ssTexture, Gam
 		// Gets the pre loaded texture from the texture loader //
 		m_texture = new Texture2D(m_renderer);
 
-		if (!m_texture->LoadFromFile(ssTexture.name, ssTexture.cellAmount.x, ssTexture.cellAmount.y))
+		if (!m_texture->LoadStoredTexture(ssTexture.name, ssTexture.cellAmount.x, ssTexture.cellAmount.y))
 		{
 			std::cout << "!! Failed to load " << ssTexture.name << " !!\n";
 		}
@@ -95,7 +95,7 @@ Vector2D GameObject::GetPosition()
 	return m_transform.position;
 }
 
-std::vector<Rect2D> GameObject::GetHitboxes()
+std::vector<Hitbox2D> GameObject::GetHitboxes()
 {
 	return m_hitboxes;
 }

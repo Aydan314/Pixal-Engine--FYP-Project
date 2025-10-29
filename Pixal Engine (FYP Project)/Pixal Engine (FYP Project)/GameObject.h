@@ -3,6 +3,7 @@
 #include "SDL_ttf.h"
 #include "Commons.h"
 #include "Texture2D.h"
+#include "Hitbox2D.h"
 #include <iostream>
 
 class GameObject
@@ -20,7 +21,7 @@ protected:
 
 	float m_collision_radius;
 	COLLISION_MODE m_collisionMode;
-	std::vector<Rect2D> m_hitboxes;
+	std::vector<Hitbox2D> m_hitboxes;
 
 	bool playerCollision = false;
 	bool m_visable = true;
@@ -54,9 +55,8 @@ public:
 	double GetRotation();
 	Transform GetTransform();
 
-	Rect2D GetCollisionBox() { return Rect2D(GetPosition().x, GetPosition().y, m_texture->GetWidth() * m_transform.scale.x, m_texture->GetHeight() * m_transform.scale.y); }
 	Rect2D GetScreenSpaceRect() { return Rect2D(m_transform.position.x, m_transform.position.y, m_texture->GetWidth(), m_texture->GetHeight()); }
-	std::vector<Rect2D> GetHitboxes();
+	std::vector<Hitbox2D> GetHitboxes();
 	float GetCollisionRadius();
 	
 	COLLISION_MODE GetCollisionMode();

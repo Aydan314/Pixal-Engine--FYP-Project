@@ -18,7 +18,7 @@ Texture2D::~Texture2D()
 	m_renderer = nullptr;
 }
 
-bool Texture2D::LoadFromFile(std::string path, int columns, int rows)
+bool Texture2D::LoadStoredTexture(std::string path, int columns, int rows)
 {
 	Free();
 
@@ -55,12 +55,14 @@ void Texture2D::Free()
 	}
 }
 
-void Texture2D::Render(Vector2D new_position, SDL_RendererFlip flip, int columnNum, int rowNum, double angle, Vector2D scale)
+void Texture2D::Render(Vector2D new_position, SDL_RendererFlip flip, int columnNum, int rowNum, double angle, Vector2D scale, SDL_Color colour)
 {
 	// Renders the specified cell of the sprite sheet //
 	SDL_Rect spriteSheetRect = { m_width * columnNum, m_height * rowNum,m_width,m_height };
-	SDL_Rect renderLocation = { new_position.x,new_position.y,m_width * scale.x,m_height * scale.y };
+	SDL_Rect renderLocation = { m_renderOffset.x + new_position.x,new_position.y + m_renderOffset.y,m_width * scale.x,m_height * scale.y };
 	SDL_Point renderCentre = { m_width / 2 * scale.x, m_height / 2 * scale.y };
+
+	if (colour.a > 0) SDL_SetTextureColorMod(m_texture, colour.r, colour.g, colour.b);
 
 	SDL_RenderCopyEx(m_renderer, m_texture, &spriteSheetRect, &renderLocation, angle, &renderCentre, flip);
 
@@ -69,5 +71,16 @@ void Texture2D::Render(Vector2D new_position, SDL_RendererFlip flip, int columnN
 	{
 		std::cout << "!! Invalid cell selection !!\n";
 	}
+}
+
+void Texture2D::SetRenderOffset(Vector2D offset)
+{
+	m_renderOffset = offset;
+}
+
+void Texture2D::SetRenderColour(SDL_Color colour)
+{
+	SDL_SetTextureColorMod(m_texture, colour.r, colour.g, colour.b);
+	m_colour = colour;
 }
 

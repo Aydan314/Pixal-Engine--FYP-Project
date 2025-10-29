@@ -3,6 +3,7 @@
 #include <vector>
 #include "Constants.h"
 #include "SDL.h"
+#include "Vector2D.h"
 
 enum COLLISION_MODE
 {
@@ -10,23 +11,6 @@ enum COLLISION_MODE
 	COLLISION_MULTIPLE,
 	COLLISION_NONE,
 	COLLISION_TRIGGER
-};
-
-struct Vector2D
-{
-	float x;
-	float y;
-
-	Vector2D()
-	{
-		x = 0.0f;
-		y = 0.0f;
-	}
-	Vector2D(float init_x, float init_y)
-	{
-		x = init_x;
-		y = init_y;
-	}
 };
 
 struct Transform 
@@ -72,6 +56,12 @@ struct TextureData
 	SDL_Texture* texture = nullptr;
 };
 
+struct SpriteSheetTile 
+{
+	Vector2D cellPos;
+	Vector2D renderOffset;
+};
+
 struct TextData
 {
 	std::string text;
@@ -89,10 +79,10 @@ struct ButtonColours
 
 const std::vector<std::string> SOUNDS_TO_LOAD =
 {
-	
+	{"Engine Sounds/CodeBlockPickup.wav","Engine Sounds/CodeBlockPutdown.wav","Engine Sounds/CodeBlockPickup.wav"}
 };
 
 const std::vector<SpriteSheetTexture> TEXTURES_TO_LOAD =
 {
-	
+	{"Engine Images/CodeBlockSheet.png", {8,8}}
 };

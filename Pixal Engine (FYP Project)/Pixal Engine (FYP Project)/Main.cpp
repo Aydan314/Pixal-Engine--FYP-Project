@@ -23,9 +23,10 @@ TextureLoader* textureLoader = nullptr;
 AudioManager* audioManager = nullptr;
 GameSceneManager* sceneManager = nullptr;
 
-CodeBlock* codeBlock;
+std::vector<CodeBlock*> codeBlocks;
 
 Uint32 g_old_time;
+float deltaTime;
 
 void Render()
 {
@@ -36,7 +37,11 @@ void Render()
 	SDL_RenderClear(game_renderer);
 
 	SDL_SetRenderDrawColor(engine_renderer, 0, 100, 0, 255);
-	codeBlock->Render();
+
+	for (CodeBlock* codeblock : codeBlocks) 
+	{
+		codeblock->Render();
+	}
 
 	SDL_RenderPresent(engine_renderer);
 	SDL_RenderPresent(game_renderer);
@@ -158,7 +163,13 @@ bool InitAll()
 	audioManager = AudioManager::Instance();
 	textureLoader = TextureLoader::Instance(engine_renderer);
 	sceneManager = GameSceneManager::Instance(engine_renderer);
-	codeBlock = new CodeBlock(engine_renderer, SpriteSheetTexture());
+
+
+	CodeBlock* codeBlock = new CodeBlock(engine_renderer, Transform{ {100,100},{1,1},0 }, SpriteSheetTexture{ "Engine Images/CodeBlockSheet.png",{8,8},{0,0} });
+	CodeBlock* codeBlock1 = new CodeBlock(engine_renderer, Transform{ {400,400},{1,1},0 }, SpriteSheetTexture{ "Engine Images/CodeBlockSheet.png",{8,8},{0,0} });
+
+	codeBlocks.push_back(codeBlock);
+	codeBlocks.push_back(codeBlock1);
 
 	return success;
 }
@@ -186,6 +197,8 @@ bool Update()
 {
 	Uint32 new_time = SDL_GetTicks();
 
+	
+
 	// Event handler //
 	SDL_Event e;
 
@@ -205,6 +218,16 @@ bool Update()
 		}
 		break;
 	}
+
+	deltaTime = new_time - g_old_time;
+
+	for (CodeBlock* codeblock : codeBlocks)
+	{
+		codeblock->Update(deltaTime, e);
+	}
+
+	InputManager::Instance()->Update(deltaTime, e);
+
 	g_old_time = new_time;
 
 	return false;
