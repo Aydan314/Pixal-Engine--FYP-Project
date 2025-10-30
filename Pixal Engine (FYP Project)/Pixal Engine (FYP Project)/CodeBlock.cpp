@@ -5,10 +5,13 @@ CodeBlock::CodeBlock(SDL_Renderer* renderer, Transform transform, SpriteSheetTex
 	m_renderer = renderer;
 	m_ssTexture = ss_texture;
 	m_transform = transform;
-	m_size = { 10,3 };
+
+	m_size = Vector2D(18,3);
+	snapPos = Vector2D(0, (m_size.y * CODE_BLOCK_TILE_SIZE) - (CODE_BLOCK_TILE_SIZE / 2));
+
 	m_text = new GUIText(m_renderer, GameObjectData{ m_transform,COLLISION_NONE }, TextData{ m_name,ENGINE_FONT_PATH,30,{255,255,255,255} });
 	
-	Hitbox2D hitbox = Hitbox2D(&m_transform.position, Vector2D(m_size.x * CODE_BLOCK_TILE_SIZE, m_size.y * CODE_BLOCK_TILE_SIZE), m_renderer);
+	Hitbox2D hitbox = Hitbox2D(&m_transform, Vector2D(m_size.x * CODE_BLOCK_TILE_SIZE, m_size.y * CODE_BLOCK_TILE_SIZE), m_renderer);
 	m_hitboxes.push_back(hitbox);
 
 	if (ss_texture.name != "")
@@ -34,37 +37,17 @@ void CodeBlock::Render()
 {
 	for (SpriteSheetTile tile : m_textureTiles) 
 	{
-		m_texture->Render(m_transform.position + tile.renderOffset, SDL_FLIP_NONE, tile.cellPos.x,tile.cellPos.y, m_transform.rotation, m_transform.scale,m_colour);
+		m_texture->Render((m_transform.position + tile.renderOffset) * m_transform.scale, SDL_FLIP_NONE, tile.cellPos.x,tile.cellPos.y, m_transform.rotation, m_transform.scale,m_colour);
 	}
 	m_text->Render();
-	m_hitboxes[0].Draw();
+	//m_hitboxes[0].Draw();
 }
 
 void CodeBlock::Update(float deltaTime, SDL_Event e)
 {
-	if (CheckMouseCollision() && InputManager::Instance()->GetMouseLeftClicked()) 
-	{
-		m_hitboxes[0].SetColour({ 0,200,0,255 });
-		m_transform.position = m_transform.position + InputManager::Instance()->GetMouseMovement();
-
-		if (playAudio) 
-		{
-			AudioManager::Instance()->PlayAudio("Engine Sounds/CodeBlockPickup.wav");
-			playAudio = false;
-		}
-	}
-	else 
-	{
-		if (playAudio == false) 
-		{
-			AudioManager::Instance()->PlayAudio("Engine Sounds/CodeBlockPutdown.wav");
-			playAudio = true;
-		}
-
-		m_hitboxes[0].SetColour({ 200,0,0,255 });
-	}
-
-	((GameObject*)m_text)->SetPosition(m_transform.position + Vector2D(CODE_BLOCK_TILE_SIZE / 2.f, ((m_size.y * CODE_BLOCK_TILE_SIZE) - m_text->GetRenderRect().h)/ 2.f));
+	
+	((GameObject*)m_text)->SetScale(m_transform.scale);
+	((GameObject*)m_text)->SetPosition(m_transform.position + Vector2D(CODE_BLOCK_TILE_SIZE / 2.f, ((m_size.y * CODE_BLOCK_TILE_SIZE) - (m_text->GetRenderRect().h / m_transform.scale.y))/ 2.f) );
 	m_text->ReformatText();
 }
 
@@ -75,10 +58,17 @@ void CodeBlock::Delete()
 
 void CodeBlock::SetPosition(Vector2D position)
 {
+	m_transform.position = position;
 }
 
 void CodeBlock::SetRotation(double rotation)
 {
+	m_transform.rotation = rotation;
+}
+
+void CodeBlock::SetScale(Vector2D scale)
+{
+	m_transform.scale = scale;
 }
 
 void CodeBlock::CreateBlockOfSize(Vector2D size)
@@ -121,6 +111,11 @@ void CodeBlock::CreateBlockOfSize(Vector2D size)
 	}
 }
 
+void CodeBlock::SnapTo(CodeBlock* other)
+{
+	m_transform.position = other->GetSnapPos();
+}
+
 Vector2D CodeBlock::GetPosition()
 {
 	return m_transform.position;
@@ -141,14 +136,20 @@ Transform CodeBlock::GetTransform()
 	return m_transform;
 }
 
-std::vector<Hitbox2D> CodeBlock::GetHitboxes()
+Vector2D CodeBlock::GetSnapPos()
 {
-	return m_hitboxes;
+	return m_transform.position + snapPos;
+}
+
+std::vector<Hitbox2D>* CodeBlock::GetHitboxes()
+{
+	return &m_hitboxes;
 }
 
 bool CodeBlock::CheckMouseCollision()
 {
 	Vector2D mousePos = InputManager::Instance()->GetMousePos();
+	mousePos = mousePos / m_transform.scale;
 
 	for (Hitbox2D hitbox : m_hitboxes)
 	{

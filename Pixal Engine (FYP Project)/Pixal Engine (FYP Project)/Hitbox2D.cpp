@@ -2,25 +2,25 @@
 
 Hitbox2D::Hitbox2D()
 {
-	position = nullptr;
+	owner = nullptr;
 	m_renderer = nullptr;
 	size = Vector2D();
 }
 
-Hitbox2D::Hitbox2D(Vector2D* _position, Vector2D _size, SDL_Renderer* renderer)
+Hitbox2D::Hitbox2D(Transform* _owner, Vector2D _size, SDL_Renderer* renderer)
 {
-	position = _position;
+	owner = _owner;
 	size = _size;
 	m_renderer = renderer;
 }
 
 bool Hitbox2D::ContainsPoint(Vector2D point)
 {
-	if (position != nullptr) 
+	if (owner != nullptr) 
 	{
-		if (point.x > position->x && point.x < size.x + position->x) 
+		if (point.x > owner->position.x && point.x < size.x + owner->position.x) 
 		{
-			if (point.y > position->y && point.y < size.y + position->y) 
+			if (point.y > owner->position.y && point.y < size.y + owner->position.y) 
 			{
 				return true;
 			}
@@ -36,10 +36,10 @@ void Hitbox2D::Draw()
 	{
 		SDL_Rect rect;
 
-		rect.x = position->x;
-		rect.y = position->y;
-		rect.w = size.x;
-		rect.h = size.y;
+		rect.x = owner->position.x * owner->scale.x;
+		rect.y = owner->position.y * owner->scale.y;
+		rect.w = size.x * owner->scale.x;
+		rect.h = size.y * owner->scale.y;
 
 		SDL_SetRenderDrawColor(m_renderer, m_colour.r, m_colour.g, m_colour.b, m_colour.a);
 

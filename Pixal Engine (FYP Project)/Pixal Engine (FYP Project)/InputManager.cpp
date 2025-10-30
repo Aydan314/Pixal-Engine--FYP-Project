@@ -34,39 +34,62 @@ bool InputManager::GetMouseRightClicked()
 	return mouseRightClick;
 }
 
+int InputManager::GetMouseScroll()
+{
+	return mouseScroll;
+}
+
 void InputManager::Update(float deltaTime, SDL_Event e)
 {
 	prevMouseX = mouseX; prevMouseY = mouseY;
+	mouseScroll = 0;
 	SDL_GetMouseState(&mouseX, &mouseY);
 
-	
-	if (e.type == SDL_MOUSEBUTTONDOWN) 
+	switch (e.type) 
 	{
-		switch (e.button.button) 
+	case SDL_MOUSEBUTTONDOWN:
 		{
-		case SDL_BUTTON_LEFT:
-			mouseLeftClick = true;
-			break;
-		case SDL_BUTTON_RIGHT:
-			mouseRightClick = true;
-			break;
-		default:
+			switch (e.button.button)
+			{
+			case SDL_BUTTON_LEFT:
+				mouseLeftClick = true;
+				break;
+			case SDL_BUTTON_RIGHT:
+				mouseRightClick = true;
+				break;
+			default:
+				break;
+			}
+		}
+		break;
+
+	case SDL_MOUSEBUTTONUP:
+		{
+			switch (e.button.button)
+			{
+			case SDL_BUTTON_LEFT:
+				mouseLeftClick = false;
+				break;
+			case SDL_BUTTON_RIGHT:
+				mouseRightClick = false;
+				break;
+			default:
+				break;
+			}
+		}
+		break;
+
+	case SDL_MOUSEWHEEL:
+		switch (e.wheel.type)
+		{
+		case SDL_MOUSEWHEEL:
+			
+			mouseScroll = e.wheel.y;
 			break;
 		}
-	}
-	else if (e.type == SDL_MOUSEBUTTONUP) 
-	{
-		switch (e.button.button)
-		{
-		case SDL_BUTTON_LEFT:
-			mouseLeftClick = false;
-			break;
-		case SDL_BUTTON_RIGHT:
-			mouseRightClick = false;
-			break;
-		default:
-			break;
-		}
+
+	default:
+		break;
 	}
 	
 }

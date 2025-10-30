@@ -62,6 +62,11 @@ void GameObject::SetRotation(double rotation)
 	m_transform.rotation = rotation;
 }
 
+void GameObject::SetScale(Vector2D scale)
+{
+	m_transform.scale = scale;
+}
+
 void GameObject::LerpToLocation(Vector2D position, int duration)
 {
 	lerpDuration = duration;

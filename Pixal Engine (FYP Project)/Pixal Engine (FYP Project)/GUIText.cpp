@@ -49,7 +49,13 @@ void GUIText::ReformatText()
 	SDL_FreeSurface(surf);
 
 	// Get render rect and render with it //
-	m_renderRect = { (int)m_transform.position.x,(int)m_transform.position.y,w,h };
+	m_renderRect = 
+	{ 
+		(int)round(m_transform.position.x * m_transform.scale.x),
+		(int)round(m_transform.position.y * m_transform.scale.y),
+		(int)round(w * m_transform.scale.x),
+		(int)round(h * m_transform.scale.y)
+	};
 }
 
 bool GUIText::LoadFont(std::string fontPath, unsigned int fontSize)

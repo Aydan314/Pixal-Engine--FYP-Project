@@ -46,9 +46,12 @@ public:
 	void Delete();
 
 	void SetPosition(Vector2D position);
+	void SetRotation(double rotation);
+	void SetScale(Vector2D scale);
+
 	void SetPlayerCollision(bool state);
 	void SetVisable(bool state);
-	void SetRotation(double rotation);
+	
 
 	Vector2D GetPosition();
 	Vector2D GetScale();

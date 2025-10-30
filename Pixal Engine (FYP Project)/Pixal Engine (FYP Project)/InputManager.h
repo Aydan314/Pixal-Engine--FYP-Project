@@ -16,6 +16,8 @@ private:
 	int mouseX;
 	int mouseY;
 
+	int mouseScroll = 0;
+
 	bool mouseLeftClick = false;
 	bool mouseRightClick = false;
 	
@@ -34,6 +36,7 @@ public:
 	Vector2D GetMouseMovement();
 	bool GetMouseLeftClicked();
 	bool GetMouseRightClicked();
+	int GetMouseScroll();
 
 	void Update(float deltaTime, SDL_Event e);
 };

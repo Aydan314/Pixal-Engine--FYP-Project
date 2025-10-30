@@ -4,6 +4,7 @@
 #define ENGINE_FONT_PATH "Engine Font/VT323-Regular.ttf"
 
 #define CODE_BLOCK_TILE_SIZE 32
+#define ZOOM_SENSITIVITY 0.25f
 
 // Engine Screen Dimensions //
 #define ENGINE_SCREEN_WIDTH 1080
