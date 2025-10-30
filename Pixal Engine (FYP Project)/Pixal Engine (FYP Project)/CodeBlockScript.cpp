@@ -3,6 +3,8 @@
 CodeBlockScript::CodeBlockScript(SDL_Renderer* renderer)
 {
 	m_renderer = renderer;
+	m_background = new Texture2D(renderer);
+	m_background->LoadStoredTexture(ENGINE_BACKGROUND);
 }
 
 CodeBlockScript::~CodeBlockScript()
@@ -89,6 +91,8 @@ void CodeBlockScript::Update(float deltaTime, SDL_Event e)
 
 void CodeBlockScript::Render()
 {
+	m_background->Render(Vector2D(0, 0), SDL_FLIP_NONE, 0, 0, 0, Vector2D(ENGINE_BACKGROUND_SCALE, ENGINE_BACKGROUND_SCALE));
+
 	for (CodeBlock* block : m_blocks) 
 	{
 		block->Render();

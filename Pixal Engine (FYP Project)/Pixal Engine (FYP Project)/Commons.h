@@ -84,5 +84,5 @@ const std::vector<std::string> SOUNDS_TO_LOAD =
 
 const std::vector<SpriteSheetTexture> TEXTURES_TO_LOAD =
 {
-	{"Engine Images/CodeBlockSheet.png", {8,8}}
+	{"Engine Images/CodeBlockSheet.png", {8,8}},{"Engine Images/EngineBackground.png",{1,1}}
 };

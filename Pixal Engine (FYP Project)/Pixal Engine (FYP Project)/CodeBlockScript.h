@@ -6,6 +6,7 @@ class CodeBlockScript
 private:
 	std::vector<CodeBlock*> m_blocks;
 	SDL_Renderer* m_renderer;
+	Texture2D* m_background;
 	bool playAudio = true;
 	CodeBlock* selectedBlock = nullptr;
 	Vector2D mouseDrag;
