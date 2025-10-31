@@ -131,6 +131,7 @@
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CodeBlock.cpp" />
+    <ClCompile Include="CodeBlockParameter.cpp" />
     <ClCompile Include="CodeBlockScript.cpp" />
     <ClCompile Include="FileHandler.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CodeBlock.h" />
+    <ClInclude Include="CodeBlockParameter.h" />
     <ClInclude Include="CodeBlockScript.h" />
     <ClInclude Include="Commons.h" />
     <ClInclude Include="Constants.h" />

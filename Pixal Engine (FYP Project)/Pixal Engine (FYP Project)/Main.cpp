@@ -4,6 +4,7 @@
 #include "AudioManager.h"
 #include "GameSceneManager.h"
 #include "CodeBlockScript.h"
+#include "GUICanvas.h"
 
 #include "SDL.h"
 #include "SDL_image.h"
@@ -24,6 +25,8 @@ AudioManager* audioManager = nullptr;
 GameSceneManager* sceneManager = nullptr;
 
 CodeBlockScript* mainScript = nullptr;
+CodeBlockScript* currentScript = nullptr;
+GUICanvas* EngineGUI = nullptr;
 
 Uint32 g_old_time;
 float deltaTime;
@@ -38,10 +41,22 @@ void Render()
 
 	SDL_SetRenderDrawColor(engine_renderer, 0, 100, 0, 255);
 
-	mainScript->Render();
+	currentScript->Render();
+	EngineGUI->Render();
 
 	SDL_RenderPresent(engine_renderer);
 	SDL_RenderPresent(game_renderer);
+}
+
+void InitGUI() 
+{
+	EngineGUI = new GUICanvas(engine_renderer, Vector2D(ENGINE_SCREEN_WIDTH, ENGINE_SCREEN_HEIGHT / 8), { 50,50,50,255 }, { {Vector2D(0,0),Vector2D(1,1),0},COLLISION_NONE });
+	
+	GUIText* text = new GUIText(engine_renderer, { {Vector2D(0,0),Vector2D(1,1),0},COLLISION_NONE }, { "Pixal Engine",ENGINE_FONT_PATH,15,{255,255,255,255} });
+	EngineGUI->AddText((GameObject*)text);
+
+	GUIText* scriptText = new GUIText(engine_renderer, { {Vector2D(0,35),Vector2D(1,1),0},COLLISION_NONE }, { currentScript->GetName(),ENGINE_FONT_PATH,30,{255,255,255,255}});
+	EngineGUI->AddText((GameObject*)scriptText);
 }
 
 bool InitEditorWindow()
@@ -161,13 +176,20 @@ bool InitAll()
 	textureLoader = TextureLoader::Instance(engine_renderer);
 	sceneManager = GameSceneManager::Instance(engine_renderer);
 	mainScript = new CodeBlockScript(engine_renderer);
+	mainScript->SetName("Main");
 
 
 	CodeBlock* codeBlock = new CodeBlock(engine_renderer, Transform{ {100,100},{1,1},0 }, SpriteSheetTexture{ "Engine Images/CodeBlockSheet.png",{8,8},{0,0} });
 	CodeBlock* codeBlock1 = new CodeBlock(engine_renderer, Transform{ {400,400},{1,1},0 }, SpriteSheetTexture{ "Engine Images/CodeBlockSheet.png",{8,8},{0,0} });
+	CodeBlockParameter* param = new CodeBlockParameter(engine_renderer, Transform{ {100,400},{1,1},0 }, SpriteSheetTexture{ "Engine Images/CodeBlockSheet.png",{8,8},{0,0} });
 
 	mainScript->Add(codeBlock);
 	mainScript->Add(codeBlock1);
+	//mainScript->Add(param);
+
+	currentScript = mainScript;
+
+	InitGUI();
 
 	return success;
 }
@@ -219,9 +241,11 @@ bool Update()
 
 	deltaTime = new_time - g_old_time;
 
-	mainScript->Update(deltaTime, e);
+	currentScript->Update(deltaTime, e);
 
 	InputManager::Instance()->Update(deltaTime, e);
+
+	EngineGUI->Update(deltaTime, e);
 
 	g_old_time = new_time;
 

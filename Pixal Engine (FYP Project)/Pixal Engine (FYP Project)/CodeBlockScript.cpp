@@ -16,6 +16,16 @@ void CodeBlockScript::Add(CodeBlock* block)
 	m_blocks.push_back(block);
 }
 
+void CodeBlockScript::Add(CodeBlockParameter* parameter)
+{
+	m_blocks.push_back((CodeBlock*)parameter);
+}
+
+void CodeBlockScript::SetName(std::string name)
+{
+	m_name = name;
+}
+
 void CodeBlockScript::Update(float deltaTime, SDL_Event e)
 {
 	Vector2D zoomOffset = Vector2D(0, 0);
@@ -58,6 +68,7 @@ void CodeBlockScript::Update(float deltaTime, SDL_Event e)
 
 			if (playAudio)
 			{
+				selectedBlock->SnapFrom();
 				AudioManager::Instance()->PlayAudio("Engine Sounds/CodeBlockPickup.wav");
 				playAudio = false;
 			}
@@ -97,4 +108,14 @@ void CodeBlockScript::Render()
 	{
 		block->Render();
 	}
+
+	for (CodeBlockParameter* param : m_params) 
+	{
+		param->Render();
+	}
+}
+
+std::string CodeBlockScript::GetName()
+{
+	return m_name;
 }

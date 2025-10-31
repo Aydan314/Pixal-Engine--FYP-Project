@@ -9,13 +9,23 @@
 #include "GUIText.h"
 #include <iostream>
 
+struct MountPoint 
+{
+	Vector2D position;
+	bool used;
+};
+
 class CodeBlock
 {
 protected:
 	SDL_Renderer* m_renderer = nullptr;
+	CodeBlock* m_next = nullptr;
+	CodeBlock* m_prev = nullptr;
 
 	Vector2D m_size;
-	Vector2D snapPos;
+	Vector2D m_textArea;
+	MountPoint m_mountPoint;
+	std::vector<MountPoint> m_paramPoints;
 
 	Transform m_transform;
 
@@ -31,6 +41,8 @@ protected:
 	std::vector<SpriteSheetTile> m_textureTiles;
 	std::vector<Hitbox2D> m_hitboxes;
 	bool m_deleted = false;
+
+	int m_parameters;
 	
 
 public:
@@ -45,18 +57,22 @@ public:
 	void SetPosition(Vector2D position);
 	void SetRotation(double rotation);
 	void SetScale(Vector2D scale);
-	void CreateBlockOfSize(Vector2D size);
+	void SetNext(CodeBlock* next);
+	virtual void CreateBlockOfSize(Vector2D size);
+
 	void SnapTo(CodeBlock* other);
+	void SnapFrom();
 
 	Vector2D GetPosition();
 	Vector2D GetScale();
 	double GetRotation();
 	Transform GetTransform();
-	Vector2D GetSnapPos();
+	MountPoint* GetMountPoint();
 
 	std::vector<Hitbox2D>* GetHitboxes();
+	std::vector<MountPoint>* GetParameterMountPoints();
 
-	bool CheckMouseCollision();
+	virtual bool CheckMouseCollision();
 	bool GetDeleted();
 	
 
