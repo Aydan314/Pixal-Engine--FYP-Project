@@ -45,7 +45,7 @@ void CodeBlockScript::Update(float deltaTime, SDL_Event e)
 	if (InputManager::Instance()->GetMouseRightClicked()) mouseDrag = InputManager::Instance()->GetMouseMovement();
 
 	// Update blocks and check if one is clicked on //
-	for (CodeBlock* block : m_blocks) 
+	for (Block* block : m_blocks) 
 	{
 		if 
 		(block->CheckMouseCollision() && !selectedBlock && InputManager::Instance()->GetMouseLeftClicked())
@@ -82,7 +82,7 @@ void CodeBlockScript::Update(float deltaTime, SDL_Event e)
 				playAudio = true;
 			}
 
-			for (CodeBlock* block : m_blocks) 
+			for (Block* block : m_blocks) 
 			{
 				if (block != selectedBlock) 
 				{
@@ -104,7 +104,7 @@ void CodeBlockScript::Render()
 {
 	m_background->Render(Vector2D(0, 0), SDL_FLIP_NONE, 0, 0, 0, Vector2D(ENGINE_BACKGROUND_SCALE, ENGINE_BACKGROUND_SCALE));
 
-	for (CodeBlock* block : m_blocks) 
+	for (Block* block : m_blocks) 
 	{
 		block->Render();
 	}

@@ -1,17 +1,18 @@
 #pragma once
 #include "CodeBlock.h"
 #include "CodeBlockParameter.h"
+#include "Block.h"
 
 class CodeBlockScript
 {
 private:
-	std::vector<CodeBlock*> m_blocks;
+	std::vector<Block*> m_blocks;
 	std::vector<CodeBlockParameter*> m_params;
 	std::string m_name = "Script";
 	SDL_Renderer* m_renderer;
 	Texture2D* m_background;
 	bool playAudio = true;
-	CodeBlock* selectedBlock = nullptr;
+	Block* selectedBlock = nullptr;
 	Vector2D mouseDrag;
 	float zoom = 1.f;
 

@@ -166,7 +166,7 @@ bool InitSDL()
 
 }
 
-bool InitAll() 
+bool InitAll()
 {
 	bool success = false;
 
@@ -179,13 +179,13 @@ bool InitAll()
 	mainScript->SetName("Main");
 
 
-	CodeBlock* codeBlock = new CodeBlock(engine_renderer, Transform{ {100,100},{1,1},0 }, SpriteSheetTexture{ "Engine Images/CodeBlockSheet.png",{8,8},{0,0} });
-	CodeBlock* codeBlock1 = new CodeBlock(engine_renderer, Transform{ {400,400},{1,1},0 }, SpriteSheetTexture{ "Engine Images/CodeBlockSheet.png",{8,8},{0,0} });
-	CodeBlockParameter* param = new CodeBlockParameter(engine_renderer, Transform{ {100,400},{1,1},0 }, SpriteSheetTexture{ "Engine Images/CodeBlockSheet.png",{8,8},{0,0} });
+	CodeBlock* codeBlock = new CodeBlock(engine_renderer, Transform{ {100,100},{1,1},0 });
+	CodeBlock* codeBlock1 = new CodeBlock(engine_renderer, Transform{ {400,400},{1,1},0 });
+	CodeBlockParameter* param = new CodeBlockParameter(engine_renderer, Transform{ {100,400},{1,1},0 });
 
 	mainScript->Add(codeBlock);
 	mainScript->Add(codeBlock1);
-	//mainScript->Add(param);
+	mainScript->Add(param);
 
 	currentScript = mainScript;
 

@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="Block.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CodeBlock.cpp" />
     <ClCompile Include="CodeBlockParameter.cpp" />
@@ -154,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="Audio.h" />
     <ClInclude Include="AudioManager.h" />
+    <ClInclude Include="Block.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CodeBlock.h" />
     <ClInclude Include="CodeBlockParameter.h" />

@@ -1,9 +1,9 @@
 #include "CodeBlock.h"
 
-CodeBlock::CodeBlock(SDL_Renderer* renderer, Transform transform, SpriteSheetTexture ss_texture)
+CodeBlock::CodeBlock(SDL_Renderer* renderer, Transform transform) : Block(renderer, transform)
 {
 	m_renderer = renderer;
-	m_ssTexture = ss_texture;
+	
 	m_transform = transform;
 
 	m_textArea = Vector2D(8, 3);
@@ -19,18 +19,6 @@ CodeBlock::CodeBlock(SDL_Renderer* renderer, Transform transform, SpriteSheetTex
 	Hitbox2D hitbox = Hitbox2D(&m_transform, Vector2D(m_size.x * CODE_BLOCK_TILE_SIZE, m_size.y * CODE_BLOCK_TILE_SIZE), m_renderer);
 	m_hitboxes.push_back(hitbox);
 
-	if (ss_texture.name != "")
-	{
-		// Gets the pre loaded texture from the texture loader //
-		m_texture = new Texture2D(m_renderer);
-
-		if (!m_texture->LoadStoredTexture(ss_texture.name, ss_texture.cellAmount.x, ss_texture.cellAmount.y))
-		{
-			std::cout << "!! Failed to load " << ss_texture.name << " !!\n";
-		}
-	}
-	else std::cout << "!! Invalid texture name !!\n";
-
 	CreateBlockOfSize(m_size);
 }
 
@@ -38,47 +26,21 @@ CodeBlock::~CodeBlock()
 {
 }
 
-void CodeBlock::Render()
-{
-	for (SpriteSheetTile tile : m_textureTiles) 
-	{
-		m_texture->Render((m_transform.position + tile.renderOffset) * m_transform.scale, SDL_FLIP_NONE, tile.cellPos.x,tile.cellPos.y, m_transform.rotation, m_transform.scale,m_colour);
-	}
-	m_text->Render();
-	m_hitboxes[0].Draw();
-}
-
 void CodeBlock::Update(float deltaTime, SDL_Event e)
 {
-	
 	((GameObject*)m_text)->SetScale(m_transform.scale);
 	((GameObject*)m_text)->SetPosition(m_transform.position + Vector2D(CODE_BLOCK_TILE_SIZE / 2.f, ((m_size.y * CODE_BLOCK_TILE_SIZE) - (m_text->GetRenderRect().h / m_transform.scale.y))/ 2.f) );
 	m_text->ReformatText();
 }
 
-void CodeBlock::Delete()
+void CodeBlock::Render()
 {
-	m_deleted = true;
-}
-
-void CodeBlock::SetPosition(Vector2D position)
-{
-	m_transform.position = position;
-}
-
-void CodeBlock::SetRotation(double rotation)
-{
-	m_transform.rotation = rotation;
-}
-
-void CodeBlock::SetScale(Vector2D scale)
-{
-	m_transform.scale = scale;
-}
-
-void CodeBlock::SetNext(CodeBlock* next)
-{
-	m_next = next;
+	for (SpriteSheetTile tile : m_textureTiles)
+	{
+		m_texture->Render((m_transform.position + tile.renderOffset) * m_transform.scale, SDL_FLIP_NONE, tile.cellPos.x, tile.cellPos.y, m_transform.rotation, m_transform.scale, m_colour);
+	}
+	m_text->Render();
+	//m_hitboxes[0].Draw();
 }
 
 void CodeBlock::CreateBlockOfSize(Vector2D size)
@@ -198,75 +160,7 @@ void CodeBlock::CreateBlockOfSize(Vector2D size)
 
 }
 
-void CodeBlock::SnapTo(CodeBlock* other)
-{
-	if (!other->GetMountPoint()->used) 
-	{
-		m_transform.position = other->GetMountPoint()->position + other->GetPosition();
-		other->GetMountPoint()->used = true;
-		other->SetNext(this);
-		m_prev = other;
-	}
-}
-
-void CodeBlock::SnapFrom()
-{
-	if (m_prev) 
-	{
-		m_prev->GetMountPoint()->used = false;
-		m_prev->SetNext(nullptr);
-		m_prev = nullptr;
-	}
-}
-
-Vector2D CodeBlock::GetPosition()
-{
-	return m_transform.position;
-}
-
-Vector2D CodeBlock::GetScale()
-{
-	return m_transform.scale;
-}
-
-double CodeBlock::GetRotation()
-{
-	return m_transform.rotation;
-}
-
-Transform CodeBlock::GetTransform()
-{
-	return m_transform;
-}
-
-MountPoint* CodeBlock::GetMountPoint()
-{
-	return &m_mountPoint;
-}
-
-std::vector<Hitbox2D>* CodeBlock::GetHitboxes()
-{
-	return &m_hitboxes;
-}
-
 std::vector<MountPoint>* CodeBlock::GetParameterMountPoints()
 {
 	return &m_paramPoints;
-}
-
-bool CodeBlock::CheckMouseCollision()
-{
-	Vector2D mousePos = InputManager::Instance()->GetMousePos();
-	mousePos = mousePos / m_transform.scale;
-
-	for (Hitbox2D hitbox : m_hitboxes)
-	{
-		if (hitbox.ContainsPoint(mousePos)) return true;
-	}
-	return false;
-}
-
-bool CodeBlock::GetDeleted()
-{
-	return m_deleted;
 }
