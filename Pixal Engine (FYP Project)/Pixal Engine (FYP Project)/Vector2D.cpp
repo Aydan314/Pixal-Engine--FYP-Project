@@ -10,6 +10,16 @@ Vector2D::Vector2D(float init_x, float init_y)
 	x = init_x; y = init_y;
 }
 
+float Vector2D::Magnitude()
+{
+	return sqrt((x * x) + (y * y));
+}
+
+std::string Vector2D::AsString()
+{
+	return "( " + std::to_string(x) + "," + std::to_string(y) + ")";
+}
+
 Vector2D Vector2D::operator+(const Vector2D& Other)
 {
 	return Vector2D(x + Other.x, y + Other.y);

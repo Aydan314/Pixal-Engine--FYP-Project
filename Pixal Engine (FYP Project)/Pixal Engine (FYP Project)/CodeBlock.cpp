@@ -2,6 +2,7 @@
 
 CodeBlock::CodeBlock(SDL_Renderer* renderer, Transform transform) : Block(renderer, transform)
 {
+	m_type = BLOCK_TYPE_BLOCK;
 	m_renderer = renderer;
 	
 	m_transform = transform;
@@ -12,7 +13,7 @@ CodeBlock::CodeBlock(SDL_Renderer* renderer, Transform transform) : Block(render
 	m_size = m_textArea + Vector2D(CODE_BLOCK_PARAMETER_SEGMENT_SIZE * m_parameters, 0);
 
 	m_mountPoint.position = Vector2D(0, (m_size.y * CODE_BLOCK_TILE_SIZE) - (CODE_BLOCK_TILE_SIZE / 2));
-	m_mountPoint.used = false;
+	m_mountPoint.contents = nullptr;
 
 	m_text = new GUIText(m_renderer, GameObjectData{ m_transform,COLLISION_NONE }, TextData{ m_name,ENGINE_FONT_PATH,30,{255,255,255,255} });
 	
@@ -28,6 +29,15 @@ CodeBlock::~CodeBlock()
 
 void CodeBlock::Update(float deltaTime, SDL_Event e)
 {
+	for (MountPoint* item : m_paramPoints)
+	{
+		if (item->contents != nullptr) item->contents->SetPosition(item->position + this->GetPosition());
+	}
+	if (m_mountPoint.contents != nullptr) 
+	{
+		m_mountPoint.contents->SetPosition(m_mountPoint.position + this->GetPosition());
+	}
+
 	((GameObject*)m_text)->SetScale(m_transform.scale);
 	((GameObject*)m_text)->SetPosition(m_transform.position + Vector2D(CODE_BLOCK_TILE_SIZE / 2.f, ((m_size.y * CODE_BLOCK_TILE_SIZE) - (m_text->GetRenderRect().h / m_transform.scale.y))/ 2.f) );
 	m_text->ReformatText();
@@ -103,9 +113,9 @@ void CodeBlock::CreateBlockOfSize(Vector2D size)
 	// Create Parameter Sections //
 	for (int i = 0; i < m_parameters; i++) 
 	{
-		MountPoint point;
-		point.position = Vector2D(xVal * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE);
-		point.used = false;
+		MountPoint* point = new MountPoint();
+		point->position = Vector2D((xVal + 1) * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE);
+		point->contents = nullptr;
 		m_paramPoints.push_back(point);
 
 		for (int x = 0; x < CODE_BLOCK_PARAMETER_SEGMENT_SIZE; x++)
@@ -160,7 +170,7 @@ void CodeBlock::CreateBlockOfSize(Vector2D size)
 
 }
 
-std::vector<MountPoint>* CodeBlock::GetParameterMountPoints()
+std::vector<MountPoint*>* CodeBlock::GetParameterMountPoints()
 {
 	return &m_paramPoints;
 }

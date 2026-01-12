@@ -182,10 +182,12 @@ bool InitAll()
 	CodeBlock* codeBlock = new CodeBlock(engine_renderer, Transform{ {100,100},{1,1},0 });
 	CodeBlock* codeBlock1 = new CodeBlock(engine_renderer, Transform{ {400,400},{1,1},0 });
 	CodeBlockParameter* param = new CodeBlockParameter(engine_renderer, Transform{ {100,400},{1,1},0 });
+	CodeBlockParameter* param1 = new CodeBlockParameter(engine_renderer, Transform{ {100,600},{1,1},0 });
 
 	mainScript->Add(codeBlock);
 	mainScript->Add(codeBlock1);
 	mainScript->Add(param);
+	mainScript->Add(param1);
 
 	currentScript = mainScript;
 

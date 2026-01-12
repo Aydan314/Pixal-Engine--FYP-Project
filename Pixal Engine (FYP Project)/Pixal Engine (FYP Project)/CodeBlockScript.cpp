@@ -47,10 +47,14 @@ void CodeBlockScript::Update(float deltaTime, SDL_Event e)
 	// Update blocks and check if one is clicked on //
 	for (Block* block : m_blocks) 
 	{
-		if 
-		(block->CheckMouseCollision() && !selectedBlock && InputManager::Instance()->GetMouseLeftClicked())
+		if (block->CheckMouseCollision() && InputManager::Instance()->GetMouseLeftClicked())
 		{
-			selectedBlock = block;
+			if (selectedBlock == nullptr) selectedBlock = block;
+			else if (selectedBlock->GetType() != BLOCK_TYPE_PARAMETER && block->GetType() == BLOCK_TYPE_PARAMETER) 
+			{
+				selectedBlock = block;
+			}
+			
 		}
 
 		block->SetScale(Vector2D(zoom, zoom));

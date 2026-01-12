@@ -5,7 +5,6 @@ class CodeBlock : public Block
 {
 protected:
 	Vector2D m_textArea;
-	std::vector<MountPoint> m_paramPoints;
 
 	GUIText* m_text;
 	int m_parameters;
@@ -20,6 +19,7 @@ public:
 
 	void CreateBlockOfSize(Vector2D size) override;
 
-	std::vector<MountPoint>* GetParameterMountPoints();
+	std::vector<MountPoint*>* GetParameterMountPoints();
+	
 };
 

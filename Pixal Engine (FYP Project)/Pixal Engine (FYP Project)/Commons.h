@@ -13,6 +13,13 @@ enum COLLISION_MODE
 	COLLISION_TRIGGER
 };
 
+enum BLOCK_TYPE 
+{
+	BLOCK_TYPE_NONE,
+	BLOCK_TYPE_BLOCK,
+	BLOCK_TYPE_PARAMETER
+};
+
 struct Transform 
 {
 	Vector2D position;

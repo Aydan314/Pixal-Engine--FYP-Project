@@ -2,6 +2,7 @@
 
 CodeBlockParameter::CodeBlockParameter(SDL_Renderer* renderer, Transform transform) : Block(renderer,transform)
 {
+	m_type = BLOCK_TYPE_PARAMETER;
 	m_renderer = renderer;
 	
 	m_transform = transform;

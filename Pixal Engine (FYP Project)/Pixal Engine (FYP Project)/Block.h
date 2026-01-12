@@ -9,10 +9,12 @@
 #include "GUIText.h"
 #include <iostream>
 
+class Block;
+
 struct MountPoint
 {
 	Vector2D position;
-	bool used;
+	Block* contents;
 };
 
 class Block
@@ -23,6 +25,8 @@ protected:
 
 	SDL_Renderer* m_renderer = nullptr;
 	bool m_deleted = false;
+	BLOCK_TYPE m_type = BLOCK_TYPE_NONE;
+	std::vector<MountPoint*> m_paramPoints;
 
 	SDL_Color m_colour = { (Uint8)(rand() % 200),(Uint8)(rand() % 200),(Uint8)(rand() % 200), 255 };
 	std::string m_name = "CODE BLOCK";
@@ -46,9 +50,12 @@ public:
 
 	virtual void SnapTo(Block* other);
 	virtual void SnapFrom();
+	void AttachParameter(Block* block);
 
 	MountPoint* GetMountPoint();
+	BLOCK_TYPE GetType();
 	void SetNext(Block* next);
+	void SetPrev(Block* prev);
 
 	bool CheckMouseCollision();
 	std::vector<Hitbox2D>* GetHitboxes();

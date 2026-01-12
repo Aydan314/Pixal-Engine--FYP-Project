@@ -22,29 +22,79 @@ Block::~Block()
 
 void Block::SnapTo(Block* other)
 {
-	if (!other->GetMountPoint()->used)
+	
+	if (m_type == BLOCK_TYPE_PARAMETER && other->GetType() == BLOCK_TYPE_BLOCK) 
 	{
-		m_transform.position = other->GetMountPoint()->position + other->GetPosition();
-		other->GetMountPoint()->used = true;
-		other->SetNext(this);
-		m_prev = other;
+		if (!m_prev) other->AttachParameter(this);
 	}
+	else
+	{
+		if (other->GetMountPoint()->contents == nullptr)
+		{
+			other->SetNext(this);
+			m_prev = other;
+		}
+	}
+	
 }
 
 void Block::SnapFrom()
 {
-	if (m_prev)
+	if (m_prev) 
 	{
-		m_prev->GetMountPoint()->used = false;
-		m_prev->SetNext(nullptr);
-		m_prev = nullptr;
+		if (m_type == BLOCK_TYPE_PARAMETER)
+		{
+
+			for (MountPoint* item : m_prev->m_paramPoints)
+			{
+				if (item->contents == this)
+				{
+					item->contents = nullptr;
+					break;
+				}
+			}
+			m_prev = nullptr;
+		}
+		else
+		{
+			m_prev->GetMountPoint()->contents = nullptr;
+			m_prev->SetNext(nullptr);
+			m_prev = nullptr;
+		}
+	}
+}
+
+void Block::AttachParameter(Block* block)
+{
+
+	for (MountPoint* point : m_paramPoints)
+	{
+		if (point->contents == nullptr) 
+		{
+			Vector2D dist = (m_transform.position + point->position) - block->GetPosition();
+			float distance = dist.Magnitude();
+
+			if (distance <= (CODE_BLOCK_PARAMETER_SEGMENT_SIZE * CODE_BLOCK_TILE_SIZE))
+			{
+				point->contents = block;
+				block->SetPrev(this);
+				break;
+			}
+		}
 	}
 }
 
 void Block::SetNext(Block* next)
 {
 	m_next = next;
+	m_mountPoint.contents = next;
 }
+
+void Block::SetPrev(Block* prev)
+{
+	m_prev = prev;
+}
+
 
 void Block::Render() 
 {
@@ -121,6 +171,11 @@ MountPoint* Block::GetMountPoint()
 	return &m_mountPoint;
 }
 
+BLOCK_TYPE Block::GetType()
+{
+	return m_type;
+}
+
 void Block::CreateBlockOfSize(Vector2D size)
 {
 
@@ -128,6 +183,6 @@ void Block::CreateBlockOfSize(Vector2D size)
 
 void Block::Update(float deltaTime, SDL_Event e)
 {
-
+	
 }
 
