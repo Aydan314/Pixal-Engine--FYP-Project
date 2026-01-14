@@ -1,6 +1,6 @@
 #include "CodeBlockParameter.h"
 
-CodeBlockParameter::CodeBlockParameter(SDL_Renderer* renderer, Transform transform) : Block(renderer,transform)
+CodeBlockParameter::CodeBlockParameter(SDL_Renderer* renderer, Transform transform, BLOCK_ID ID) : Block(renderer,transform)
 {
 	m_type = BLOCK_TYPE_PARAMETER;
 	m_renderer = renderer;
@@ -27,6 +27,14 @@ void CodeBlockParameter::Render()
 	{
 		m_texture->Render((m_transform.position + tile.renderOffset) * m_transform.scale, SDL_FLIP_NONE, tile.cellPos.x, tile.cellPos.y, m_transform.rotation, m_transform.scale, m_colour);
 	}
+	m_text->Render();
+}
+
+void CodeBlockParameter::Update(float deltaTime, SDL_Event e)
+{
+	((GameObject*)m_text)->SetScale(m_transform.scale);
+	((GameObject*)m_text)->SetPosition(m_transform.position + Vector2D(CODE_BLOCK_TILE_SIZE / 2.f, ((m_size.y * CODE_BLOCK_TILE_SIZE) - (m_text->GetRenderRect().h / m_transform.scale.y)) / 2.f));
+	m_text->ReformatText();
 }
 
 void CodeBlockParameter::CreateBlockOfSize(Vector2D size)

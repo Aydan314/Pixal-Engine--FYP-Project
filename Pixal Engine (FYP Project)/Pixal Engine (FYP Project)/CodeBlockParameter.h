@@ -23,11 +23,11 @@ protected:
 
 
 public:
-	CodeBlockParameter(SDL_Renderer* renderer, Transform transform);
+	CodeBlockParameter(SDL_Renderer* renderer, Transform transform, BLOCK_ID ID = BLOCK_ID_CUSTOM);
 	~CodeBlockParameter();
 
 	void Render() override;
+	void Update(float deltaTime, SDL_Event e) override;
 	void CreateBlockOfSize(Vector2D size) override;
-
 };
 

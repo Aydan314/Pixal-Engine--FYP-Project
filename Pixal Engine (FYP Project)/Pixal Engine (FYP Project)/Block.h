@@ -22,13 +22,16 @@ class Block
 protected:
 	Block* m_next = nullptr;
 	Block* m_prev = nullptr;
+	bool m_startBlock = false;
+	bool m_endBlock = false;
+	bool m_conditionalBlock = false;
 
 	SDL_Renderer* m_renderer = nullptr;
 	bool m_deleted = false;
 	BLOCK_TYPE m_type = BLOCK_TYPE_NONE;
 	std::vector<MountPoint*> m_paramPoints;
 
-	SDL_Color m_colour = { (Uint8)(rand() % 200),(Uint8)(rand() % 200),(Uint8)(rand() % 200), 255 };
+	SDL_Color m_colour = COLOUR_BLUE;
 	std::string m_name = "CODE BLOCK";
 
 	Vector2D m_size;
@@ -41,12 +44,13 @@ protected:
 	Texture2D* m_texture;
 
 public:
-	Block(SDL_Renderer* renderer, Transform transform);
+	Block(SDL_Renderer* renderer, Transform transform, BLOCK_ID ID = BLOCK_ID_CUSTOM);
 	~Block();
 
 	virtual void Render();
 	virtual void Update(float deltaTime, SDL_Event e);
 	virtual void CreateBlockOfSize(Vector2D size);
+	virtual void Resize();
 
 	virtual void SnapTo(Block* other);
 	virtual void SnapFrom();
@@ -56,6 +60,9 @@ public:
 	BLOCK_TYPE GetType();
 	void SetNext(Block* next);
 	void SetPrev(Block* prev);
+
+	Block* GetNext();
+	Block* GetPrev();
 
 	bool CheckMouseCollision();
 	std::vector<Hitbox2D>* GetHitboxes();
@@ -68,6 +75,9 @@ public:
 	Vector2D GetScale();
 	double GetRotation();
 	Transform GetTransform();
+
+	bool IsStartBlock();
+	bool IsEndBlock();
 
 	void Delete();
 	bool GetDeleted();

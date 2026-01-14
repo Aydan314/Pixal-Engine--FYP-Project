@@ -179,13 +179,25 @@ bool InitAll()
 	mainScript->SetName("Main");
 
 
-	CodeBlock* codeBlock = new CodeBlock(engine_renderer, Transform{ {100,100},{1,1},0 });
-	CodeBlock* codeBlock1 = new CodeBlock(engine_renderer, Transform{ {400,400},{1,1},0 });
+	CodeBlock* codeBlock = new CodeBlock(engine_renderer, Transform{ {100,100},{1,1},0 },BLOCK_ID_SET_POSITION);
+	CodeBlock* codeBlock1 = new CodeBlock(engine_renderer, Transform{ {400,400},{1,1},0 }, BLOCK_ID_STOP);
+	CodeBlock* codeBlock2 = new CodeBlock(engine_renderer, Transform{ {400,800},{1,1},0 }, BLOCK_ID_START);
+	CodeBlock* codeBlock3 = new CodeBlock(engine_renderer, Transform{ {300,-100},{1,1},0 }, BLOCK_ID_IF);
+	CodeBlock* codeBlock4 = new CodeBlock(engine_renderer, Transform{ {30,-50},{1,1},0 }, BLOCK_ID_CUSTOM);
+	CodeBlock* codeBlock5 = new CodeBlock(engine_renderer, Transform{ {30,-60},{1,1},0 }, BLOCK_ID_CUSTOM);
+	CodeBlock* codeBlock6 = new CodeBlock(engine_renderer, Transform{ {30,-70},{1,1},0 }, BLOCK_ID_CUSTOM);
+	CodeBlock* codeBlock7 = new CodeBlock(engine_renderer, Transform{ {30,-80},{1,1},0 }, BLOCK_ID_CUSTOM);
 	CodeBlockParameter* param = new CodeBlockParameter(engine_renderer, Transform{ {100,400},{1,1},0 });
 	CodeBlockParameter* param1 = new CodeBlockParameter(engine_renderer, Transform{ {100,600},{1,1},0 });
 
 	mainScript->Add(codeBlock);
 	mainScript->Add(codeBlock1);
+	mainScript->Add(codeBlock2);
+	mainScript->Add(codeBlock3);
+	mainScript->Add(codeBlock4);
+	mainScript->Add(codeBlock5);
+	mainScript->Add(codeBlock6);
+	mainScript->Add(codeBlock7);
 	mainScript->Add(param);
 	mainScript->Add(param1);
 

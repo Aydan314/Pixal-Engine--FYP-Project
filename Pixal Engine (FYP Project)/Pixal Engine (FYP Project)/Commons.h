@@ -20,6 +20,15 @@ enum BLOCK_TYPE
 	BLOCK_TYPE_PARAMETER
 };
 
+enum BLOCK_ID 
+{
+	BLOCK_ID_CUSTOM,
+	BLOCK_ID_SET_POSITION,
+	BLOCK_ID_STOP,
+	BLOCK_ID_START,
+	BLOCK_ID_IF
+};
+
 struct Transform 
 {
 	Vector2D position;

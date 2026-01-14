@@ -1,6 +1,6 @@
 #include "Block.h"
 
-Block::Block(SDL_Renderer* renderer, Transform transform)
+Block::Block(SDL_Renderer* renderer, Transform transform, BLOCK_ID ID)
 {
 	m_renderer = renderer;
 	m_transform = transform;
@@ -22,20 +22,21 @@ Block::~Block()
 
 void Block::SnapTo(Block* other)
 {
-	
-	if (m_type == BLOCK_TYPE_PARAMETER && other->GetType() == BLOCK_TYPE_BLOCK) 
+	if (!m_startBlock) 
 	{
-		if (!m_prev) other->AttachParameter(this);
-	}
-	else
-	{
-		if (other->GetMountPoint()->contents == nullptr)
+		if (m_type == BLOCK_TYPE_PARAMETER && other->GetType() == BLOCK_TYPE_BLOCK)
 		{
-			other->SetNext(this);
-			m_prev = other;
+			if (!m_prev) other->AttachParameter(this);
+		}
+		else
+		{
+			if (other->GetMountPoint()->contents == nullptr && !other->IsEndBlock())
+			{
+				other->SetNext(this);
+				m_prev = other;
+			}
 		}
 	}
-	
 }
 
 void Block::SnapFrom()
@@ -88,11 +89,22 @@ void Block::SetNext(Block* next)
 {
 	m_next = next;
 	m_mountPoint.contents = next;
+	Resize();
 }
 
 void Block::SetPrev(Block* prev)
 {
 	m_prev = prev;
+}
+
+Block* Block::GetNext()
+{
+	return m_next;
+}
+
+Block* Block::GetPrev()
+{
+	return m_prev;
 }
 
 
@@ -139,6 +151,16 @@ Transform Block::GetTransform()
 	return m_transform;
 }
 
+bool Block::IsStartBlock()
+{
+	return m_startBlock;
+}
+
+bool Block::IsEndBlock()
+{
+	return m_endBlock;
+}
+
 void Block::Delete()
 {
 	m_deleted = true;
@@ -179,6 +201,10 @@ BLOCK_TYPE Block::GetType()
 void Block::CreateBlockOfSize(Vector2D size)
 {
 
+}
+
+void Block::Resize()
+{
 }
 
 void Block::Update(float deltaTime, SDL_Event e)
