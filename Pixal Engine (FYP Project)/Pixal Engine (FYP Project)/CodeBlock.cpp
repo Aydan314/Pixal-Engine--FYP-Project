@@ -16,7 +16,7 @@ CodeBlock::~CodeBlock()
 
 void CodeBlock::Init(BLOCK_ID ID)
 {
-	m_textArea = Vector2D(8, 3);
+	m_textArea = Vector2D(8, CODE_BLOCK_HEIGHT);
 	m_parameters = 0;
 
 	switch (ID) 
@@ -27,7 +27,7 @@ void CodeBlock::Init(BLOCK_ID ID)
 		m_colour = COLOUR_GREEN;
 
 		m_parameters = 1;
-		m_textArea = Vector2D(8, 3);
+		m_textArea = Vector2D(8, CODE_BLOCK_HEIGHT);
 		break;
 
 	case BLOCK_ID_IF:
@@ -35,7 +35,7 @@ void CodeBlock::Init(BLOCK_ID ID)
 		m_colour = COLOUR_LIGHT_GREY;
 
 		m_parameters = 1;
-		m_textArea = Vector2D(6, 3);
+		m_textArea = Vector2D(6, CODE_BLOCK_HEIGHT);
 		m_conditionalBlock = true;
 		break;
 
@@ -44,7 +44,7 @@ void CodeBlock::Init(BLOCK_ID ID)
 		m_colour = COLOUR_RED;
 
 		m_parameters = 0;
-		m_textArea = Vector2D(6, 3);
+		m_textArea = Vector2D(6, CODE_BLOCK_HEIGHT);
 		m_endBlock = true;
 		break;
 
@@ -53,7 +53,7 @@ void CodeBlock::Init(BLOCK_ID ID)
 		m_colour = COLOUR_GREEN;
 
 		m_parameters = 0;
-		m_textArea = Vector2D(6, 3);
+		m_textArea = Vector2D(6, CODE_BLOCK_HEIGHT);
 		m_startBlock = true;
 		break;
 	}
@@ -63,16 +63,40 @@ void CodeBlock::Init(BLOCK_ID ID)
 
 	m_size = m_textArea + Vector2D(CODE_BLOCK_PARAMETER_SEGMENT_SIZE * m_parameters, 0);
 
-	Hitbox2D hitbox = Hitbox2D(&m_transform, Vector2D(m_size.x * CODE_BLOCK_TILE_SIZE, m_size.y * CODE_BLOCK_TILE_SIZE), m_renderer);
+	Hitbox2D* hitbox = new Hitbox2D(&m_transform, Vector2D(m_size.x * CODE_BLOCK_TILE_SIZE, m_size.y * CODE_BLOCK_TILE_SIZE), Vector2D(0,0), m_renderer);
 	m_hitboxes.push_back(hitbox);
 
+	InitMountPoints();
 	
-	m_mountPoint.contents = nullptr;
-	if (m_conditionalBlock) 
+}
+
+void CodeBlock::InitMountPoints()
+{
+	m_startMountPoint = new MountPoint();
+	m_startMountPoint->type = MOUNT_TYPE_START;
+
+	m_conditionalMountPoint = nullptr;
+	if (m_conditionalBlock)
 	{
-		m_mountPoint.position = Vector2D(CODE_BLOCK_TILE_SIZE, (m_size.y * CODE_BLOCK_TILE_SIZE) - (CODE_BLOCK_TILE_SIZE / 2));
+		m_conditionalMountPoint = new MountPoint();
+		m_conditionalMountPoint->position = Vector2D(CODE_BLOCK_TILE_SIZE, (m_size.y * CODE_BLOCK_TILE_SIZE) - (CODE_BLOCK_TILE_SIZE / 2));
+		m_conditionalMountPoint->type = MOUNT_TYPE_CONDITIONAL;
+
+		m_endHitbox = new Hitbox2D
+		(
+			&m_transform,
+			Vector2D(m_size.x * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE),
+			Vector2D(0, (CODE_BLOCK_HEIGHT + CODE_BLOCK_CONDITIONAL_TAIL_LENGTH) * CODE_BLOCK_TILE_SIZE),
+			m_renderer
+		);
+
+		m_hitboxes.push_back(m_endHitbox);
 	}
-	else m_mountPoint.position = Vector2D(0, (m_size.y * CODE_BLOCK_TILE_SIZE) - (CODE_BLOCK_TILE_SIZE / 2));
+
+	m_endMountPoint = new MountPoint();
+	m_endMountPoint->contents = nullptr;
+	m_endMountPoint->position = Vector2D(0, (m_size.y * CODE_BLOCK_TILE_SIZE) - (CODE_BLOCK_TILE_SIZE / 2));
+	m_endMountPoint->type = MOUNT_TYPE_END;
 }
 
 void CodeBlock::Update(float deltaTime, SDL_Event e)
@@ -81,14 +105,29 @@ void CodeBlock::Update(float deltaTime, SDL_Event e)
 	{
 		if (item->contents != nullptr) item->contents->SetPosition(item->position + this->GetPosition());
 	}
-	if (m_mountPoint.contents != nullptr) 
+	if (m_endMountPoint->contents != nullptr) 
 	{
-		m_mountPoint.contents->SetPosition(m_mountPoint.position + this->GetPosition());
+		m_endMountPoint->contents->SetPosition(m_endMountPoint->position + this->GetPosition());
+	}
+
+	if (m_conditionalBlock) 
+	{
+		float yPos = (CODE_BLOCK_HEIGHT + CODE_BLOCK_CONDITIONAL_TAIL_LENGTH) * CODE_BLOCK_TILE_SIZE;
+		if (m_conditionalMountPoint->contents != nullptr) yPos = (CODE_BLOCK_HEIGHT + m_tailTextureTiles.size()) * CODE_BLOCK_TILE_SIZE;
+			
+		m_endHitbox->SetPosition(Vector2D(0, yPos));
+
+		if (m_conditionalMountPoint->contents != nullptr)
+		{
+			m_conditionalMountPoint->contents->SetPosition(m_conditionalMountPoint->position + this->GetPosition());
+		}
 	}
 
 	((GameObject*)m_text)->SetScale(m_transform.scale);
 	((GameObject*)m_text)->SetPosition(m_transform.position + Vector2D(CODE_BLOCK_TILE_SIZE / 2.f, ((m_size.y * CODE_BLOCK_TILE_SIZE) - (m_text->GetRenderRect().h / m_transform.scale.y))/ 2.f) );
 	m_text->ReformatText();
+
+
 }
 
 void CodeBlock::Render()
@@ -105,15 +144,15 @@ void CodeBlock::Render()
 		}
 		for (SpriteSheetTile tile : m_tailEndTextureTiles)
 		{
-
-			float yPos = (3 + CODE_BLOCK_CONDITIONAL_TAIL_LENGTH) * CODE_BLOCK_TILE_SIZE;
-			if (m_next != nullptr) yPos = (3 + m_tailTextureTiles.size()) * CODE_BLOCK_TILE_SIZE;
-
-			m_texture->Render((m_transform.position + tile.renderOffset + Vector2D(0,yPos)) * m_transform.scale, SDL_FLIP_NONE, tile.cellPos.x, tile.cellPos.y, m_transform.rotation, m_transform.scale, m_colour);
+			m_texture->Render((m_transform.position + tile.renderOffset + m_endHitbox->GetPosition()) * m_transform.scale, SDL_FLIP_NONE, tile.cellPos.x, tile.cellPos.y, m_transform.rotation, m_transform.scale, m_colour);
 		}
 	}
 	m_text->Render();
-	//m_hitboxes[0].Draw();
+
+	/*for (int i = 0; i < m_hitboxes.size(); i++) 
+	{
+		m_hitboxes[i]->Draw();
+	}*/
 }
 
 void CodeBlock::Resize()
@@ -123,7 +162,7 @@ void CodeBlock::Resize()
 		m_tailTextureTiles = {};
 		CreateTail();
 	}
-	else if (m_prev != nullptr) m_prev->Resize();
+	else if (m_startMountPoint->contents != nullptr) m_startMountPoint->contents->Resize();
 }
 
 void CodeBlock::CreateBlockOfSize(Vector2D size)
@@ -271,12 +310,12 @@ void CodeBlock::CreateBlockOfSize(Vector2D size)
 
 void CodeBlock::CreateTail()
 {
-	if (m_next == nullptr) 
+	if (m_conditionalMountPoint->contents == nullptr) 
 	{
 		for (int i = 0; i < CODE_BLOCK_CONDITIONAL_TAIL_LENGTH; i++)
 		{
 			SpriteSheetTile tile;
-			tile.renderOffset = Vector2D(0, (3 + i) * CODE_BLOCK_TILE_SIZE);
+			tile.renderOffset = Vector2D(0, (CODE_BLOCK_HEIGHT + i) * CODE_BLOCK_TILE_SIZE);
 
 			tile.cellPos = Vector2D(CODE_BLOCK_SHEET_TAIL_SEGMENT);
 
@@ -285,15 +324,15 @@ void CodeBlock::CreateTail()
 	}
 	else 
 	{
-		Block* next = m_next;
+		Block* next = m_conditionalMountPoint->contents;
 		int yVal = 0;
 		int i = 0;
 		while (next != nullptr) 
 		{
-			for (int j = 0; j < 3 - i % 2; j++)
+			for (int j = 0; j < (CODE_BLOCK_HEIGHT - i % 2); j++)
 			{
 				SpriteSheetTile tile;
-				tile.renderOffset = Vector2D(0,(3 + yVal) * CODE_BLOCK_TILE_SIZE);
+				tile.renderOffset = Vector2D(0,(CODE_BLOCK_HEIGHT + yVal) * CODE_BLOCK_TILE_SIZE);
 
 				tile.cellPos = Vector2D(CODE_BLOCK_SHEET_TAIL_SEGMENT);
 
@@ -304,7 +343,7 @@ void CodeBlock::CreateTail()
 			i++;
 		}
 	}
-
+	m_endMountPoint->position = Vector2D(0, ((4 + m_tailTextureTiles.size()) * CODE_BLOCK_TILE_SIZE) - (CODE_BLOCK_TILE_SIZE / 2));
 }
 
 void CodeBlock::CreateTailEnd()

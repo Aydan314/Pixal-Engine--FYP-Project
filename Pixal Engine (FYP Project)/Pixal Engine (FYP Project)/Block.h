@@ -15,13 +15,12 @@ struct MountPoint
 {
 	Vector2D position;
 	Block* contents;
+	MOUNT_TYPE type;
 };
 
 class Block
 {
 protected:
-	Block* m_next = nullptr;
-	Block* m_prev = nullptr;
 	bool m_startBlock = false;
 	bool m_endBlock = false;
 	bool m_conditionalBlock = false;
@@ -36,8 +35,11 @@ protected:
 
 	Vector2D m_size;
 	Transform m_transform;
-	std::vector<Hitbox2D> m_hitboxes;
-	MountPoint m_mountPoint;
+	std::vector<Hitbox2D*> m_hitboxes;
+
+	MountPoint* m_endMountPoint;
+	MountPoint* m_startMountPoint;
+	MountPoint* m_conditionalMountPoint;
 
 	SpriteSheetTexture m_ssTexture = SpriteSheetTexture();
 	std::vector<SpriteSheetTile> m_textureTiles;
@@ -57,15 +59,18 @@ public:
 	void AttachParameter(Block* block);
 
 	MountPoint* GetMountPoint();
+	MountPoint* GetConditionalMountpoint();
+
 	BLOCK_TYPE GetType();
 	void SetNext(Block* next);
 	void SetPrev(Block* prev);
+	void SetConditional(Block* conditional);
 
 	Block* GetNext();
 	Block* GetPrev();
 
 	bool CheckMouseCollision();
-	std::vector<Hitbox2D>* GetHitboxes();
+	std::vector<Hitbox2D*> GetHitboxes();
 
 	void SetPosition(Vector2D position);
 	void SetScale(Vector2D scale);
@@ -78,6 +83,7 @@ public:
 
 	bool IsStartBlock();
 	bool IsEndBlock();
+	bool IsConditionalBlock();
 
 	void Delete();
 	bool GetDeleted();

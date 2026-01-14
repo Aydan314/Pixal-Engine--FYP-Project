@@ -11,8 +11,11 @@ CodeBlockParameter::CodeBlockParameter(SDL_Renderer* renderer, Transform transfo
 
 	m_text = new GUIText(m_renderer, GameObjectData{ m_transform,COLLISION_NONE }, TextData{ m_name,ENGINE_FONT_PATH,15,{255,255,255,255} });
 
-	m_hitboxes.push_back(Hitbox2D(&m_transform, Vector2D(m_size.x * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE), m_renderer));
+	m_hitboxes.push_back(new Hitbox2D(&m_transform, Vector2D(m_size.x * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE), Vector2D(0,0), m_renderer));
 
+	m_startMountPoint = new MountPoint();
+	m_endMountPoint = new MountPoint();
+	m_conditionalMountPoint = nullptr;
 
 	CreateBlockOfSize(m_size);
 }

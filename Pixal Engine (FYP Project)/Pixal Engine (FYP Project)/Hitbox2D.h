@@ -8,18 +8,23 @@ class Hitbox2D
 private:
 	SDL_Renderer* m_renderer;
 	SDL_Color m_colour {200,0,0,255};
+	Vector2D m_position;
 
 public :
 	Transform* owner;
 	Vector2D size;
+	
 
 	Hitbox2D();
-	Hitbox2D(Transform* _owner, Vector2D _size, SDL_Renderer* renderer = nullptr);
+	Hitbox2D(Transform* _owner, Vector2D _size, Vector2D _position = Vector2D(0,0), SDL_Renderer* renderer = nullptr);
 
 	bool ContainsPoint(Vector2D point);
 
 	void Draw();
 	void SetColour(SDL_Color colour);
+
+	void SetPosition(Vector2D position);
+	Vector2D GetPosition();
 
 };
 

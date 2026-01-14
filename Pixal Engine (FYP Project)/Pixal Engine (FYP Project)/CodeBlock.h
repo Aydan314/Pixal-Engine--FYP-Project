@@ -10,6 +10,7 @@ protected:
 	int m_parameters;
 	std::vector<SpriteSheetTile> m_tailTextureTiles;
 	std::vector<SpriteSheetTile> m_tailEndTextureTiles;
+	Hitbox2D* m_endHitbox = nullptr;
 	
 
 public:
@@ -24,6 +25,7 @@ public:
 	void CreateTail();
 	void CreateTailEnd();
 	void Init(BLOCK_ID ID);
+	void InitMountPoints();
 
 	std::vector<MountPoint*>* GetParameterMountPoints();
 	

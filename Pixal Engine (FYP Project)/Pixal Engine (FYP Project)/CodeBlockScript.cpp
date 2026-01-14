@@ -67,7 +67,7 @@ void CodeBlockScript::Update(float deltaTime, SDL_Event e)
 		// If block is selected, drag it around the screen //
 		if (InputManager::Instance()->GetMouseLeftClicked() && !InputManager::Instance()->GetMouseRightClicked())
 		{
-			selectedBlock->GetHitboxes()->at(0).SetColour({ 0,200,0,255 });
+			selectedBlock->GetHitboxes()[0]->SetColour({ 0,200,0,255 });
 			selectedBlock->SetPosition(selectedBlock->GetPosition() + (InputManager::Instance()->GetMouseMovement() / Vector2D(zoom, zoom)));
 
 			if (playAudio)
@@ -90,15 +90,21 @@ void CodeBlockScript::Update(float deltaTime, SDL_Event e)
 			{
 				if (block != selectedBlock) 
 				{
-					if (block->GetHitboxes()->at(0).ContainsPoint(selectedBlock->GetPosition() + Vector2D(CODE_BLOCK_TILE_SIZE,0))) 
+					bool selected = false;
+					for (int i = 0; i < block->GetHitboxes().size(); i++) 
 					{
-						selectedBlock->SnapTo(block);
-						break;
+						if (block->GetHitboxes()[i]->ContainsPoint(selectedBlock->GetPosition() + Vector2D(CODE_BLOCK_TILE_SIZE, 0)))
+						{
+							selectedBlock->SnapTo(block);
+							selected = true;
+							break;
+						}
 					}
+					if (selected) break;
 				}
 			}
 
-			selectedBlock->GetHitboxes()->at(0).SetColour({ 200,0,0,255 });
+			selectedBlock->GetHitboxes()[0]->SetColour({ 200,0,0,255 });
 			selectedBlock = nullptr;
 		}
 	}

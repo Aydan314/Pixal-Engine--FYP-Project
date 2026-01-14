@@ -29,6 +29,14 @@ enum BLOCK_ID
 	BLOCK_ID_IF
 };
 
+enum MOUNT_TYPE 
+{
+	MOUNT_TYPE_UNDEFINED,
+	MOUNT_TYPE_START,
+	MOUNT_TYPE_CONDITIONAL,
+	MOUNT_TYPE_END
+};
+
 struct Transform 
 {
 	Vector2D position;

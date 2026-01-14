@@ -26,14 +26,30 @@ void Block::SnapTo(Block* other)
 	{
 		if (m_type == BLOCK_TYPE_PARAMETER && other->GetType() == BLOCK_TYPE_BLOCK)
 		{
-			if (!m_prev) other->AttachParameter(this);
+			if (!m_startMountPoint->contents) other->AttachParameter(this);
+		}
+		else if (other->GetConditionalMountpoint() != nullptr) 
+		{
+			float conditionalDist = std::abs((other->GetPosition().y + other->GetConditionalMountpoint()->position.y) - this->GetPosition().y);
+			float endDist = std::abs((other->GetPosition().y + other->GetMountPoint()->position.y) - this->GetPosition().y);
+
+			if (conditionalDist < endDist && other->GetConditionalMountpoint()->contents == nullptr)
+			{
+				other->SetConditional(this);
+				m_startMountPoint->contents = other;
+			}
+			else if (other->GetMountPoint()->contents == nullptr && !other->IsEndBlock()) 
+			{
+				other->SetNext(this);
+				m_startMountPoint->contents = other;
+			}
 		}
 		else
 		{
 			if (other->GetMountPoint()->contents == nullptr && !other->IsEndBlock())
 			{
 				other->SetNext(this);
-				m_prev = other;
+				m_startMountPoint->contents = other;
 			}
 		}
 	}
@@ -41,12 +57,12 @@ void Block::SnapTo(Block* other)
 
 void Block::SnapFrom()
 {
-	if (m_prev) 
+	if (m_startMountPoint->contents) 
 	{
 		if (m_type == BLOCK_TYPE_PARAMETER)
 		{
 
-			for (MountPoint* item : m_prev->m_paramPoints)
+			for (MountPoint* item : m_startMountPoint->contents->m_paramPoints)
 			{
 				if (item->contents == this)
 				{
@@ -54,13 +70,32 @@ void Block::SnapFrom()
 					break;
 				}
 			}
-			m_prev = nullptr;
+			m_startMountPoint->contents = nullptr;
 		}
 		else
 		{
-			m_prev->GetMountPoint()->contents = nullptr;
-			m_prev->SetNext(nullptr);
-			m_prev = nullptr;
+
+			if (m_startMountPoint->contents->IsConditionalBlock())
+			{
+				if (m_startMountPoint->contents->GetConditionalMountpoint()->contents == this) 
+				{
+					m_startMountPoint->contents->GetConditionalMountpoint()->contents = nullptr;
+					m_startMountPoint->contents->SetConditional(nullptr);
+					m_startMountPoint->contents = nullptr;
+				}
+				else 
+				{
+					m_startMountPoint->contents->GetMountPoint()->contents = nullptr;
+					m_startMountPoint->contents->SetNext(nullptr);
+					m_startMountPoint->contents = nullptr;
+				}
+			}
+			else 
+			{
+				m_startMountPoint->contents->GetMountPoint()->contents = nullptr;
+				m_startMountPoint->contents->SetNext(nullptr);
+				m_startMountPoint->contents = nullptr;
+			}
 		}
 	}
 }
@@ -87,24 +122,29 @@ void Block::AttachParameter(Block* block)
 
 void Block::SetNext(Block* next)
 {
-	m_next = next;
-	m_mountPoint.contents = next;
+	m_endMountPoint->contents = next;
 	Resize();
 }
 
 void Block::SetPrev(Block* prev)
 {
-	m_prev = prev;
+	m_startMountPoint->contents = prev;
+}
+
+void Block::SetConditional(Block* conditional)
+{
+	m_conditionalMountPoint->contents = conditional;
+	Resize();
 }
 
 Block* Block::GetNext()
 {
-	return m_next;
+	return m_endMountPoint->contents;
 }
 
 Block* Block::GetPrev()
 {
-	return m_prev;
+	return m_startMountPoint->contents;
 }
 
 
@@ -161,6 +201,11 @@ bool Block::IsEndBlock()
 	return m_endBlock;
 }
 
+bool Block::IsConditionalBlock()
+{
+	return m_conditionalBlock;
+}
+
 void Block::Delete()
 {
 	m_deleted = true;
@@ -176,21 +221,26 @@ bool Block::CheckMouseCollision()
 	Vector2D mousePos = InputManager::Instance()->GetMousePos();
 	mousePos = mousePos / m_transform.scale;
 
-	for (Hitbox2D hitbox : m_hitboxes)
+	for (Hitbox2D* hitbox : m_hitboxes)
 	{
-		if (hitbox.ContainsPoint(mousePos)) return true;
+		if (hitbox->ContainsPoint(mousePos)) return true;
 	}
 	return false;
 }
 
-std::vector<Hitbox2D>* Block::GetHitboxes()
+std::vector<Hitbox2D*> Block::GetHitboxes()
 {
-	return &m_hitboxes;
+	return m_hitboxes;
 }
 
 MountPoint* Block::GetMountPoint()
 {
-	return &m_mountPoint;
+	return m_endMountPoint;
+}
+
+MountPoint* Block::GetConditionalMountpoint()
+{
+	return m_conditionalMountPoint;
 }
 
 BLOCK_TYPE Block::GetType()
