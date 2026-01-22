@@ -1,10 +1,14 @@
 #include "CodeBlockScript.h"
 
-CodeBlockScript::CodeBlockScript(SDL_Renderer* renderer)
+CodeBlockScript::CodeBlockScript(SDL_Renderer* renderer, GameObject* controlledObject)
 {
 	m_renderer = renderer;
+	m_controlledObject = controlledObject;
 	m_background = new Texture2D(renderer);
 	m_background->LoadStoredTexture(ENGINE_BACKGROUND);
+
+	m_start = new CodeBlock(m_renderer, { {ENGINE_SCREEN_WIDTH / 2,ENGINE_SCREEN_HEIGHT / 2},{0,0},0 }, BLOCK_ID_START);
+	m_blocks.push_back(m_start);
 }
 
 CodeBlockScript::~CodeBlockScript()
@@ -29,6 +33,12 @@ void CodeBlockScript::SetName(std::string name)
 void CodeBlockScript::Update(float deltaTime, SDL_Event e)
 {
 	Vector2D zoomOffset = Vector2D(0, 0);
+
+	if (InputManager::Instance()->IsKeyPressed(SDLK_F5)) 
+	{
+		m_start->Run();
+		std::cout << "-----------------------\n";
+	}
 
 	if (InputManager::Instance()->GetMouseScroll() != 0) 
 	{
@@ -123,6 +133,21 @@ void CodeBlockScript::Render()
 	{
 		param->Render();
 	}
+}
+
+void CodeBlockScript::SelectBlock(Block* block)
+{
+	selectedBlock = block;
+}
+
+float CodeBlockScript::GetZoomValue()
+{
+	return zoom;
+}
+
+bool CodeBlockScript::IsBlockSelected()
+{
+	return selectedBlock != nullptr;
 }
 
 std::string CodeBlockScript::GetName()

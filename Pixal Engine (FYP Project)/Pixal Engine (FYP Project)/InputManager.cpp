@@ -39,8 +39,14 @@ int InputManager::GetMouseScroll()
 	return mouseScroll;
 }
 
+bool InputManager::IsKeyPressed(SDL_Keycode key)
+{
+	return keyboard[key];
+}
+
 void InputManager::Update(float deltaTime, SDL_Event e)
 {
+	// Update Mouse State //
 	prevMouseX = mouseX; prevMouseY = mouseY;
 	mouseScroll = 0;
 	SDL_GetMouseState(&mouseX, &mouseY);
@@ -89,6 +95,17 @@ void InputManager::Update(float deltaTime, SDL_Event e)
 		}
 
 	default:
+		break;
+	}
+
+	// Update Keyboard State //
+	switch (e.type)
+	{
+	case SDL_KEYDOWN:
+		keyboard[e.key.keysym.sym] = true;
+		break;
+	case SDL_KEYUP:
+		keyboard[e.key.keysym.sym] = false;
 		break;
 	}
 	

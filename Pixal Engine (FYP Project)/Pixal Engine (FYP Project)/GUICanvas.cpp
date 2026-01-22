@@ -47,6 +47,7 @@ void GUICanvas::Render()
 void GUICanvas::Update(float deltaTime, SDL_Event e)
 {
 	detectedInput = false;
+	Vector2D mousePos = InputManager::Instance()->GetMousePos();
 
 	if (m_visable)
 	{
@@ -56,47 +57,14 @@ void GUICanvas::Update(float deltaTime, SDL_Event e)
 		{
 			button->Update(deltaTime, e);
 
-			if (i == selectedButton) button->SetSelected(true);
+			if (((GameObject*)button)->GetHitboxes()[0].ContainsPoint(mousePos)) 
+			{
+				button->SetSelected(true);
+				detectedInput = true;
+			}
 			else button->SetSelected(false);
 
 			i++;
-		}
-
-		/*if (!disableInput)
-		{
-			PlayerInput playerInput = InputManager::Instance()->HandlePlayerInput(e);
-
-			switch (playerInput.inputState)
-			{
-			case INPUT_PRESSED:
-				switch (playerInput.input)
-				{
-				case CONTROLS_UP:
-					selectedButton--;
-					detectedInput = true;
-					break;
-				case CONTROLS_DOWN:
-					selectedButton++;
-					detectedInput = true;
-					break;
-				}
-
-				break;
-			}
-		}*/
-
-		// Ensures the button selection stays within the bounds of the array //
-		if (selectedButton >= (signed)m_buttons.size())
-		{
-			selectedButton = m_buttons.size() - 1;
-		}
-		else if (selectedButton < 0)
-		{
-			selectedButton = 0;
-		}
-		else if (detectedInput)
-		{
-			//AudioManager::Instance()->PlayAudio("Audio/Button_Select.wav");
 		}
 	}
 }

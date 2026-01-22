@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Vector2D.h"
 #include "SDL.h"
+#include <map>
 
 class InputManager
 {
@@ -20,6 +21,8 @@ private:
 
 	bool mouseLeftClick = false;
 	bool mouseRightClick = false;
+
+	std::map<int, bool> keyboard;
 	
 public:
 	static inline InputManager* Instance() {
@@ -37,6 +40,8 @@ public:
 	bool GetMouseLeftClicked();
 	bool GetMouseRightClicked();
 	int GetMouseScroll();
+
+	bool IsKeyPressed(SDL_Keycode key);
 
 	void Update(float deltaTime, SDL_Event e);
 };

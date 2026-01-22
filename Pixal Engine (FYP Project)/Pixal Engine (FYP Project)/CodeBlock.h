@@ -20,6 +20,7 @@ public:
 	void Update(float deltaTime, SDL_Event e) override;
 	void Render() override;
 	void Resize() override;
+	void Run() override;
 
 	void CreateBlockOfSize(Vector2D size) override;
 	void CreateTail();

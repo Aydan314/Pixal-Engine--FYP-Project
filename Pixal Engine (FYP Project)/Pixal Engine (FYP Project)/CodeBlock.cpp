@@ -3,6 +3,7 @@
 CodeBlock::CodeBlock(SDL_Renderer* renderer, Transform transform, BLOCK_ID ID) : Block(renderer, transform, ID)
 {
 	m_type = BLOCK_TYPE_BLOCK;
+	m_ID = ID;
 	m_renderer = renderer;
 	m_transform = transform;
 
@@ -27,7 +28,7 @@ void CodeBlock::Init(BLOCK_ID ID)
 		m_colour = COLOUR_GREEN;
 
 		m_parameters = 1;
-		m_textArea = Vector2D(8, CODE_BLOCK_HEIGHT);
+		m_textArea = Vector2D(6, CODE_BLOCK_HEIGHT);
 		break;
 
 	case BLOCK_ID_IF:
@@ -163,6 +164,22 @@ void CodeBlock::Resize()
 		CreateTail();
 	}
 	else if (m_startMountPoint->contents != nullptr) m_startMountPoint->contents->Resize();
+}
+
+void CodeBlock::Run()
+{
+	switch (m_ID) 
+	{
+	case BLOCK_ID_SET_POSITION:
+		std::cout << "ghjifhgirh\n";
+		break;
+
+	default:
+		std::cout << m_name << "\n";
+		break;
+	}
+	
+	if (GetNext()) GetNext()->Run();
 }
 
 void CodeBlock::CreateBlockOfSize(Vector2D size)

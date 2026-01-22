@@ -28,6 +28,7 @@ protected:
 	SDL_Renderer* m_renderer = nullptr;
 	bool m_deleted = false;
 	BLOCK_TYPE m_type = BLOCK_TYPE_NONE;
+	BLOCK_ID m_ID = BLOCK_ID_CUSTOM;
 	std::vector<MountPoint*> m_paramPoints;
 
 	SDL_Color m_colour = COLOUR_BLUE;
@@ -53,6 +54,7 @@ public:
 	virtual void Update(float deltaTime, SDL_Event e);
 	virtual void CreateBlockOfSize(Vector2D size);
 	virtual void Resize();
+	virtual void Run();
 
 	virtual void SnapTo(Block* other);
 	virtual void SnapFrom();
@@ -62,6 +64,7 @@ public:
 	MountPoint* GetConditionalMountpoint();
 
 	BLOCK_TYPE GetType();
+	BLOCK_ID GetID();
 	void SetNext(Block* next);
 	void SetPrev(Block* prev);
 	void SetConditional(Block* conditional);

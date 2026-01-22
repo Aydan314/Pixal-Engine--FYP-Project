@@ -25,38 +25,73 @@ AudioManager* audioManager = nullptr;
 GameSceneManager* sceneManager = nullptr;
 
 CodeBlockScript* mainScript = nullptr;
-CodeBlockScript* currentScript = nullptr;
+CodeBlockScript* emptyScript = nullptr;
+std::vector<CodeBlockScript*> scripts;
+int selectedScript = 0;
+GUIText* scriptText = nullptr;
 GUICanvas* EngineGUI = nullptr;
+GUICanvas* BlockSelectGUI = nullptr;
+
+std::vector<CodeBlock*> BlockDrawer;
 
 Uint32 g_old_time;
 float deltaTime;
 
-void Render()
-{
-	SDL_SetRenderDrawColor(engine_renderer, 0, 0, 0, 255);
-	SDL_RenderClear(engine_renderer);
-
-	SDL_SetRenderDrawColor(game_renderer, 0, 0, 100, 255);
-	SDL_RenderClear(game_renderer);
-
-	SDL_SetRenderDrawColor(engine_renderer, 0, 100, 0, 255);
-
-	currentScript->Render();
-	EngineGUI->Render();
-
-	SDL_RenderPresent(engine_renderer);
-	SDL_RenderPresent(game_renderer);
-}
-
 void InitGUI() 
 {
-	EngineGUI = new GUICanvas(engine_renderer, Vector2D(ENGINE_SCREEN_WIDTH, ENGINE_SCREEN_HEIGHT / 8), { 50,50,50,255 }, { {Vector2D(0,0),Vector2D(1,1),0},COLLISION_NONE });
+	// Create GUI at top of screen //
+	EngineGUI = new GUICanvas(engine_renderer, Vector2D(ENGINE_SCREEN_WIDTH, ENGINE_SCREEN_HEIGHT / 8), ENGINE_BACKGROUND_COLOUR, { {Vector2D(0,0),Vector2D(1,1),0},COLLISION_NONE });
 	
-	GUIText* text = new GUIText(engine_renderer, { {Vector2D(0,0),Vector2D(1,1),0},COLLISION_NONE }, { "Pixal Engine",ENGINE_FONT_PATH,15,{255,255,255,255} });
+	GUIText* text = new GUIText(engine_renderer, { {Vector2D(0,0),Vector2D(1,1),0},COLLISION_NONE }, { "Pixal Engine",ENGINE_FONT_PATH,15,ENGINE_TEXT_COLOUR });
 	EngineGUI->AddText((GameObject*)text);
 
-	GUIText* scriptText = new GUIText(engine_renderer, { {Vector2D(0,35),Vector2D(1,1),0},COLLISION_NONE }, { currentScript->GetName(),ENGINE_FONT_PATH,30,{255,255,255,255}});
+	scriptText = new GUIText(engine_renderer, { {Vector2D(0,10),Vector2D(1,1),0},COLLISION_NONE }, { scripts[selectedScript]->GetName(),ENGINE_FONT_PATH,40,ENGINE_TEXT_COLOUR });
 	EngineGUI->AddText((GameObject*)scriptText);
+
+	// Create tabs for all available scripts //
+	int i = 0;
+	Vector2D ButtonSize = { 100,30 };
+	for (CodeBlockScript* script : scripts) 
+	{
+		Vector2D ButtonPos = Vector2D(i * ButtonSize.x, ENGINE_SCREEN_HEIGHT / 8 - ButtonSize.y);
+
+		GUIText* tabText = new GUIText(engine_renderer, { {Vector2D(0,35),Vector2D(1,1),0},COLLISION_NONE }, { script->GetName(),ENGINE_FONT_PATH,20,ENGINE_TEXT_COLOUR });
+		GUIButton* scriptButton = new GUIButton(engine_renderer, ButtonSize, ENGINE_BUTTON_COLOURS, { {ButtonPos,ButtonSize,0},COLLISION_NONE });
+		
+		scriptButton->SetText(tabText);
+
+		EngineGUI->AddButton(scriptButton);
+		i++;
+	}
+	
+	// Create Block Drawer GUI //
+	BlockSelectGUI = new GUICanvas(engine_renderer, Vector2D(ENGINE_SCREEN_WIDTH, ENGINE_SCREEN_HEIGHT / 8.f), ENGINE_BUTTON_COLOURS.defaultColour, { {Vector2D(0,ENGINE_SCREEN_HEIGHT - (ENGINE_SCREEN_HEIGHT / 8)),Vector2D(1,1),0},COLLISION_NONE });
+	int blockButtonWidth = 30;
+
+	GUIText* left = new GUIText(engine_renderer, { {Vector2D(0,10),Vector2D(1,1),0},COLLISION_NONE }, { "<",ENGINE_FONT_PATH,40,ENGINE_TEXT_COLOUR });
+	GUIButton* blockLeft = new GUIButton(engine_renderer, Vector2D(blockButtonWidth, ENGINE_SCREEN_HEIGHT / 8.f), ENGINE_BUTTON_COLOURS, { {Vector2D(0,ENGINE_SCREEN_HEIGHT - (ENGINE_SCREEN_HEIGHT / 8)),Vector2D(1,1),0},COLLISION_NONE });
+	blockLeft->SetText(left);
+	BlockSelectGUI->AddButton(blockLeft);
+
+	GUIText* right = new GUIText(engine_renderer, { {Vector2D(0,10),Vector2D(1,1),0},COLLISION_NONE }, { ">",ENGINE_FONT_PATH,40,ENGINE_TEXT_COLOUR });
+	GUIButton* blockRight = new GUIButton(engine_renderer, Vector2D(blockButtonWidth, ENGINE_SCREEN_HEIGHT / 8.f), ENGINE_BUTTON_COLOURS, { {Vector2D(ENGINE_SCREEN_WIDTH - blockButtonWidth,ENGINE_SCREEN_HEIGHT - (ENGINE_SCREEN_HEIGHT / 8)),Vector2D(1,1),0},COLLISION_NONE });
+	blockRight->SetText(right);
+	BlockSelectGUI->AddButton(blockRight);
+
+	// Populate Block Drawer with Codeblocks //
+	float shrinkFactor = 2;
+	float x = blockButtonWidth;
+	int blockDrawerSpacing = 128;
+
+	for (int ID = 0; ID < BLOCK_ID_END_ID; ID++) 
+	{
+		CodeBlock* block = new CodeBlock(engine_renderer, { Vector2D(0, 0) ,Vector2D(1,1),0 }, (BLOCK_ID)ID);
+		block->SetPosition(Vector2D(x, ENGINE_SCREEN_HEIGHT - ((ENGINE_SCREEN_HEIGHT / 8.f) - 20)) * shrinkFactor);
+		x += (block->GetHitboxes()[0]->size.x) / shrinkFactor;
+
+		block->SetScale(Vector2D(1 / shrinkFactor, 1 / shrinkFactor));
+		BlockDrawer.push_back(block);
+	}
 }
 
 bool InitEditorWindow()
@@ -181,7 +216,6 @@ bool InitAll()
 
 	CodeBlock* codeBlock = new CodeBlock(engine_renderer, Transform{ {100,100},{1,1},0 },BLOCK_ID_SET_POSITION);
 	CodeBlock* codeBlock1 = new CodeBlock(engine_renderer, Transform{ {400,400},{1,1},0 }, BLOCK_ID_STOP);
-	CodeBlock* codeBlock2 = new CodeBlock(engine_renderer, Transform{ {400,800},{1,1},0 }, BLOCK_ID_START);
 	CodeBlock* codeBlock3 = new CodeBlock(engine_renderer, Transform{ {300,-100},{1,1},0 }, BLOCK_ID_IF);
 	CodeBlock* codeBlock4 = new CodeBlock(engine_renderer, Transform{ {30,-50},{1,1},0 }, BLOCK_ID_CUSTOM);
 	CodeBlock* codeBlock5 = new CodeBlock(engine_renderer, Transform{ {30,-60},{1,1},0 }, BLOCK_ID_CUSTOM);
@@ -192,7 +226,6 @@ bool InitAll()
 
 	mainScript->Add(codeBlock);
 	mainScript->Add(codeBlock1);
-	mainScript->Add(codeBlock2);
 	mainScript->Add(codeBlock3);
 	mainScript->Add(codeBlock4);
 	mainScript->Add(codeBlock5);
@@ -201,7 +234,15 @@ bool InitAll()
 	mainScript->Add(param);
 	mainScript->Add(param1);
 
-	currentScript = mainScript;
+	scripts.push_back(mainScript);
+
+	emptyScript = new CodeBlockScript(engine_renderer);
+	emptyScript->SetName("Other Script");
+
+	CodeBlock* codeBlockE = new CodeBlock(engine_renderer, Transform{ {30,80},{1,1},0 }, BLOCK_ID_CUSTOM);
+	emptyScript->Add(codeBlockE);
+
+	scripts.push_back(emptyScript);
 
 	InitGUI();
 
@@ -226,6 +267,30 @@ void CloseSDL()
 	// quit SDL subsystems //
 	SDL_Quit();
 }
+
+void Render()
+{
+	SDL_SetRenderDrawColor(engine_renderer, 0, 0, 0, 255);
+	SDL_RenderClear(engine_renderer);
+
+	SDL_SetRenderDrawColor(game_renderer, 0, 0, 100, 255);
+	SDL_RenderClear(game_renderer);
+
+	SDL_SetRenderDrawColor(engine_renderer, 0, 100, 0, 255);
+
+	scripts[selectedScript]->Render();
+	EngineGUI->Render();
+
+	BlockSelectGUI->Render();
+	for (Block* block : BlockDrawer) 
+	{
+		block->Render();
+	}
+
+	SDL_RenderPresent(engine_renderer);
+	SDL_RenderPresent(game_renderer);
+}
+
 
 bool Update()
 {
@@ -255,13 +320,49 @@ bool Update()
 
 	deltaTime = new_time - g_old_time;
 
-	currentScript->Update(deltaTime, e);
+	scripts[selectedScript]->Update(deltaTime, e);
 
 	InputManager::Instance()->Update(deltaTime, e);
-
+	
 	EngineGUI->Update(deltaTime, e);
 
+	BlockSelectGUI->Update(deltaTime, e);
+
+	Vector2D mousePos = InputManager::Instance()->GetMousePos();
+
+	for (CodeBlock* block : BlockDrawer) 
+	{
+		block->Update(deltaTime, e);
+		if (block->GetHitboxes()[0]->ContainsPoint(mousePos * 2)) 
+		{
+			if (InputManager::Instance()->GetMouseLeftClicked() && !scripts[selectedScript]->IsBlockSelected())
+			{
+				CodeBlock* newBlock = new CodeBlock(engine_renderer, { mousePos / scripts[selectedScript]->GetZoomValue(),{1,1},0}, block->GetID());
+
+				scripts[selectedScript]->Add(newBlock);
+				scripts[selectedScript]->SelectBlock((Block*)newBlock);
+			}
+		}
+	}
+
 	g_old_time = new_time;
+
+	// Handle GUI Inputs //
+	int index = 0;
+	for (GUIButton* button : EngineGUI->GetAttachedButtons()) 
+	{
+		if (button->GetClicked() && !InputManager::Instance()->GetMouseLeftClicked()) 
+		{
+			// Switch Scripts //
+			
+			selectedScript = index;
+			scriptText->SetText(scripts[selectedScript]->GetName());
+			scriptText->ReformatText();
+				
+			button->ResetClicked();
+		}
+		index++;
+	}
 
 	return false;
 }

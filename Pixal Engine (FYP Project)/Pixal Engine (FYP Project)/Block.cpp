@@ -248,6 +248,11 @@ BLOCK_TYPE Block::GetType()
 	return m_type;
 }
 
+BLOCK_ID Block::GetID()
+{
+	return m_ID;
+}
+
 void Block::CreateBlockOfSize(Vector2D size)
 {
 
@@ -255,6 +260,12 @@ void Block::CreateBlockOfSize(Vector2D size)
 
 void Block::Resize()
 {
+}
+
+void Block::Run()
+{
+	std::cout << m_name << "\n";
+	if (GetNext()) GetNext()->Run();
 }
 
 void Block::Update(float deltaTime, SDL_Event e)

@@ -6,6 +6,9 @@ GUIButton::GUIButton(SDL_Renderer* renderer, Vector2D size, ButtonColours colour
 	m_colours = colours;
 	m_size = size;
 
+	Hitbox2D hitbox = Hitbox2D(&m_transform, size, { 0,0 }, m_renderer);
+	m_hitboxes.push_back(hitbox);
+
 	m_clicked = false;
 }
 
@@ -39,25 +42,11 @@ void GUIButton::Update(float deltaTime, SDL_Event e)
 	// Handles the various button states //
 	if (m_selected)
 	{
+		// Detects interaction with the button //
 		if (!m_clicked)
 		{
 			m_bgColour = m_colours.selectedColour;
-
-			//// Detects interaction with the button //
-			//PlayerInput playerInput = InputManager::Instance()->HandlePlayerInput(e);
-
-			//switch (playerInput.inputState)
-			//{
-			//case INPUT_PRESSED:
-			//	switch (playerInput.input)
-			//	{
-			//	case CONTROLS_INTERACT:
-			//		m_clicked = true;
-			//		AudioManager::Instance()->PlayAudio("Audio/Button_Click.wav", 16);
-			//		break;
-			//	}
-			//	break;
-			//}
+			m_clicked = InputManager::Instance()->GetMouseLeftClicked();
 		}
 		else
 		{

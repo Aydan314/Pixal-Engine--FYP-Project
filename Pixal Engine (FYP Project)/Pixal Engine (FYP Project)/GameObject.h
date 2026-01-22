@@ -4,6 +4,7 @@
 #include "Commons.h"
 #include "Texture2D.h"
 #include "Hitbox2D.h"
+#include "InputManager.h"
 #include <iostream>
 
 class GameObject

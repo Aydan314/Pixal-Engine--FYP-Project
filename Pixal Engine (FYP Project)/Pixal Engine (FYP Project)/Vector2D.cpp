@@ -35,7 +35,17 @@ Vector2D Vector2D::operator*(const Vector2D& Other)
 	return Vector2D(x * Other.x, y * Other.y);
 }
 
+Vector2D Vector2D::operator*(const float& Other)
+{
+	return Vector2D(x * Other, y * Other);
+}
+
 Vector2D Vector2D::operator/(const Vector2D& Other)
 {
 	return Vector2D(x / Other.x, y / Other.y);
+}
+
+Vector2D Vector2D::operator/(const float& Other)
+{
+	return Vector2D(x / Other, y / Other);
 }
