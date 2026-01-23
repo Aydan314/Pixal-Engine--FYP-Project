@@ -31,6 +31,7 @@ int selectedScript = 0;
 GUIText* scriptText = nullptr;
 GUICanvas* EngineGUI = nullptr;
 GUICanvas* BlockSelectGUI = nullptr;
+GameScene* gameScene = nullptr;
 
 std::vector<CodeBlock*> BlockDrawer;
 
@@ -85,7 +86,7 @@ void InitGUI()
 
 	for (int ID = 0; ID < BLOCK_ID_END_ID; ID++) 
 	{
-		CodeBlock* block = new CodeBlock(engine_renderer, { Vector2D(0, 0) ,Vector2D(1,1),0 }, (BLOCK_ID)ID);
+		CodeBlock* block = new CodeBlock(engine_renderer, { Vector2D(0, 0) ,Vector2D(1,1),0 }, nullptr, (BLOCK_ID)ID);
 		block->SetPosition(Vector2D(x, ENGINE_SCREEN_HEIGHT - ((ENGINE_SCREEN_HEIGHT / 8.f) - 20)) * shrinkFactor);
 		x += (block->GetHitboxes()[0]->size.x) / shrinkFactor;
 
@@ -209,20 +210,24 @@ bool InitAll()
 
 	audioManager = AudioManager::Instance();
 	textureLoader = TextureLoader::Instance(engine_renderer);
+	textureLoader->SetGameRenderer(game_renderer);
 	sceneManager = GameSceneManager::Instance(engine_renderer);
-	mainScript = new CodeBlockScript(engine_renderer);
+	gameScene = new GameScene(game_renderer);
+
+	mainScript = new CodeBlockScript(engine_renderer,gameScene);
 	mainScript->SetName("Main");
 
 
-	CodeBlock* codeBlock = new CodeBlock(engine_renderer, Transform{ {100,100},{1,1},0 },BLOCK_ID_SET_POSITION);
-	CodeBlock* codeBlock1 = new CodeBlock(engine_renderer, Transform{ {400,400},{1,1},0 }, BLOCK_ID_STOP);
-	CodeBlock* codeBlock3 = new CodeBlock(engine_renderer, Transform{ {300,-100},{1,1},0 }, BLOCK_ID_IF);
-	CodeBlock* codeBlock4 = new CodeBlock(engine_renderer, Transform{ {30,-50},{1,1},0 }, BLOCK_ID_CUSTOM);
-	CodeBlock* codeBlock5 = new CodeBlock(engine_renderer, Transform{ {30,-60},{1,1},0 }, BLOCK_ID_CUSTOM);
-	CodeBlock* codeBlock6 = new CodeBlock(engine_renderer, Transform{ {30,-70},{1,1},0 }, BLOCK_ID_CUSTOM);
-	CodeBlock* codeBlock7 = new CodeBlock(engine_renderer, Transform{ {30,-80},{1,1},0 }, BLOCK_ID_CUSTOM);
-	CodeBlockParameter* param = new CodeBlockParameter(engine_renderer, Transform{ {100,400},{1,1},0 });
-	CodeBlockParameter* param1 = new CodeBlockParameter(engine_renderer, Transform{ {100,600},{1,1},0 });
+	CodeBlock* codeBlock = new CodeBlock(engine_renderer, Transform{ {100,100},{1,1},0 }, gameScene,BLOCK_ID_SET_POSITION);
+	CodeBlock* codeBlock1 = new CodeBlock(engine_renderer, Transform{ {400,400},{1,1},0 }, gameScene,BLOCK_ID_STOP);
+	CodeBlock* codeBlock3 = new CodeBlock(engine_renderer, Transform{ {300,-100},{1,1},0 }, gameScene,BLOCK_ID_IF);
+	CodeBlock* codeBlock4 = new CodeBlock(engine_renderer, Transform{ {30,-50},{1,1},0 }, gameScene,BLOCK_ID_CUSTOM);
+	CodeBlock* codeBlock5 = new CodeBlock(engine_renderer, Transform{ {30,-60},{1,1},0 }, gameScene,BLOCK_ID_CUSTOM);
+	CodeBlock* codeBlock6 = new CodeBlock(engine_renderer, Transform{ {30,-70},{1,1},0 }, gameScene,BLOCK_ID_CUSTOM);
+	CodeBlock* codeBlock7 = new CodeBlock(engine_renderer, Transform{ {30,-80},{1,1},0 }, gameScene,BLOCK_ID_CUSTOM);
+	CodeBlockParameter* param = new CodeBlockParameter(engine_renderer, Transform{ {100,400},{1,1},0 }, gameScene,DATA_TYPE_NUMBER);
+	CodeBlockParameter* param1 = new CodeBlockParameter(engine_renderer, Transform{ {100,600},{1,1},0 }, gameScene,DATA_TYPE_STRING);
+	CodeBlockParameter* param2 = new CodeBlockParameter(engine_renderer, Transform{ {100,800},{1,1},0 }, gameScene, DATA_TYPE_GAMEOBJECT);
 
 	mainScript->Add(codeBlock);
 	mainScript->Add(codeBlock1);
@@ -233,13 +238,14 @@ bool InitAll()
 	mainScript->Add(codeBlock7);
 	mainScript->Add(param);
 	mainScript->Add(param1);
+	mainScript->Add(param2);
 
 	scripts.push_back(mainScript);
 
-	emptyScript = new CodeBlockScript(engine_renderer);
+	emptyScript = new CodeBlockScript(engine_renderer, gameScene);
 	emptyScript->SetName("Other Script");
 
-	CodeBlock* codeBlockE = new CodeBlock(engine_renderer, Transform{ {30,80},{1,1},0 }, BLOCK_ID_CUSTOM);
+	CodeBlock* codeBlockE = new CodeBlock(engine_renderer, Transform{ {30,80},{1,1},0 }, gameScene, BLOCK_ID_CUSTOM);
 	emptyScript->Add(codeBlockE);
 
 	scripts.push_back(emptyScript);
@@ -273,9 +279,6 @@ void Render()
 	SDL_SetRenderDrawColor(engine_renderer, 0, 0, 0, 255);
 	SDL_RenderClear(engine_renderer);
 
-	SDL_SetRenderDrawColor(game_renderer, 0, 0, 100, 255);
-	SDL_RenderClear(game_renderer);
-
 	SDL_SetRenderDrawColor(engine_renderer, 0, 100, 0, 255);
 
 	scripts[selectedScript]->Render();
@@ -288,6 +291,12 @@ void Render()
 	}
 
 	SDL_RenderPresent(engine_renderer);
+
+	SDL_SetRenderDrawColor(game_renderer, 0, 0, 100, 255);
+	SDL_RenderClear(game_renderer);
+
+	gameScene->Render();
+
 	SDL_RenderPresent(game_renderer);
 }
 
@@ -295,8 +304,6 @@ void Render()
 bool Update()
 {
 	Uint32 new_time = SDL_GetTicks();
-
-	
 
 	// Event handler //
 	SDL_Event e;
@@ -337,13 +344,15 @@ bool Update()
 		{
 			if (InputManager::Instance()->GetMouseLeftClicked() && !scripts[selectedScript]->IsBlockSelected())
 			{
-				CodeBlock* newBlock = new CodeBlock(engine_renderer, { mousePos / scripts[selectedScript]->GetZoomValue(),{1,1},0}, block->GetID());
+				CodeBlock* newBlock = new CodeBlock(engine_renderer, { mousePos / scripts[selectedScript]->GetZoomValue(),{1,1},0}, gameScene, block->GetID());
 
 				scripts[selectedScript]->Add(newBlock);
 				scripts[selectedScript]->SelectBlock((Block*)newBlock);
 			}
 		}
 	}
+
+	gameScene->Update(deltaTime, e);
 
 	g_old_time = new_time;
 

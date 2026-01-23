@@ -8,6 +8,7 @@
 #include "Hitbox2D.h"
 #include "GUIText.h"
 #include <iostream>
+#include "GameScene.h"
 
 class Block;
 
@@ -27,6 +28,7 @@ protected:
 	bool m_hasFocus = false;
 
 	SDL_Renderer* m_renderer = nullptr;
+	GameScene* m_gameScene = nullptr;
 	bool m_deleted = false;
 	BLOCK_TYPE m_type = BLOCK_TYPE_NONE;
 	BLOCK_ID m_ID = BLOCK_ID_CUSTOM;
@@ -48,7 +50,7 @@ protected:
 	Texture2D* m_texture;
 
 public:
-	Block(SDL_Renderer* renderer, Transform transform, BLOCK_ID ID = BLOCK_ID_CUSTOM);
+	Block(SDL_Renderer* renderer, Transform transform, GameScene* gameScene);
 	~Block();
 
 	virtual void Render();

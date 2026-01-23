@@ -1,13 +1,13 @@
 #include "CodeBlockScript.h"
 
-CodeBlockScript::CodeBlockScript(SDL_Renderer* renderer, GameObject* controlledObject)
+CodeBlockScript::CodeBlockScript(SDL_Renderer* renderer, GameScene* controlledScene)
 {
+	m_controlledScene = controlledScene;
 	m_renderer = renderer;
-	m_controlledObject = controlledObject;
 	m_background = new Texture2D(renderer);
 	m_background->LoadStoredTexture(ENGINE_BACKGROUND);
 
-	m_start = new CodeBlock(m_renderer, { {ENGINE_SCREEN_WIDTH / 2,ENGINE_SCREEN_HEIGHT / 2},{0,0},0 }, BLOCK_ID_START);
+	m_start = new CodeBlock(m_renderer, { {ENGINE_SCREEN_WIDTH / 2,ENGINE_SCREEN_HEIGHT / 2},{0,0},0 }, controlledScene, BLOCK_ID_START);
 	m_blocks.push_back(m_start);
 }
 
@@ -34,7 +34,7 @@ void CodeBlockScript::Update(float deltaTime, SDL_Event e)
 {
 	Vector2D zoomOffset = Vector2D(0, 0);
 
-	if (InputManager::Instance()->IsKeyPressed(SDLK_F5)) 
+	if (InputManager::Instance()->IsKeyPressed(SDLK_F5) && InputManager::Instance()->Keystroke()) 
 	{
 		m_start->Run();
 		std::cout << "-----------------------\n";
@@ -59,7 +59,7 @@ void CodeBlockScript::Update(float deltaTime, SDL_Event e)
 	{
 		if (block->CheckMouseCollision() && InputManager::Instance()->GetMouseLeftClicked())
 		{
-			if (!selectedBlock || block->GetType() == BLOCK_TYPE_PARAMETER)
+			if (!selectedBlock || (block->GetType() == BLOCK_TYPE_PARAMETER && selectedBlock->GetType() != BLOCK_TYPE_PARAMETER))
 			{
 				selectedBlock = block;
 				block->SetFocus(true);

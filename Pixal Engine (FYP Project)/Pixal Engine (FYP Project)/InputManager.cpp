@@ -60,6 +60,11 @@ bool InputManager::IsKeyPressed(SDL_Keycode key)
 	return keyboard[key];
 }
 
+bool InputManager::Keystroke()
+{
+	return keyStroke;
+}
+
 void InputManager::Update(float deltaTime, SDL_Event e)
 {
 	// Update Mouse State //
@@ -114,13 +119,15 @@ void InputManager::Update(float deltaTime, SDL_Event e)
 		break;
 	}
 
-	// Update Keyboard State //
+	if (keyStroke) keyStroke = false;
 
+	// Update Keyboard State //
 	switch (e.type)
 	{
 	case SDL_KEYDOWN:
 		keyboard[e.key.keysym.sym] = true;
-
+		if (!keyDown) keyStroke = true;
+		keyDown = true;
 		switch (e.key.keysym.sym)
 		{
 		case SDLK_LSHIFT:
@@ -130,6 +137,7 @@ void InputManager::Update(float deltaTime, SDL_Event e)
 
 		break;
 	case SDL_KEYUP:
+		keyDown = false;
 		if (keyboard[e.key.keysym.sym] == true) 
 		{
 			SDL_Keycode keystroke = e.key.keysym.sym;

@@ -1,6 +1,6 @@
 #include "CodeBlockParameter.h"
 
-CodeBlockParameter::CodeBlockParameter(SDL_Renderer* renderer, Transform transform, BLOCK_ID ID) : Block(renderer,transform)
+CodeBlockParameter::CodeBlockParameter(SDL_Renderer* renderer, Transform transform, GameScene* gameScene, DATA_TYPE dataType) : Block(renderer,transform,gameScene)
 {
 	m_type = BLOCK_TYPE_PARAMETER;
 	m_renderer = renderer;
@@ -9,13 +9,20 @@ CodeBlockParameter::CodeBlockParameter(SDL_Renderer* renderer, Transform transfo
 
 	m_size = Vector2D(3,1);
 
-	m_text = new GUITextBox(m_renderer, Vector2D(m_size.x * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE), GameObjectData{ m_transform,COLLISION_NONE }, TextData{ "",ENGINE_FONT_PATH,15,{255,255,255,255} });
+	m_dataType = dataType;
+	Init(m_dataType);
+
+	m_text = new GUITextBox(m_renderer, Vector2D(m_size.x * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE), GameObjectData{ m_transform,COLLISION_NONE }, TextData{ m_defaultText,ENGINE_FONT_PATH,15,{255,255,255,255} });
 
 	m_hitboxes.push_back(new Hitbox2D(&m_transform, Vector2D(m_size.x * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE), Vector2D(0,0), m_renderer));
 
 	m_startMountPoint = new MountPoint();
 	m_endMountPoint = new MountPoint();
 	m_conditionalMountPoint = nullptr;
+
+	m_dataContent.gameObject = nullptr;
+	m_dataContent.string = "";
+	m_dataContent.number = 0;
 
 	CreateBlockOfSize(m_size);
 }
@@ -51,6 +58,9 @@ void CodeBlockParameter::Update(float deltaTime, SDL_Event e)
 	m_text->SetFocus(m_hasFocus);
 	m_text->Update(deltaTime, e);
 	m_text->ReformatText();
+
+	if (!m_hasFocus && m_lastFocus) UpdateData();
+	m_lastFocus = m_hasFocus;
 }
 
 void CodeBlockParameter::CreateBlockOfSize(Vector2D size)
@@ -75,4 +85,60 @@ void CodeBlockParameter::CreateBlockOfSize(Vector2D size)
 		
 		m_textureTiles.push_back(tile);
 	}
+}
+
+void CodeBlockParameter::Init(DATA_TYPE type)
+{
+	switch (type) 
+	{
+	case DATA_TYPE_NUMBER:
+		m_colour = SDL_Color{ 50,50,225,255 };
+		m_defaultText = "0";
+		break;
+	case DATA_TYPE_GAMEOBJECT:
+		m_colour = SDL_Color{ 50,225,50,255 };
+		m_defaultText = "GAMEOBJECT";
+		break;
+	case DATA_TYPE_STRING:
+		m_colour = SDL_Color{ 235,180,50,255 };
+		m_defaultText = "Hello";
+		break;
+	}
+}
+
+void CodeBlockParameter::UpdateData()
+{
+	switch (m_dataType)
+	{
+	case DATA_TYPE_NUMBER:
+		m_dataContent.number = std::stof(m_text->GetText());
+		break;
+	case DATA_TYPE_GAMEOBJECT:
+		
+		break;
+	case DATA_TYPE_STRING:
+		
+		m_dataContent.string = m_text->GetText();
+		break;
+	}
+}
+
+DATA_TYPE CodeBlockParameter::GetDataType()
+{
+	return m_dataType;
+}
+
+float CodeBlockParameter::GetNumberData()
+{
+	return m_dataContent.number;
+}
+
+std::string CodeBlockParameter::GetStringData()
+{
+	return m_dataContent.string;
+}
+
+GameObject* CodeBlockParameter::GetGameObjectData()
+{
+	return m_dataContent.gameObject;
 }

@@ -2,6 +2,7 @@
 #include "CodeBlock.h"
 #include "CodeBlockParameter.h"
 #include "Block.h"
+#include "GameScene.h"
 
 class CodeBlockScript
 {
@@ -9,8 +10,8 @@ private:
 	std::vector<Block*> m_blocks;
 	std::vector<CodeBlockParameter*> m_params;
 	std::string m_name = "Script";
-	GameObject* m_controlledObject = nullptr;
 	CodeBlock* m_start = nullptr;
+	GameScene* m_controlledScene = nullptr;
 
 	SDL_Renderer* m_renderer;
 	Texture2D* m_background;
@@ -21,7 +22,7 @@ private:
 	float zoom = 1.f;
 
 public:
-	CodeBlockScript(SDL_Renderer* renderer, GameObject* controlledObject = nullptr);
+	CodeBlockScript(SDL_Renderer* renderer, GameScene* controlledScene);
 	~CodeBlockScript();
 
 	void Add(CodeBlock* block);

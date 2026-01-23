@@ -1,7 +1,8 @@
 #include "Block.h"
 
-Block::Block(SDL_Renderer* renderer, Transform transform, BLOCK_ID ID)
+Block::Block(SDL_Renderer* renderer, Transform transform, GameScene* gameScene)
 {
+	m_gameScene = gameScene;
 	m_renderer = renderer;
 	m_transform = transform;
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Block.h"
+#include "CodeBlockParameter.h"
 
 class CodeBlock : public Block
 {
@@ -14,7 +15,7 @@ protected:
 	
 
 public:
-	CodeBlock(SDL_Renderer* renderer, Transform transform, BLOCK_ID ID = BLOCK_ID_CUSTOM);
+	CodeBlock(SDL_Renderer* renderer, Transform transform, GameScene* gameScene, BLOCK_ID ID = BLOCK_ID_CUSTOM);
 	~CodeBlock();
 
 	void Update(float deltaTime, SDL_Event e) override;

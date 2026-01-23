@@ -28,6 +28,9 @@ private:
 	std::string typedInput;
 	bool upperCase = false;
 	bool shift = false;
+
+	bool keyDown = false;
+	bool keyStroke = false;
 	
 public:
 	static inline InputManager* Instance() {
@@ -51,6 +54,7 @@ public:
 
 
 	bool IsKeyPressed(SDL_Keycode key);
+	bool Keystroke();
 
 	void Update(float deltaTime, SDL_Event e);
 };

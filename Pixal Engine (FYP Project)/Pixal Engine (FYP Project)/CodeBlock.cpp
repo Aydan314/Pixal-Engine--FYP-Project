@@ -1,6 +1,6 @@
 #include "CodeBlock.h"
 
-CodeBlock::CodeBlock(SDL_Renderer* renderer, Transform transform, BLOCK_ID ID) : Block(renderer, transform, ID)
+CodeBlock::CodeBlock(SDL_Renderer* renderer, Transform transform, GameScene* gameScene, BLOCK_ID ID) : Block(renderer, transform, gameScene)
 {
 	m_type = BLOCK_TYPE_BLOCK;
 	m_ID = ID;
@@ -56,6 +56,14 @@ void CodeBlock::Init(BLOCK_ID ID)
 		m_parameters = 0;
 		m_textArea = Vector2D(6, CODE_BLOCK_HEIGHT);
 		m_startBlock = true;
+		break;
+
+	case BLOCK_ID_CREATE_GAMEOBJECT:
+		m_name = "Create GameObject";
+		m_colour = COLOUR_GREEN;
+
+		m_parameters = 1;
+		m_textArea = Vector2D(7, CODE_BLOCK_HEIGHT);
 		break;
 	}
 
@@ -171,7 +179,19 @@ void CodeBlock::Run()
 	switch (m_ID) 
 	{
 	case BLOCK_ID_SET_POSITION:
-		std::cout << "ghjifhgirh\n";
+		std::cout << "Set Position to: ";
+		if (m_paramPoints[0]->contents) std::cout << ((CodeBlockParameter*)m_paramPoints[0]->contents)->GetNumberData();
+		std::cout << "\n";
+		break;
+	case BLOCK_ID_CREATE_GAMEOBJECT:
+		
+		m_gameScene->Add(new GameObject
+			(
+			m_gameScene->GetRenderer(),
+			SpriteSheetTexture{ "Engine Images/Sprites.png", {2,2},{0,0} },
+			GameObjectData{ Transform{ {0,0},{1,1},0 },COLLISION_SINGLE }
+			)
+		);
 		break;
 
 	default:

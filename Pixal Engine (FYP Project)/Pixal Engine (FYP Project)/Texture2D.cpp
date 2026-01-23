@@ -25,7 +25,8 @@ bool Texture2D::LoadStoredTexture(std::string path, int columns, int rows)
 	// Loads the image //
 	TextureData textureData;
 
-	textureData = TextureLoader::Instance(m_renderer)->GetTexture(path);
+	if (m_renderer == TextureLoader::Instance(m_renderer)->GetRenderer()) textureData = TextureLoader::Instance(m_renderer)->GetTexture(path);
+	else textureData = TextureLoader::Instance(m_renderer)->GetGameTexture(path);
 
 	// Defines texture values //
 	m_texture = textureData.texture;
