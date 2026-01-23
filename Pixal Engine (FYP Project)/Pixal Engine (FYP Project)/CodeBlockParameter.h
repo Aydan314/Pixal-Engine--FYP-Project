@@ -7,14 +7,14 @@
 #include "AudioManager.h"
 #include "Hitbox2D.h"
 #include "Block.h"
-#include "GUIText.h"
+#include "GUITextBox.h"
 #include <iostream>
 
 class CodeBlockParameter : public Block
 {
 protected:
 
-	GUIText* m_text;
+	GUITextBox* m_text;
 	std::string m_name = "PARAMETER";
 
 	SDL_Color m_colour = { (Uint8)(rand() % 200),(Uint8)(rand() % 200),(Uint8)(rand() % 200), 255 };

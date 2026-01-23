@@ -9,7 +9,7 @@ CodeBlockParameter::CodeBlockParameter(SDL_Renderer* renderer, Transform transfo
 
 	m_size = Vector2D(3,1);
 
-	m_text = new GUIText(m_renderer, GameObjectData{ m_transform,COLLISION_NONE }, TextData{ m_name,ENGINE_FONT_PATH,15,{255,255,255,255} });
+	m_text = new GUITextBox(m_renderer, Vector2D(m_size.x * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE), GameObjectData{ m_transform,COLLISION_NONE }, TextData{ "",ENGINE_FONT_PATH,15,{255,255,255,255} });
 
 	m_hitboxes.push_back(new Hitbox2D(&m_transform, Vector2D(m_size.x * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE), Vector2D(0,0), m_renderer));
 
@@ -26,9 +26,20 @@ CodeBlockParameter::~CodeBlockParameter()
 
 void CodeBlockParameter::Render()
 {
+	SDL_Color colour = m_colour;
+	SDL_Color highlight = SDL_Color{ 20,20,20,255 };
+
+	if (m_hasFocus) colour = SDL_Color
+	{ 
+		(Uint8)(m_colour.r + highlight.r), 
+		(Uint8)(m_colour.g + highlight.g), 
+		(Uint8)(m_colour.b + highlight.b), 
+		m_colour.a 
+	};
+
 	for (SpriteSheetTile tile : m_textureTiles)
 	{
-		m_texture->Render((m_transform.position + tile.renderOffset) * m_transform.scale, SDL_FLIP_NONE, tile.cellPos.x, tile.cellPos.y, m_transform.rotation, m_transform.scale, m_colour);
+		m_texture->Render((m_transform.position + tile.renderOffset) * m_transform.scale, SDL_FLIP_NONE, tile.cellPos.x, tile.cellPos.y, m_transform.rotation, m_transform.scale, colour);
 	}
 	m_text->Render();
 }
@@ -37,6 +48,8 @@ void CodeBlockParameter::Update(float deltaTime, SDL_Event e)
 {
 	((GameObject*)m_text)->SetScale(m_transform.scale);
 	((GameObject*)m_text)->SetPosition(m_transform.position + Vector2D(CODE_BLOCK_TILE_SIZE / 2.f, ((m_size.y * CODE_BLOCK_TILE_SIZE) - (m_text->GetRenderRect().h / m_transform.scale.y)) / 2.f));
+	m_text->SetFocus(m_hasFocus);
+	m_text->Update(deltaTime, e);
 	m_text->ReformatText();
 }
 

@@ -3,12 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\CodeBlockScript.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\CodeBlockScript.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\InputManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\InputManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\CodeBlockParameter.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\CodeBlockParameter.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\CodeBlock.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\CodeBlock.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GUITextBox.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\GUITextBox.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\CodeBlockParameter.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\CodeBlockParameter.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Block.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\Block.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Block.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -19,16 +39,36 @@
       "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\CodeBlock.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\CodeBlockScript.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\CodeBlockScript.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GUITextBox.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\GUITextBox.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\InputManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\InputManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Commons.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\Commons.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Hitbox2D.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\Hitbox2D.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GUICanvas.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\GUICanvas.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GUIText.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\GUIText.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\CodeBlockScript.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\CodeBlockScript.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Block.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\Block.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GameObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -47,52 +87,20 @@
       "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\Vector2D.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Commons.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\Commons.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GUIButton.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\GUIButton.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GUICanvas.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\GUICanvas.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Hitbox2D.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\Hitbox2D.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Hitbox2D.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\Hitbox2D.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\CodeBlockParameter.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\CodeBlockParameter.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GameObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\GameObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\CodeBlockParameter.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\CodeBlockParameter.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\InputManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\InputManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\InputManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\InputManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Constants.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\Constants.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GUIText.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{69C92915-61E0-4F3F-BF15-D3ACBC719E89}|Pixal Engine (FYP Project)\\Pixal Engine (FYP Project).vcxproj|solutionrelative:Pixal Engine (FYP Project)\\GUIText.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.42.34433\\include\\vector||{3B902123-F8A7-4915-9F01-361F908088D0}|"
@@ -137,11 +145,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 16,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "CodeBlock.cpp",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\CodeBlock.cpp",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\CodeBlock.cpp",
@@ -155,7 +163,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "CodeBlock.h",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\CodeBlock.h",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\CodeBlock.h",
@@ -175,7 +183,7 @@
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\Commons.h",
               "ToolTip": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Commons.h",
               "RelativeToolTip": "Pixal Engine (FYP Project)\\Commons.h",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAACEAAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-10-26T13:35:30.048Z",
               "IsPinned": true,
@@ -183,13 +191,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 13,
               "Title": "Main.cpp",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Main.cpp",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\Main.cpp",
-              "ToolTip": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Main.cpp*",
-              "RelativeToolTip": "Pixal Engine (FYP Project)\\Main.cpp*",
-              "ViewState": "AgIAAC4AAAAAAAAAAAAlwDkAAACNAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Main.cpp",
+              "RelativeToolTip": "Pixal Engine (FYP Project)\\Main.cpp",
+              "ViewState": "AgIAABwAAAAAAAAAAAAlwDIAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-10-10T14:06:13.188Z",
               "IsPinned": true,
@@ -197,7 +205,63 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 9,
+              "Title": "GUITextBox.h",
+              "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GUITextBox.h",
+              "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\GUITextBox.h",
+              "ToolTip": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GUITextBox.h",
+              "RelativeToolTip": "Pixal Engine (FYP Project)\\GUITextBox.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-01-23T13:01:18.803Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GUITextBox.cpp",
+              "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GUITextBox.cpp",
+              "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\GUITextBox.cpp",
+              "ToolTip": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GUITextBox.cpp",
+              "RelativeToolTip": "Pixal Engine (FYP Project)\\GUITextBox.cpp",
+              "ViewState": "AgIAABcAAAAAAAAAAAAAwCQAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-01-23T13:03:29.159Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "InputManager.h",
+              "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\InputManager.h",
+              "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\InputManager.h",
+              "ToolTip": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\InputManager.h",
+              "RelativeToolTip": "Pixal Engine (FYP Project)\\InputManager.h",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAADAAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-01-22T11:56:59.753Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "InputManager.cpp",
+              "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\InputManager.cpp",
+              "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\InputManager.cpp",
+              "ToolTip": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\InputManager.cpp",
+              "RelativeToolTip": "Pixal Engine (FYP Project)\\InputManager.cpp",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAwDcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-01-22T12:01:13.814Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
               "Title": "GUIButton.cpp",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GUIButton.cpp",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\GUIButton.cpp",
@@ -205,51 +269,24 @@
               "RelativeToolTip": "Pixal Engine (FYP Project)\\GUIButton.cpp",
               "ViewState": "AgIAABgAAAAAAAAAAAAAACwAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-01-22T13:25:23.377Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-22T13:25:23.377Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "GUICanvas.cpp",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GUICanvas.cpp",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\GUICanvas.cpp",
               "ToolTip": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GUICanvas.cpp",
               "RelativeToolTip": "Pixal Engine (FYP Project)\\GUICanvas.cpp",
-              "ViewState": "AgIAADwAAAAAAAAAAAAAADwAAAAEAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADwAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-01-22T13:18:04.142Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "InputManager.cpp",
-              "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\InputManager.cpp",
-              "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\InputManager.cpp",
-              "ToolTip": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\InputManager.cpp",
-              "RelativeToolTip": "Pixal Engine (FYP Project)\\InputManager.cpp",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAAAGAAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-01-22T12:01:13.814Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "InputManager.h",
-              "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\InputManager.h",
-              "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\InputManager.h",
-              "ToolTip": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\InputManager.h",
-              "RelativeToolTip": "Pixal Engine (FYP Project)\\InputManager.h",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAAB8AAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-01-22T11:56:59.753Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 22,
               "Title": "Hitbox2D.cpp",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Hitbox2D.cpp",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\Hitbox2D.cpp",
@@ -257,12 +294,11 @@
               "RelativeToolTip": "Pixal Engine (FYP Project)\\Hitbox2D.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-01-14T15:21:14.336Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-14T15:21:14.336Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 12,
               "Title": "Hitbox2D.h",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Hitbox2D.h",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\Hitbox2D.h",
@@ -275,7 +311,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 25,
               "Title": "vector",
               "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.42.34433\\include\\vector",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.42.34433\\include\\vector",
@@ -287,7 +323,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 19,
               "Title": "Vector2D.cpp",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Vector2D.cpp",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\Vector2D.cpp",
@@ -295,12 +331,11 @@
               "RelativeToolTip": "Pixal Engine (FYP Project)\\Vector2D.cpp",
               "ViewState": "AgIAABsAAAAAAAAAAAAAwDMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-01-12T12:42:40.947Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-12T12:42:40.947Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 20,
               "Title": "Vector2D.h",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Vector2D.h",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\Vector2D.h",
@@ -308,8 +343,7 @@
               "RelativeToolTip": "Pixal Engine (FYP Project)\\Vector2D.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-01-12T12:42:04.594Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-12T12:42:04.594Z"
             },
             {
               "$type": "Document",
@@ -319,27 +353,27 @@
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\Block.h",
               "ToolTip": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Block.h",
               "RelativeToolTip": "Pixal Engine (FYP Project)\\Block.h",
-              "ViewState": "AgIAADAAAAAAAAAAAAAAACcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADMAAAAAAAAAAAAAAE4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-11-03T13:20:57.172Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "CodeBlockScript.cpp",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\CodeBlockScript.cpp",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\CodeBlockScript.cpp",
               "ToolTip": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\CodeBlockScript.cpp",
               "RelativeToolTip": "Pixal Engine (FYP Project)\\CodeBlockScript.cpp",
-              "ViewState": "AgIAAC4AAAAAAAAAAAAAwIsAAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAAADcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-10-30T11:58:13.949Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 27,
               "Title": "TextureLoader.cpp",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\TextureLoader.cpp",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\TextureLoader.cpp",
@@ -351,7 +385,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 16,
               "Title": "CodeBlockScript.h",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\CodeBlockScript.h",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\CodeBlockScript.h",
@@ -359,25 +393,24 @@
               "RelativeToolTip": "Pixal Engine (FYP Project)\\CodeBlockScript.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-10-30T11:55:27.423Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-30T11:55:27.423Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 5,
               "Title": "CodeBlockParameter.h",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\CodeBlockParameter.h",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\CodeBlockParameter.h",
               "ToolTip": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\CodeBlockParameter.h",
               "RelativeToolTip": "Pixal Engine (FYP Project)\\CodeBlockParameter.h",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAB0AAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-10-31T14:04:31.11Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 24,
               "Title": "Constants.h",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Constants.h",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\Constants.h",
@@ -389,20 +422,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 2,
               "Title": "CodeBlockParameter.cpp",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\CodeBlockParameter.cpp",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\CodeBlockParameter.cpp",
               "ToolTip": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\CodeBlockParameter.cpp",
               "RelativeToolTip": "Pixal Engine (FYP Project)\\CodeBlockParameter.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-10-31T14:07:21.858Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 18,
               "Title": "Texture2D.cpp",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Texture2D.cpp",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\Texture2D.cpp",
@@ -410,25 +443,24 @@
               "RelativeToolTip": "Pixal Engine (FYP Project)\\Texture2D.cpp",
               "ViewState": "AgIAACkAAAAAAAAAAAAiwDwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-26T14:36:55.951Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-26T14:36:55.951Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "Block.cpp",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Block.cpp",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\Block.cpp",
               "ToolTip": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Block.cpp",
               "RelativeToolTip": "Pixal Engine (FYP Project)\\Block.cpp",
-              "ViewState": "AgIAAOkAAAAAAAAAAAAAwPwAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAALcAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-11-03T13:21:01.68Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 17,
               "Title": "GameObject.cpp",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GameObject.cpp",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\GameObject.cpp",
@@ -436,24 +468,24 @@
               "RelativeToolTip": "Pixal Engine (FYP Project)\\GameObject.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-26T13:47:21.362Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-26T13:47:21.362Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 15,
               "Title": "GUIText.cpp",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GUIText.cpp",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\GUIText.cpp",
               "ToolTip": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GUIText.cpp",
               "RelativeToolTip": "Pixal Engine (FYP Project)\\GUIText.cpp",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAADUAAAA7AAAAAAAAAA==",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAAAGoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-26T14:41:52.487Z"
+              "WhenOpened": "2025-10-26T14:41:52.487Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 30,
               "Title": "FileHandler.cpp",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\FileHandler.cpp",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\FileHandler.cpp",
@@ -465,7 +497,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 31,
               "Title": "FileHandler.h",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\FileHandler.h",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\FileHandler.h",
@@ -477,7 +509,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 32,
               "Title": "GameSceneManager.h",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GameSceneManager.h",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\GameSceneManager.h",
@@ -489,7 +521,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 33,
               "Title": "GameScene.h",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GameScene.h",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\GameScene.h",
@@ -501,7 +533,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 26,
               "Title": "Camera.h",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Camera.h",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\Camera.h",
@@ -513,7 +545,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 28,
               "Title": "Texture2D.h",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\Texture2D.h",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\Texture2D.h",
@@ -525,7 +557,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 23,
               "Title": "GameObject.h",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\GameObject.h",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\GameObject.h",
@@ -533,12 +565,11 @@
               "RelativeToolTip": "Pixal Engine (FYP Project)\\GameObject.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-10-26T13:41:57.652Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-26T13:41:57.652Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 29,
               "Title": "TextureLoader.h",
               "DocumentMoniker": "C:\\Users\\aydan\\Documents\\GitHub\\Pixal-Engine--FYP-Project-\\Pixal Engine (FYP Project)\\Pixal Engine (FYP Project)\\TextureLoader.h",
               "RelativeDocumentMoniker": "Pixal Engine (FYP Project)\\TextureLoader.h",

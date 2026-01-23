@@ -24,6 +24,7 @@ protected:
 	bool m_startBlock = false;
 	bool m_endBlock = false;
 	bool m_conditionalBlock = false;
+	bool m_hasFocus = false;
 
 	SDL_Renderer* m_renderer = nullptr;
 	bool m_deleted = false;
@@ -73,11 +74,13 @@ public:
 	Block* GetPrev();
 
 	bool CheckMouseCollision();
+	bool GetHasFocus();
 	std::vector<Hitbox2D*> GetHitboxes();
 
 	void SetPosition(Vector2D position);
 	void SetScale(Vector2D scale);
 	void SetRotation(double rotation);
+	void SetFocus(bool focus);
 
 	Vector2D GetPosition();
 	Vector2D GetScale();

@@ -4,6 +4,8 @@
 #include "SDL.h"
 #include <map>
 
+#define CASE_DIFF 32
+
 class InputManager
 {
 private:
@@ -23,6 +25,9 @@ private:
 	bool mouseRightClick = false;
 
 	std::map<int, bool> keyboard;
+	std::string typedInput;
+	bool upperCase = false;
+	bool shift = false;
 	
 public:
 	static inline InputManager* Instance() {
@@ -40,6 +45,10 @@ public:
 	bool GetMouseLeftClicked();
 	bool GetMouseRightClicked();
 	int GetMouseScroll();
+	std::string ReadTypedInput();
+	void LoadTypedInputString(std::string text);
+	void ClearTypedInput();
+
 
 	bool IsKeyPressed(SDL_Keycode key);
 

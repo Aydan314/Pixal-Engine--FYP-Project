@@ -39,6 +39,22 @@ int InputManager::GetMouseScroll()
 	return mouseScroll;
 }
 
+std::string InputManager::ReadTypedInput()
+{
+	std::string typed = typedInput;
+	return typed;
+}
+
+void InputManager::ClearTypedInput()
+{
+	typedInput = "";
+}
+
+void InputManager::LoadTypedInputString(std::string text)
+{
+	typedInput = text;
+}
+
 bool InputManager::IsKeyPressed(SDL_Keycode key)
 {
 	return keyboard[key];
@@ -99,14 +115,44 @@ void InputManager::Update(float deltaTime, SDL_Event e)
 	}
 
 	// Update Keyboard State //
+
 	switch (e.type)
 	{
 	case SDL_KEYDOWN:
 		keyboard[e.key.keysym.sym] = true;
+
+		switch (e.key.keysym.sym)
+		{
+		case SDLK_LSHIFT:
+			shift = true;
+			break;
+		}
+
 		break;
 	case SDL_KEYUP:
+		if (keyboard[e.key.keysym.sym] == true) 
+		{
+			SDL_Keycode keystroke = e.key.keysym.sym;
+			switch (keystroke) 
+			{
+			case SDLK_BACKSPACE:
+				typedInput = typedInput.substr(0, typedInput.size() - 1);
+				break;
+			case SDLK_RETURN:
+				break;
+			case SDLK_CAPSLOCK:
+				upperCase = !upperCase;
+				break;
+			case SDLK_LSHIFT:
+				shift = false;
+				break;
+			default:
+				typedInput += (char)keystroke - (std::abs(upperCase - shift) * CASE_DIFF);
+				break;
+			}
+		}
+
 		keyboard[e.key.keysym.sym] = false;
 		break;
 	}
-	
 }

@@ -142,6 +142,7 @@
     <ClCompile Include="GUICanvas.cpp" />
     <ClCompile Include="GUIText.cpp" />
     <ClCompile Include="GUITextBlock.cpp" />
+    <ClCompile Include="GUITextBox.cpp" />
     <ClCompile Include="Hitbox2D.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="GUICanvas.h" />
     <ClInclude Include="GUIText.h" />
     <ClInclude Include="GUITextBlock.h" />
+    <ClInclude Include="GUITextBox.h" />
     <ClInclude Include="Hitbox2D.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="resource.h" />

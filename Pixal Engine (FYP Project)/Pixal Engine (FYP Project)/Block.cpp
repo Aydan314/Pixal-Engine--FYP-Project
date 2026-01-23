@@ -171,6 +171,11 @@ void Block::SetRotation(double rotation)
 	m_transform.rotation = rotation;
 }
 
+void Block::SetFocus(bool focus)
+{
+	m_hasFocus = focus;
+}
+
 Vector2D Block::GetPosition()
 {
 	return m_transform.position;
@@ -226,6 +231,11 @@ bool Block::CheckMouseCollision()
 		if (hitbox->ContainsPoint(mousePos)) return true;
 	}
 	return false;
+}
+
+bool Block::GetHasFocus()
+{
+	return m_hasFocus;
 }
 
 std::vector<Hitbox2D*> Block::GetHitboxes()

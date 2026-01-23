@@ -59,13 +59,13 @@ void CodeBlockScript::Update(float deltaTime, SDL_Event e)
 	{
 		if (block->CheckMouseCollision() && InputManager::Instance()->GetMouseLeftClicked())
 		{
-			if (selectedBlock == nullptr) selectedBlock = block;
-			else if (selectedBlock->GetType() != BLOCK_TYPE_PARAMETER && block->GetType() == BLOCK_TYPE_PARAMETER) 
+			if (!selectedBlock || block->GetType() == BLOCK_TYPE_PARAMETER)
 			{
 				selectedBlock = block;
+				block->SetFocus(true);
 			}
-			
 		}
+		else if (InputManager::Instance()->GetMouseLeftClicked() || InputManager::Instance()->GetMouseRightClicked()) block->SetFocus(false);
 
 		block->SetScale(Vector2D(zoom, zoom));
 		block->SetPosition(zoomOffset + block->GetPosition() + (mouseDrag / Vector2D(zoom,zoom)));

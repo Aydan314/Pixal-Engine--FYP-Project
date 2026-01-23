@@ -1,15 +1,8 @@
-﻿  Main.cpp
+﻿  CodeBlockScript.cpp
 C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\GameObject.h(62,137): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'Main.cpp')
+  (compiling source file 'CodeBlockScript.cpp')
   
 C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\GameObject.h(62,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'Main.cpp')
+  (compiling source file 'CodeBlockScript.cpp')
   
-C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\Main.cpp(72,65): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\Main.cpp(77,66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\Main.cpp(77,168): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\Main.cpp(83,10): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\Main.cpp(321,23): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\Main.cpp(123,1): warning C4715: 'InitEditorWindow': not all control paths return a value
-C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\Main.cpp(151,1): warning C4715: 'InitGameWindow': not all control paths return a value
   Pixal Engine (FYP Project).vcxproj -> C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\x64\Debug\Pixal Engine (FYP Project).exe
