@@ -36,6 +36,8 @@ void CodeBlockScript::Update(float deltaTime, SDL_Event e)
 
 	if (InputManager::Instance()->IsKeyPressed(SDLK_F5) && InputManager::Instance()->Keystroke()) 
 	{
+		m_controlledScene->Clear();
+		CodeBlockVariableManager::Instance()->Clear();
 		m_start->Run();
 		std::cout << "-----------------------\n";
 	}

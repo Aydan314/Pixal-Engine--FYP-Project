@@ -23,6 +23,7 @@ CodeBlockParameter::CodeBlockParameter(SDL_Renderer* renderer, Transform transfo
 	m_dataContent.gameObject = nullptr;
 	m_dataContent.string = "";
 	m_dataContent.number = 0;
+	m_dataContent.name = "PARAMETER";
 
 	CreateBlockOfSize(m_size);
 }
@@ -55,6 +56,7 @@ void CodeBlockParameter::Update(float deltaTime, SDL_Event e)
 {
 	((GameObject*)m_text)->SetScale(m_transform.scale);
 	((GameObject*)m_text)->SetPosition(m_transform.position + Vector2D(CODE_BLOCK_TILE_SIZE / 2.f, ((m_size.y * CODE_BLOCK_TILE_SIZE) - (m_text->GetRenderRect().h / m_transform.scale.y)) / 2.f));
+	
 	m_text->SetFocus(m_hasFocus);
 	m_text->Update(deltaTime, e);
 	m_text->ReformatText();
@@ -95,12 +97,13 @@ void CodeBlockParameter::Init(DATA_TYPE type)
 		m_colour = SDL_Color{ 50,50,225,255 };
 		m_defaultText = "0";
 		break;
-	case DATA_TYPE_GAMEOBJECT:
-		m_colour = SDL_Color{ 50,225,50,255 };
-		m_defaultText = "GAMEOBJECT";
+	case DATA_TYPE_VARIABLE:
+		m_colour = SDL_Color{ 235,180,50,255 };
+		m_defaultText = "MyVariable";
+		m_dataContent.name = m_defaultText;
 		break;
 	case DATA_TYPE_STRING:
-		m_colour = SDL_Color{ 235,180,50,255 };
+		m_colour = SDL_Color{ 235,50,180,255 };
 		m_defaultText = "Hello";
 		break;
 	}
@@ -111,13 +114,13 @@ void CodeBlockParameter::UpdateData()
 	switch (m_dataType)
 	{
 	case DATA_TYPE_NUMBER:
+		if (m_text->GetText() == "") m_text->SetText("0");
 		m_dataContent.number = std::stof(m_text->GetText());
 		break;
-	case DATA_TYPE_GAMEOBJECT:
-		
+	case DATA_TYPE_VARIABLE:
+		m_dataContent.name = m_text->GetText();
 		break;
 	case DATA_TYPE_STRING:
-		
 		m_dataContent.string = m_text->GetText();
 		break;
 	}
@@ -128,17 +131,8 @@ DATA_TYPE CodeBlockParameter::GetDataType()
 	return m_dataType;
 }
 
-float CodeBlockParameter::GetNumberData()
+DataContent CodeBlockParameter::GetContents()
 {
-	return m_dataContent.number;
+	return m_dataContent;
 }
 
-std::string CodeBlockParameter::GetStringData()
-{
-	return m_dataContent.string;
-}
-
-GameObject* CodeBlockParameter::GetGameObjectData()
-{
-	return m_dataContent.gameObject;
-}

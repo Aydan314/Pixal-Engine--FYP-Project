@@ -43,6 +43,7 @@ enum MOUNT_TYPE
 enum DATA_TYPE 
 {
 	DATA_TYPE_NONE,
+	DATA_TYPE_VARIABLE,
 	DATA_TYPE_STRING,
 	DATA_TYPE_NUMBER,
 	DATA_TYPE_GAMEOBJECT
@@ -110,6 +111,16 @@ struct ButtonColours
 	SDL_Color defaultColour;
 	SDL_Color selectedColour;
 	SDL_Color clickedColour;
+};
+
+class GameObject;
+
+struct DataContent
+{
+	std::string name;
+	float number;
+	std::string string;
+	GameObject* gameObject;
 };
 
 const std::vector<std::string> SOUNDS_TO_LOAD =

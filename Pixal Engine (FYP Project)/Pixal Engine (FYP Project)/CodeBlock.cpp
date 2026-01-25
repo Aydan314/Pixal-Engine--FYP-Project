@@ -24,19 +24,19 @@ void CodeBlock::Init(BLOCK_ID ID)
 	{
 
 	case BLOCK_ID_SET_POSITION:
-		m_name = "Set Position";
+		m_name = "Set Position Of          to X =       Y =";
 		m_colour = COLOUR_GREEN;
 
-		m_parameters = 1;
-		m_textArea = Vector2D(6, CODE_BLOCK_HEIGHT);
+		m_parameters = 3;
+		m_textArea = Vector2D(7, CODE_BLOCK_HEIGHT);
 		break;
 
 	case BLOCK_ID_IF:
-		m_name = "If";
+		m_name = "If                =";
 		m_colour = COLOUR_LIGHT_GREY;
 
-		m_parameters = 1;
-		m_textArea = Vector2D(6, CODE_BLOCK_HEIGHT);
+		m_parameters = 2;
+		m_textArea = Vector2D(4, CODE_BLOCK_HEIGHT);
 		m_conditionalBlock = true;
 		break;
 
@@ -59,11 +59,11 @@ void CodeBlock::Init(BLOCK_ID ID)
 		break;
 
 	case BLOCK_ID_CREATE_GAMEOBJECT:
-		m_name = "Create GameObject";
+		m_name = "Create GameObject Called";
 		m_colour = COLOUR_GREEN;
 
 		m_parameters = 1;
-		m_textArea = Vector2D(7, CODE_BLOCK_HEIGHT);
+		m_textArea = Vector2D(10, CODE_BLOCK_HEIGHT);
 		break;
 	}
 
@@ -176,22 +176,43 @@ void CodeBlock::Resize()
 
 void CodeBlock::Run()
 {
+	GameObject* newObject = nullptr;
+	DataContent content;
+
 	switch (m_ID) 
 	{
 	case BLOCK_ID_SET_POSITION:
-		std::cout << "Set Position to: ";
-		if (m_paramPoints[0]->contents) std::cout << ((CodeBlockParameter*)m_paramPoints[0]->contents)->GetNumberData();
-		std::cout << "\n";
+		if (m_paramPoints[0]->contents)
+		{
+			float X = 0;
+			float Y = 0;
+
+			if (m_paramPoints[1]->contents) X = ((CodeBlockParameter*)m_paramPoints[1]->contents)->GetContents().number;
+			if (m_paramPoints[2]->contents) Y = ((CodeBlockParameter*)m_paramPoints[2]->contents)->GetContents().number;
+
+			std::string varName = ((CodeBlockParameter*)m_paramPoints[0]->contents)->GetContents().name;
+			CodeBlockVariableManager::Instance()->GetVariable(varName).gameObject->SetPosition(Vector2D(X, Y));
+			std::cout << "Set position of " << varName << " to " << X << "," << Y << "\n";
+		}
 		break;
+
 	case BLOCK_ID_CREATE_GAMEOBJECT:
-		
-		m_gameScene->Add(new GameObject
+		if (m_paramPoints[0]->contents)
+		{
+			newObject = new GameObject
 			(
-			m_gameScene->GetRenderer(),
-			SpriteSheetTexture{ "Engine Images/Sprites.png", {2,2},{0,0} },
-			GameObjectData{ Transform{ {0,0},{1,1},0 },COLLISION_SINGLE }
-			)
-		);
+				m_gameScene->GetRenderer(),
+				SpriteSheetTexture{ "Engine Images/Sprites.png", {2,2},{0,0} },
+				GameObjectData{ Transform{ {0,0},{1,1},0 },COLLISION_SINGLE }
+			);
+			m_gameScene->Add(newObject);
+
+			content.gameObject = newObject;
+
+			std::string varName = ((CodeBlockParameter*)m_paramPoints[0]->contents)->GetContents().name;
+			CodeBlockVariableManager::Instance()->SetVariable(varName, content);
+			std::cout << "Create new object called: " << varName << "\n";
+		}
 		break;
 
 	default:

@@ -10,13 +10,6 @@
 #include "GUITextBox.h"
 #include <iostream>
 
-struct DataContent
-{
-	float number;
-	std::string string;
-	GameObject* gameObject;
-};
-
 class CodeBlockParameter : public Block
 {
 protected:
@@ -45,8 +38,6 @@ public:
 
 	DATA_TYPE GetDataType();
 
-	float GetNumberData();
-	std::string GetStringData();
-	GameObject* GetGameObjectData();
+	DataContent GetContents();
 };
 

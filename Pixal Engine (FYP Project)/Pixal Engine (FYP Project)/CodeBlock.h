@@ -1,6 +1,7 @@
 #pragma once
 #include "Block.h"
 #include "CodeBlockParameter.h"
+#include "CodeBlockVariableManager.h"
 
 class CodeBlock : public Block
 {

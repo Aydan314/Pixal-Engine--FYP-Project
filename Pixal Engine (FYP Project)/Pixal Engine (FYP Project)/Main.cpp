@@ -226,8 +226,11 @@ bool InitAll()
 	CodeBlock* codeBlock6 = new CodeBlock(engine_renderer, Transform{ {30,-70},{1,1},0 }, gameScene,BLOCK_ID_CUSTOM);
 	CodeBlock* codeBlock7 = new CodeBlock(engine_renderer, Transform{ {30,-80},{1,1},0 }, gameScene,BLOCK_ID_CUSTOM);
 	CodeBlockParameter* param = new CodeBlockParameter(engine_renderer, Transform{ {100,400},{1,1},0 }, gameScene,DATA_TYPE_NUMBER);
+	CodeBlockParameter* param0 = new CodeBlockParameter(engine_renderer, Transform{ {200,400},{1,1},0 }, gameScene, DATA_TYPE_NUMBER);
 	CodeBlockParameter* param1 = new CodeBlockParameter(engine_renderer, Transform{ {100,600},{1,1},0 }, gameScene,DATA_TYPE_STRING);
-	CodeBlockParameter* param2 = new CodeBlockParameter(engine_renderer, Transform{ {100,800},{1,1},0 }, gameScene, DATA_TYPE_GAMEOBJECT);
+	CodeBlockParameter* param2 = new CodeBlockParameter(engine_renderer, Transform{ {200,800},{1,1},0 }, gameScene, DATA_TYPE_VARIABLE);
+	CodeBlockParameter* param3 = new CodeBlockParameter(engine_renderer, Transform{ {300,800},{1,1},0 }, gameScene, DATA_TYPE_VARIABLE);
+	CodeBlockParameter* param4 = new CodeBlockParameter(engine_renderer, Transform{ {400,800},{1,1},0 }, gameScene, DATA_TYPE_VARIABLE);
 
 	mainScript->Add(codeBlock);
 	mainScript->Add(codeBlock1);
@@ -237,8 +240,11 @@ bool InitAll()
 	mainScript->Add(codeBlock6);
 	mainScript->Add(codeBlock7);
 	mainScript->Add(param);
+	mainScript->Add(param0);
 	mainScript->Add(param1);
 	mainScript->Add(param2);
+	mainScript->Add(param3);
+	mainScript->Add(param4);
 
 	scripts.push_back(mainScript);
 

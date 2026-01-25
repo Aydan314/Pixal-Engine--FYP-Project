@@ -134,6 +134,7 @@
     <ClCompile Include="CodeBlock.cpp" />
     <ClCompile Include="CodeBlockParameter.cpp" />
     <ClCompile Include="CodeBlockScript.cpp" />
+    <ClCompile Include="CodeBlockVariableManager.cpp" />
     <ClCompile Include="FileHandler.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameScene.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="CodeBlock.h" />
     <ClInclude Include="CodeBlockParameter.h" />
     <ClInclude Include="CodeBlockScript.h" />
+    <ClInclude Include="CodeBlockVariableManager.h" />
     <ClInclude Include="Commons.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="FileHandler.h" />
