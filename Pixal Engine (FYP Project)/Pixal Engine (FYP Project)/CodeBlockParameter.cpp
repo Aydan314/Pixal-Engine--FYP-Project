@@ -7,14 +7,14 @@ CodeBlockParameter::CodeBlockParameter(SDL_Renderer* renderer, Transform transfo
 	
 	m_transform = transform;
 
-	m_size = Vector2D(3,1);
+	m_size = 3;
 
 	m_dataType = dataType;
 	Init(m_dataType);
 
-	m_text = new GUITextBox(m_renderer, Vector2D(m_size.x * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE), GameObjectData{ m_transform,COLLISION_NONE }, TextData{ m_defaultText,ENGINE_FONT_PATH,15,{255,255,255,255} });
+	m_text = new GUITextBox(m_renderer, Vector2D(m_size * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE), GameObjectData{ m_transform,COLLISION_NONE }, TextData{ m_defaultText,ENGINE_FONT_PATH,15,{255,255,255,255} });
 
-	m_hitboxes.push_back(new Hitbox2D(&m_transform, Vector2D(m_size.x * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE), Vector2D(0,0), m_renderer));
+	m_hitboxes.push_back(new Hitbox2D(&m_transform, Vector2D(m_size * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE), Vector2D(0,0), m_renderer));
 
 	m_startMountPoint = new MountPoint();
 	m_endMountPoint = new MountPoint();
@@ -25,7 +25,7 @@ CodeBlockParameter::CodeBlockParameter(SDL_Renderer* renderer, Transform transfo
 	m_dataContent.number = 0;
 	m_dataContent.name = "PARAMETER";
 
-	CreateBlockOfSize(m_size);
+	CreateBlock();
 }
 
 CodeBlockParameter::~CodeBlockParameter()
@@ -55,7 +55,7 @@ void CodeBlockParameter::Render()
 void CodeBlockParameter::Update(float deltaTime, SDL_Event e)
 {
 	((GameObject*)m_text)->SetScale(m_transform.scale);
-	((GameObject*)m_text)->SetPosition(m_transform.position + Vector2D(CODE_BLOCK_TILE_SIZE / 2.f, ((m_size.y * CODE_BLOCK_TILE_SIZE) - (m_text->GetRenderRect().h / m_transform.scale.y)) / 2.f));
+	((GameObject*)m_text)->SetPosition(m_transform.position + Vector2D(CODE_BLOCK_TILE_SIZE / 2.f, ((CODE_BLOCK_TILE_SIZE) - (m_text->GetRenderRect().h / m_transform.scale.y)) / 2.f));
 	
 	m_text->SetFocus(m_hasFocus);
 	m_text->Update(deltaTime, e);
@@ -65,25 +65,25 @@ void CodeBlockParameter::Update(float deltaTime, SDL_Event e)
 	m_lastFocus = m_hasFocus;
 }
 
-void CodeBlockParameter::CreateBlockOfSize(Vector2D size)
+void CodeBlockParameter::CreateBlock()
 {
-	for (int x = 0; x < size.x; x++) 
+	for (int x = 0; x < m_size; x++) 
 	{
 		SpriteSheetTile tile;
 		tile.renderOffset = Vector2D(x * CODE_BLOCK_TILE_SIZE, 0);
 
-		int xVal = CODE_BLOCK_SHEET_PARAMETER_SEGMENT_X;
+		int xVal = CODE_BLOCK_PARAMETER_SEGMENT;
 
 		if (x != 0) 
 		{
 			xVal ++;
-			if (x == size.x - 1) 
+			if (x == m_size - 1) 
 			{
 				xVal++;
 			}
 		}
 
-		tile.cellPos = Vector2D(xVal, CODE_BLOCK_SHEET_PARAMETER_SEGMENT_Y);
+		tile.cellPos = Vector2D(xVal, CODE_BLOCK_PARAMETER_SEGMENT);
 		
 		m_textureTiles.push_back(tile);
 	}
@@ -94,16 +94,16 @@ void CodeBlockParameter::Init(DATA_TYPE type)
 	switch (type) 
 	{
 	case DATA_TYPE_NUMBER:
-		m_colour = SDL_Color{ 50,50,225,255 };
+		m_colour = COLOUR_BLUE;
 		m_defaultText = "0";
 		break;
 	case DATA_TYPE_VARIABLE:
-		m_colour = SDL_Color{ 235,180,50,255 };
+		m_colour = COLOUR_ORANGE;
 		m_defaultText = "MyVariable";
 		m_dataContent.name = m_defaultText;
 		break;
 	case DATA_TYPE_STRING:
-		m_colour = SDL_Color{ 235,50,180,255 };
+		m_colour = COLOUR_PINK;
 		m_defaultText = "Hello";
 		break;
 	}

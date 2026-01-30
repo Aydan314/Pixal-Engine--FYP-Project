@@ -32,7 +32,7 @@ public:
 
 	void Render() override;
 	void Update(float deltaTime, SDL_Event e) override;
-	void CreateBlockOfSize(Vector2D size) override;
+	void CreateBlock() override;
 	void Init(DATA_TYPE type);
 	void UpdateData();
 

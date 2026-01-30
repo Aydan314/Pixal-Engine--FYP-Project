@@ -37,7 +37,7 @@ protected:
 	SDL_Color m_colour = COLOUR_BLUE;
 	std::string m_name = "CODE BLOCK";
 
-	Vector2D m_size;
+	int m_size;
 	Transform m_transform;
 	std::vector<Hitbox2D*> m_hitboxes;
 
@@ -55,7 +55,7 @@ public:
 
 	virtual void Render();
 	virtual void Update(float deltaTime, SDL_Event e);
-	virtual void CreateBlockOfSize(Vector2D size);
+	virtual void CreateBlock();
 	virtual void Resize();
 	virtual void Run();
 

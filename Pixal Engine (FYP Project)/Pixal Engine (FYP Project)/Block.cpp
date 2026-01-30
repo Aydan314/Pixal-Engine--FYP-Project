@@ -111,7 +111,7 @@ void Block::AttachParameter(Block* block)
 			Vector2D dist = (m_transform.position + point->position) - block->GetPosition();
 			float distance = dist.Magnitude();
 
-			if (distance <= (CODE_BLOCK_PARAMETER_SEGMENT_SIZE * CODE_BLOCK_TILE_SIZE))
+			if (distance <= (3 * CODE_BLOCK_TILE_SIZE))
 			{
 				point->contents = block;
 				block->SetPrev(this);
@@ -264,9 +264,8 @@ BLOCK_ID Block::GetID()
 	return m_ID;
 }
 
-void Block::CreateBlockOfSize(Vector2D size)
+void Block::CreateBlock()
 {
-
 }
 
 void Block::Resize()

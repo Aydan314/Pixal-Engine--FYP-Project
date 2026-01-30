@@ -8,7 +8,14 @@ CodeBlock::CodeBlock(SDL_Renderer* renderer, Transform transform, GameScene* gam
 	m_transform = transform;
 
 	Init(ID);
-	CreateBlockOfSize(m_size);
+	CreateBlock();
+	InitMountPoints();
+
+	if (m_conditionalBlock)
+	{
+		CreateTailEnd();
+		CreateTail();
+	}
 }
 
 CodeBlock::~CodeBlock()
@@ -17,66 +24,67 @@ CodeBlock::~CodeBlock()
 
 void CodeBlock::Init(BLOCK_ID ID)
 {
-	m_textArea = Vector2D(8, CODE_BLOCK_HEIGHT);
 	m_parameters = 0;
 
 	switch (ID) 
 	{
 
 	case BLOCK_ID_SET_POSITION:
-		m_name = "Set Position Of          to X =       Y =";
+		m_name = "Set Position Of           to X=        Y=";
 		m_colour = COLOUR_GREEN;
-
-		m_parameters = 3;
-		m_textArea = Vector2D(7, CODE_BLOCK_HEIGHT);
+		m_template =
+		{
+			{BlockSectionStart},{BlockSectionSpace,5},{BlockSectionParameter},{BlockSectionSpace,2},{BlockSectionParameter},{BlockSectionSpace,1},{BlockSectionParameter},{BlockSectionEnd}
+		};
 		break;
 
 	case BLOCK_ID_IF:
 		m_name = "If                =";
 		m_colour = COLOUR_LIGHT_GREY;
-
-		m_parameters = 2;
-		m_textArea = Vector2D(4, CODE_BLOCK_HEIGHT);
-		m_conditionalBlock = true;
+		m_template =
+		{
+			{BlockSectionConditionalStart},{BlockSectionSpace,1},{BlockSectionParameter},{BlockSectionSpace,1},{BlockSectionParameter},{ BlockSectionEnd }
+		};
 		break;
 
 	case BLOCK_ID_STOP:
 		m_name = "Stop";
 		m_colour = COLOUR_RED;
-
-		m_parameters = 0;
-		m_textArea = Vector2D(6, CODE_BLOCK_HEIGHT);
-		m_endBlock = true;
+		m_template =
+		{
+			{BlockSectionEndingStart},{BlockSectionSpace,3},{BlockSectionEnd}
+		};
 		break;
 
 	case BLOCK_ID_START:
 		m_name = "On Start";
 		m_colour = COLOUR_GREEN;
-
-		m_parameters = 0;
-		m_textArea = Vector2D(6, CODE_BLOCK_HEIGHT);
-		m_startBlock = true;
+		m_template =
+		{
+			{BlockSectionBeginningStart},{BlockSectionSpace,3},{BlockSectionEnd}
+		};
 		break;
 
 	case BLOCK_ID_CREATE_GAMEOBJECT:
 		m_name = "Create GameObject Called";
 		m_colour = COLOUR_GREEN;
+		m_template =
+		{
+			{BlockSectionStart},{BlockSectionSpace,8},{BlockSectionParameter},{BlockSectionEnd}
+		};
+		break;
 
-		m_parameters = 1;
-		m_textArea = Vector2D(10, CODE_BLOCK_HEIGHT);
+	default:
+		m_name = "CODE BLOCK";
+		m_colour = COLOUR_WHITE;
+		m_template =
+		{
+			{BlockSectionStart},{BlockSectionSpace,3},{BlockSectionEnd}
+		};
 		break;
 	}
 
-
 	m_text = new GUIText(m_renderer, GameObjectData{ m_transform,COLLISION_NONE }, TextData{ m_name,ENGINE_FONT_PATH,30,{255,255,255,255} });
-
-	m_size = m_textArea + Vector2D(CODE_BLOCK_PARAMETER_SEGMENT_SIZE * m_parameters, 0);
-
-	Hitbox2D* hitbox = new Hitbox2D(&m_transform, Vector2D(m_size.x * CODE_BLOCK_TILE_SIZE, m_size.y * CODE_BLOCK_TILE_SIZE), Vector2D(0,0), m_renderer);
-	m_hitboxes.push_back(hitbox);
-
-	InitMountPoints();
-	
 }
 
 void CodeBlock::InitMountPoints()
@@ -88,23 +96,13 @@ void CodeBlock::InitMountPoints()
 	if (m_conditionalBlock)
 	{
 		m_conditionalMountPoint = new MountPoint();
-		m_conditionalMountPoint->position = Vector2D(CODE_BLOCK_TILE_SIZE, (m_size.y * CODE_BLOCK_TILE_SIZE) - (CODE_BLOCK_TILE_SIZE / 2));
+		m_conditionalMountPoint->position = Vector2D(CODE_BLOCK_TILE_SIZE, (CODE_BLOCK_HEIGHT * CODE_BLOCK_TILE_SIZE) - (CODE_BLOCK_TILE_SIZE / 2));
 		m_conditionalMountPoint->type = MOUNT_TYPE_CONDITIONAL;
-
-		m_endHitbox = new Hitbox2D
-		(
-			&m_transform,
-			Vector2D(m_size.x * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE),
-			Vector2D(0, (CODE_BLOCK_HEIGHT + CODE_BLOCK_CONDITIONAL_TAIL_LENGTH) * CODE_BLOCK_TILE_SIZE),
-			m_renderer
-		);
-
-		m_hitboxes.push_back(m_endHitbox);
 	}
 
 	m_endMountPoint = new MountPoint();
 	m_endMountPoint->contents = nullptr;
-	m_endMountPoint->position = Vector2D(0, (m_size.y * CODE_BLOCK_TILE_SIZE) - (CODE_BLOCK_TILE_SIZE / 2));
+	m_endMountPoint->position = Vector2D(0, (CODE_BLOCK_HEIGHT * CODE_BLOCK_TILE_SIZE) - (CODE_BLOCK_TILE_SIZE / 2));
 	m_endMountPoint->type = MOUNT_TYPE_END;
 }
 
@@ -133,7 +131,7 @@ void CodeBlock::Update(float deltaTime, SDL_Event e)
 	}
 
 	((GameObject*)m_text)->SetScale(m_transform.scale);
-	((GameObject*)m_text)->SetPosition(m_transform.position + Vector2D(CODE_BLOCK_TILE_SIZE / 2.f, ((m_size.y * CODE_BLOCK_TILE_SIZE) - (m_text->GetRenderRect().h / m_transform.scale.y))/ 2.f) );
+	((GameObject*)m_text)->SetPosition(m_transform.position + Vector2D(CODE_BLOCK_TILE_SIZE / 2.f, ((CODE_BLOCK_HEIGHT * CODE_BLOCK_TILE_SIZE) - (m_text->GetRenderRect().h / m_transform.scale.y))/ 2.f) );
 	m_text->ReformatText();
 
 
@@ -223,147 +221,328 @@ void CodeBlock::Run()
 	if (GetNext()) GetNext()->Run();
 }
 
-void CodeBlock::CreateBlockOfSize(Vector2D size)
+void CodeBlock::CreateBlock()
 {
 	m_paramPoints.clear();
 
-	int xVal = 0;
-	// Create Start Of Code Block //
-	for (xVal; xVal < 2; xVal++) 
+	int index = 0;
+	for (BlockSection section : m_template) 
 	{
-		for (int y = 0; y < size.y; y++)
+		switch (section.type) 
 		{
-			SpriteSheetTile tile;
-			tile.renderOffset = Vector2D(xVal * CODE_BLOCK_TILE_SIZE, y * CODE_BLOCK_TILE_SIZE);
+		case BlockSectionStart:
+			CreateStartSegment(&index);
+			break;
 
+		case BlockSectionConditionalStart:
+			CreateConditionalStartSegment(&index);
+			break;
 
-			int yVal = 0;
+		case BlockSectionBeginningStart:
+			CreateBeginningStartSegment(&index);
+			break;
 
-			if (y != 0 && y < size.y - 1) 
-			{
-				yVal = 1;
-			}
-			else if (y == size.y - 1) 
-			{
-				yVal = 2;
-			}
+		case BlockSectionEndingStart:
+			CreateEndingStartSegment(&index);
+			break;
 
-			// Remove top connection //
-			if (m_startBlock && xVal == 1 && yVal == 0) 
-			{
-				tile.cellPos = Vector2D(2, yVal);
-			}
-			// Remove bottom connection //
-			else if (m_endBlock && xVal == 1 && yVal == 2)
-			{
-				tile.cellPos = Vector2D(2, yVal);
-			}
-			// Start tail //
-			else if (m_conditionalBlock && yVal == 2 && xVal == 0) 
-			{
-				tile.cellPos = Vector2D(xVal, 3);
-			}
-			else if (m_conditionalBlock && yVal == 2 && xVal == 1)
-			{
-				tile.cellPos = Vector2D(2, yVal);
-			}
-			else tile.cellPos = Vector2D(xVal, yVal);
+		case BlockSectionSpace:
+			CreateSpaceSegment(&index, section.size);
+			break;
 
-			m_textureTiles.push_back(tile);
+		case BlockSectionParameter:
+			CreateParameterSegment(&index);
+			break;
+
+		case BlockSectionEnd:
+			CreateEndSegment(&index);
+			break;
 		}
 	}
+	m_size = index;
 
-	// Create Segment For Text //
+	Hitbox2D* hitbox = new Hitbox2D(&m_transform, Vector2D(m_size * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_HEIGHT * CODE_BLOCK_TILE_SIZE), Vector2D(0, 0), m_renderer);
+	m_hitboxes.push_back(hitbox);
+}
 
-	for (xVal; xVal < (m_textArea.x - 1); xVal++)
+void CodeBlock::CreateStartSegment(int* index)
+{
+	int segmentSize = 2;
+
+	std::vector<Vector2D> sliceCells
 	{
-		for (int y = 0; y < size.y; y++)
-		{
-			SpriteSheetTile tile;
-			tile.renderOffset = Vector2D(xVal * CODE_BLOCK_TILE_SIZE, y * CODE_BLOCK_TILE_SIZE);
+		{CODE_BLOCK_START_SEGMENT,0},
+		{CODE_BLOCK_START_SEGMENT,1},
+		{CODE_BLOCK_START_SEGMENT,2},
 
-			int yVal = 0;
+		{CODE_BLOCK_START_SEGMENT + 1, 0},
+		{CODE_BLOCK_START_SEGMENT + 1, 1},
+		{CODE_BLOCK_START_SEGMENT + 1, 2}
+	};
 
-			if (y != 0 && y < size.y - 1)
-			{
-				yVal = 1;
-			}
-			else if (y == size.y - 1)
-			{
-				yVal = 2;
-			}
-
-			if (m_conditionalBlock && xVal == 2 && yVal == 2) 
-			{
-				tile.cellPos = Vector2D(1, yVal);
-			}
-			else tile.cellPos = Vector2D(CODE_BLOCK_SHEET_TEXT_SEGMENT, yVal);
-
-			m_textureTiles.push_back(tile);
-		}
-	}
-
-	// Create Parameter Sections //
-	for (int i = 0; i < m_parameters; i++) 
+	std::vector<Vector2D> slicePositions
 	{
-		MountPoint* point = new MountPoint();
-		point->position = Vector2D((xVal + 1) * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE);
-		point->contents = nullptr;
-		m_paramPoints.push_back(point);
+		{0,0},
+		{0,1},
+		{0,2},
 
-		for (int x = 0; x < CODE_BLOCK_PARAMETER_SEGMENT_SIZE; x++)
-		{
-			for (int y = 0; y < size.y; y++)
-			{
-				SpriteSheetTile tile;
-				tile.renderOffset = Vector2D(xVal * CODE_BLOCK_TILE_SIZE, y * CODE_BLOCK_TILE_SIZE);
+		{1,0},
+		{1,1},
+		{1,2}
+	};
 
-				int yVal = 0;
-
-				if (y != 0 && y < size.y - 1)
-				{
-					yVal = 1;
-				}
-				else if (y == size.y - 1)
-				{
-					yVal = 2;
-				}
-
-				tile.cellPos = Vector2D(x + 2, yVal);
-
-				m_textureTiles.push_back(tile);
-			}
-			xVal++;
-		}
-	}
-
-	// Finish Code Block //
-	for (int y = 0; y < size.y; y++) 
+	for (int i = 0; i < sliceCells.size(); i++) 
 	{
 		SpriteSheetTile tile;
-		tile.renderOffset = Vector2D(xVal * CODE_BLOCK_TILE_SIZE, y * CODE_BLOCK_TILE_SIZE);
-
-		int yVal = 0;
-
-		if (y != 0 && y < size.y - 1)
-		{
-			yVal = 1;
-		}
-		else if (y == size.y - 1)
-		{
-			yVal = 2;
-		}
-
-		tile.cellPos = Vector2D(CODE_BLOCK_SHEET_END_SEGMENT, yVal);
+		tile.renderOffset = slicePositions[i] * CODE_BLOCK_TILE_SIZE;
+		tile.cellPos = sliceCells[i];
 
 		m_textureTiles.push_back(tile);
+	}
 
-		if (m_conditionalBlock)
+	*index += segmentSize;
+}
+
+void CodeBlock::CreateConditionalStartSegment(int* index)
+{
+	int segmentSize = 3;
+	m_conditionalBlock = true;
+
+	std::vector<Vector2D> sliceCells
+	{
+		{CODE_BLOCK_START_SEGMENT,0},
+		{CODE_BLOCK_START_SEGMENT,1},
+		{CODE_BLOCK_START_SEGMENT,CODE_BLOCK_CONDITIONAL_SEGMENT},
+
+		{CODE_BLOCK_START_SEGMENT + 1, 0},
+		{CODE_BLOCK_START_SEGMENT + 1, 1},
+		{CODE_BLOCK_BLANK_SEGMENT, 2},
+
+		{CODE_BLOCK_BLANK_SEGMENT,0},
+		{CODE_BLOCK_BLANK_SEGMENT,1},
+		{CODE_BLOCK_START_SEGMENT + 1,2}
+	};
+
+	std::vector<Vector2D> slicePositions
+	{
+		{0,0},
+		{0,1},
+		{0,2},
+
+		{1,0},
+		{1,1},
+		{1,2},
+
+		{2,0},
+		{2,1},
+		{2,2}
+	};
+
+	for (int i = 0; i < sliceCells.size(); i++)
+	{
+		SpriteSheetTile tile;
+		tile.renderOffset = slicePositions[i] * CODE_BLOCK_TILE_SIZE;
+		tile.cellPos = sliceCells[i];
+
+		m_textureTiles.push_back(tile);
+	}
+
+	*index += segmentSize;
+}
+
+void CodeBlock::CreateBeginningStartSegment(int* index)
+{
+	int segmentSize = 2;
+	m_startBlock = true;
+
+	std::vector<Vector2D> sliceCells
+	{
+		{CODE_BLOCK_START_SEGMENT,0},
+		{CODE_BLOCK_START_SEGMENT,1},
+		{CODE_BLOCK_START_SEGMENT,2},
+
+		{CODE_BLOCK_BLANK_SEGMENT, 0},
+		{CODE_BLOCK_START_SEGMENT + 1, 1},
+		{CODE_BLOCK_START_SEGMENT + 1, 2}
+	};
+
+	std::vector<Vector2D> slicePositions
+	{
+		{0,0},
+		{0,1},
+		{0,2},
+
+		{1,0},
+		{1,1},
+		{1,2}
+	};
+
+	for (int i = 0; i < sliceCells.size(); i++)
+	{
+		SpriteSheetTile tile;
+		tile.renderOffset = slicePositions[i] * CODE_BLOCK_TILE_SIZE;
+		tile.cellPos = sliceCells[i];
+
+		m_textureTiles.push_back(tile);
+	}
+
+	*index += segmentSize;
+}
+
+void CodeBlock::CreateEndingStartSegment(int* index)
+{
+	int segmentSize = 2;
+	m_endBlock = true;
+
+	std::vector<Vector2D> sliceCells
+	{
+		{CODE_BLOCK_START_SEGMENT,0},
+		{CODE_BLOCK_START_SEGMENT,1},
+		{CODE_BLOCK_START_SEGMENT,2},
+
+		{CODE_BLOCK_START_SEGMENT + 1, 0},
+		{CODE_BLOCK_START_SEGMENT + 1, 1},
+		{CODE_BLOCK_BLANK_SEGMENT, 2}
+	};
+
+	std::vector<Vector2D> slicePositions
+	{
+		{0,0},
+		{0,1},
+		{0,2},
+
+		{1,0},
+		{1,1},
+		{1,2}
+	};
+
+	for (int i = 0; i < sliceCells.size(); i++)
+	{
+		SpriteSheetTile tile;
+		tile.renderOffset = slicePositions[i] * CODE_BLOCK_TILE_SIZE;
+		tile.cellPos = sliceCells[i];
+
+		m_textureTiles.push_back(tile);
+	}
+
+	*index += segmentSize;
+}
+
+void CodeBlock::CreateSpaceSegment(int* index, int size)
+{
+	int segmentSize = size;
+
+	std::vector<Vector2D> sliceCells =
+	{
+		{CODE_BLOCK_BLANK_SEGMENT,0},
+		{CODE_BLOCK_BLANK_SEGMENT,1},
+		{CODE_BLOCK_BLANK_SEGMENT,2}
+	};
+
+	std::vector<Vector2D> slicePositions
+	{
+		{0,0},
+		{0,1},
+		{0,2}
+	};
+
+	for (int i = 0; i < segmentSize; i++) 
+	{
+		for (int j = 0; j < sliceCells.size(); j++) 
 		{
-			CreateTailEnd();
-			CreateTail();
+			SpriteSheetTile tile;
+			tile.renderOffset = (slicePositions[j] + Vector2D(*index, 0) + Vector2D(i, 0)) * CODE_BLOCK_TILE_SIZE;
+			tile.cellPos = sliceCells[j];
+
+			m_textureTiles.push_back(tile);
 		}
 	}
+	*index += segmentSize;
+}
+
+void CodeBlock::CreateParameterSegment(int* index)
+{
+	int segmentSize = 3;
+
+	MountPoint* param = new MountPoint();
+	param->contents = nullptr;
+	param->position = Vector2D(*index * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE);
+
+	m_parameters++;
+
+	m_paramPoints.push_back(param);
+
+	std::vector<Vector2D> sliceCells
+	{
+		{CODE_BLOCK_PARAMETER_SEGMENT,0},
+		{CODE_BLOCK_PARAMETER_SEGMENT,1},
+		{CODE_BLOCK_PARAMETER_SEGMENT,2},
+
+		{CODE_BLOCK_PARAMETER_SEGMENT + 1, 0},
+		{CODE_BLOCK_PARAMETER_SEGMENT + 1, 1},
+		{CODE_BLOCK_PARAMETER_SEGMENT + 1, 2},
+
+		{CODE_BLOCK_PARAMETER_SEGMENT + 2, 0},
+		{CODE_BLOCK_PARAMETER_SEGMENT + 2, 1},
+		{CODE_BLOCK_PARAMETER_SEGMENT + 2, 2}
+	};
+
+	std::vector<Vector2D> slicePositions
+	{
+		{0,0},
+		{0,1},
+		{0,2},
+
+		{1,0},
+		{1,1},
+		{1,2},
+
+		{2,0},
+		{2,1},
+		{2,2}
+	};
+
+	for (int i = 0; i < sliceCells.size(); i++)
+	{
+		SpriteSheetTile tile;
+		tile.renderOffset = (slicePositions[i] + Vector2D(*index, 0) ) * CODE_BLOCK_TILE_SIZE;
+		tile.cellPos = sliceCells[i];
+
+		m_textureTiles.push_back(tile);
+	}
+
+	*index += segmentSize;
+}
+
+void CodeBlock::CreateEndSegment(int* index)
+{
+	int segmentSize = 1;
+
+	std::vector<Vector2D> sliceCells =
+	{
+		{CODE_BLOCK_END_SEGMENT,0},
+		{CODE_BLOCK_END_SEGMENT,1},
+		{CODE_BLOCK_END_SEGMENT,2}
+	};
+
+	std::vector<Vector2D> slicePositions
+	{
+		{0,0},
+		{0,1},
+		{0,2}
+	};
+
+
+	for (int i = 0; i < sliceCells.size(); i++)
+	{
+		SpriteSheetTile tile;
+		tile.renderOffset = (slicePositions[i] + Vector2D(*index, 0)) * CODE_BLOCK_TILE_SIZE;
+		tile.cellPos = sliceCells[i];
+
+		m_textureTiles.push_back(tile);
+	}
+
+	*index += segmentSize;
 }
 
 void CodeBlock::CreateTail()
@@ -406,7 +585,17 @@ void CodeBlock::CreateTail()
 
 void CodeBlock::CreateTailEnd()
 {
-	for (int i = 0; i < m_size.x; i++) 
+	m_endHitbox = new Hitbox2D
+	(
+		&m_transform,
+		Vector2D(m_size * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE),
+		Vector2D(0, (CODE_BLOCK_HEIGHT + CODE_BLOCK_CONDITIONAL_TAIL_LENGTH + 1) * CODE_BLOCK_TILE_SIZE),
+		m_renderer
+	);
+
+	m_hitboxes.push_back(m_endHitbox);
+
+	for (int i = 0; i < m_size; i++) 
 	{
 		SpriteSheetTile tile;
 		tile.renderOffset = Vector2D(i * CODE_BLOCK_TILE_SIZE, 0);
@@ -415,7 +604,7 @@ void CodeBlock::CreateTailEnd()
 
 		if (i == 0) tile.cellPos.x = 0;
 		else if (i == 1) tile.cellPos.x = 1;
-		else if (i == (m_size.x - 1)) tile.cellPos.x = 3;
+		else if (i == (m_size - 1)) tile.cellPos.x = 3;
 
 		m_tailEndTextureTiles.push_back(tile);
 	}
