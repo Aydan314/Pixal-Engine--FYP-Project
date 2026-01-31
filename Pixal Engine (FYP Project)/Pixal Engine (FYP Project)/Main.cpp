@@ -33,7 +33,9 @@ GUICanvas* EngineGUI = nullptr;
 GUICanvas* BlockSelectGUI = nullptr;
 GameScene* gameScene = nullptr;
 
-std::vector<CodeBlock*> BlockDrawer;
+std::vector<std::vector<CodeBlock*>> BlockDrawer;
+int blockDrawerPage = 0;
+bool m_running = false;
 
 Uint32 g_old_time;
 float deltaTime;
@@ -82,16 +84,26 @@ void InitGUI()
 	// Populate Block Drawer with Codeblocks //
 	float shrinkFactor = 2;
 	float x = blockButtonWidth;
-	int blockDrawerSpacing = 128;
+	int page = 0;
+	BlockDrawer.push_back({});
 
 	for (int ID = 0; ID < BLOCK_ID_END_ID; ID++) 
 	{
 		CodeBlock* block = new CodeBlock(engine_renderer, { Vector2D(0, 0) ,Vector2D(1,1),0 }, nullptr, (BLOCK_ID)ID);
+
+		if (x + (block->GetHitboxes()[0]->size.x) / shrinkFactor >= ENGINE_SCREEN_WIDTH)
+		{
+			// Create new page //
+			page++;
+			BlockDrawer.push_back({});
+			x = blockButtonWidth;
+		}
+
 		block->SetPosition(Vector2D(x, ENGINE_SCREEN_HEIGHT - ((ENGINE_SCREEN_HEIGHT / 8.f) - 20)) * shrinkFactor);
 		x += (block->GetHitboxes()[0]->size.x) / shrinkFactor;
 
 		block->SetScale(Vector2D(1 / shrinkFactor, 1 / shrinkFactor));
-		BlockDrawer.push_back(block);
+		BlockDrawer[page].push_back(block);
 	}
 }
 
@@ -217,32 +229,31 @@ bool InitAll()
 	mainScript = new CodeBlockScript(engine_renderer,gameScene);
 	mainScript->SetName("Main");
 
-
-	CodeBlock* codeBlock = new CodeBlock(engine_renderer, Transform{ {100,100},{1,1},0 }, gameScene,BLOCK_ID_SET_POSITION);
-	CodeBlock* codeBlock1 = new CodeBlock(engine_renderer, Transform{ {400,400},{1,1},0 }, gameScene,BLOCK_ID_STOP);
-	CodeBlock* codeBlock3 = new CodeBlock(engine_renderer, Transform{ {300,-100},{1,1},0 }, gameScene,BLOCK_ID_IF);
-	CodeBlock* codeBlock4 = new CodeBlock(engine_renderer, Transform{ {30,-50},{1,1},0 }, gameScene,BLOCK_ID_CUSTOM);
-	CodeBlock* codeBlock5 = new CodeBlock(engine_renderer, Transform{ {30,-60},{1,1},0 }, gameScene,BLOCK_ID_CUSTOM);
-	CodeBlock* codeBlock6 = new CodeBlock(engine_renderer, Transform{ {30,-70},{1,1},0 }, gameScene,BLOCK_ID_CUSTOM);
-	CodeBlock* codeBlock7 = new CodeBlock(engine_renderer, Transform{ {30,-80},{1,1},0 }, gameScene,BLOCK_ID_CUSTOM);
 	CodeBlockParameter* param = new CodeBlockParameter(engine_renderer, Transform{ {100,400},{1,1},0 }, gameScene,DATA_TYPE_NUMBER);
 	CodeBlockParameter* param0 = new CodeBlockParameter(engine_renderer, Transform{ {200,400},{1,1},0 }, gameScene, DATA_TYPE_NUMBER);
+	CodeBlockParameter* param01 = new CodeBlockParameter(engine_renderer, Transform{ {180,400},{1,1},0 }, gameScene, DATA_TYPE_NUMBER);
+	CodeBlockParameter* param02 = new CodeBlockParameter(engine_renderer, Transform{ {140,400},{1,1},0 }, gameScene, DATA_TYPE_NUMBER);
 	CodeBlockParameter* param1 = new CodeBlockParameter(engine_renderer, Transform{ {100,600},{1,1},0 }, gameScene,DATA_TYPE_STRING);
+	CodeBlockParameter* param11 = new CodeBlockParameter(engine_renderer, Transform{ {100,650},{1,1},0 }, gameScene, DATA_TYPE_STRING);
+	CodeBlockParameter* param12 = new CodeBlockParameter(engine_renderer, Transform{ {100,670},{1,1},0 }, gameScene, DATA_TYPE_STRING);
+	CodeBlockParameter* param13 = new CodeBlockParameter(engine_renderer, Transform{ {100,680},{1,1},0 }, gameScene, DATA_TYPE_STRING);
 	CodeBlockParameter* param2 = new CodeBlockParameter(engine_renderer, Transform{ {200,800},{1,1},0 }, gameScene, DATA_TYPE_VARIABLE);
+	CodeBlockParameter* param21 = new CodeBlockParameter(engine_renderer, Transform{ {200,700},{1,1},0 }, gameScene, DATA_TYPE_VARIABLE);
+	CodeBlockParameter* param22 = new CodeBlockParameter(engine_renderer, Transform{ {200,770},{1,1},0 }, gameScene, DATA_TYPE_VARIABLE);
 	CodeBlockParameter* param3 = new CodeBlockParameter(engine_renderer, Transform{ {300,800},{1,1},0 }, gameScene, DATA_TYPE_VARIABLE);
 	CodeBlockParameter* param4 = new CodeBlockParameter(engine_renderer, Transform{ {400,800},{1,1},0 }, gameScene, DATA_TYPE_VARIABLE);
 
-	mainScript->Add(codeBlock);
-	mainScript->Add(codeBlock1);
-	mainScript->Add(codeBlock3);
-	mainScript->Add(codeBlock4);
-	mainScript->Add(codeBlock5);
-	mainScript->Add(codeBlock6);
-	mainScript->Add(codeBlock7);
 	mainScript->Add(param);
 	mainScript->Add(param0);
+	mainScript->Add(param01);
+	mainScript->Add(param02);
 	mainScript->Add(param1);
+	mainScript->Add(param11);
+	mainScript->Add(param12);
+	mainScript->Add(param13);
 	mainScript->Add(param2);
+	mainScript->Add(param21);
+	mainScript->Add(param22);
 	mainScript->Add(param3);
 	mainScript->Add(param4);
 
@@ -291,7 +302,7 @@ void Render()
 	EngineGUI->Render();
 
 	BlockSelectGUI->Render();
-	for (Block* block : BlockDrawer) 
+	for (Block* block : BlockDrawer[blockDrawerPage])
 	{
 		block->Render();
 	}
@@ -334,51 +345,83 @@ bool Update()
 	deltaTime = new_time - g_old_time;
 
 	scripts[selectedScript]->Update(deltaTime, e);
-
 	InputManager::Instance()->Update(deltaTime, e);
-	
-	EngineGUI->Update(deltaTime, e);
 
-	BlockSelectGUI->Update(deltaTime, e);
-
-	Vector2D mousePos = InputManager::Instance()->GetMousePos();
-
-	for (CodeBlock* block : BlockDrawer) 
+	if (!m_running)
 	{
-		block->Update(deltaTime, e);
-		if (block->GetHitboxes()[0]->ContainsPoint(mousePos * 2)) 
-		{
-			if (InputManager::Instance()->GetMouseLeftClicked() && !scripts[selectedScript]->IsBlockSelected())
-			{
-				CodeBlock* newBlock = new CodeBlock(engine_renderer, { mousePos / scripts[selectedScript]->GetZoomValue(),{1,1},0}, gameScene, block->GetID());
+		EngineGUI->Update(deltaTime, e);
 
-				scripts[selectedScript]->Add(newBlock);
-				scripts[selectedScript]->SelectBlock((Block*)newBlock);
+		BlockSelectGUI->Update(deltaTime, e);
+
+		Vector2D mousePos = InputManager::Instance()->GetMousePos();
+
+		for (CodeBlock* block : BlockDrawer[blockDrawerPage])
+		{
+			block->Update(deltaTime, e);
+			if (block->GetHitboxes()[0]->ContainsPoint(mousePos * 2))
+			{
+				if (InputManager::Instance()->GetMouseLeftClicked() && !scripts[selectedScript]->IsBlockSelected())
+				{
+					CodeBlock* newBlock = new CodeBlock(engine_renderer, { mousePos / scripts[selectedScript]->GetZoomValue(),{1,1},0 }, gameScene, block->GetID());
+
+					scripts[selectedScript]->Add(newBlock);
+					scripts[selectedScript]->SelectBlock((Block*)newBlock);
+				}
+			}
+		}
+
+		// Handle GUI Inputs //
+		int index = 0;
+		for (GUIButton* button : EngineGUI->GetAttachedButtons())
+		{
+			if (button->GetClicked() && !InputManager::Instance()->GetMouseLeftClicked())
+			{
+				// Switch Scripts //
+
+				selectedScript = index;
+				scriptText->SetText(scripts[selectedScript]->GetName());
+				scriptText->ReformatText();
+
+				button->ResetClicked();
+			}
+			index++;
+		}
+
+		for (int i = 0; i < BlockSelectGUI->GetAttachedButtons().size(); i++)
+		{
+			if (BlockSelectGUI->GetAttachedButtons()[i]->GetClicked() && !InputManager::Instance()->GetMouseLeftClicked())
+			{
+				// Previous block page //
+				if (i == 0)
+				{
+					if (blockDrawerPage > 0) blockDrawerPage--;
+				}
+				// Next block page //
+				else if (i == 1)
+				{
+					if (blockDrawerPage < BlockDrawer.size() - 1) blockDrawerPage++;
+				}
+
+				BlockSelectGUI->GetAttachedButtons()[i]->ResetClicked();
 			}
 		}
 	}
-
-	gameScene->Update(deltaTime, e);
-
-	g_old_time = new_time;
-
-	// Handle GUI Inputs //
-	int index = 0;
-	for (GUIButton* button : EngineGUI->GetAttachedButtons()) 
+	// Execute Code //
+	if (InputManager::Instance()->IsKeyPressed(SDLK_F5) && InputManager::Instance()->Keystroke())
 	{
-		if (button->GetClicked() && !InputManager::Instance()->GetMouseLeftClicked()) 
-		{
-			// Switch Scripts //
-			
-			selectedScript = index;
-			scriptText->SetText(scripts[selectedScript]->GetName());
-			scriptText->ReformatText();
-				
-			button->ResetClicked();
-		}
-		index++;
+		scripts[selectedScript]->Run();
+		EngineGUI->SetBackgroundColour(ENGINE_RUNNING_COLOUR);
+		m_running = true;
+	}
+	// Stop Code Execution //
+	if (InputManager::Instance()->IsKeyPressed(SDLK_ESCAPE) && InputManager::Instance()->Keystroke())
+	{
+		scripts[selectedScript]->Stop();
+		EngineGUI->SetBackgroundColour(ENGINE_BACKGROUND_COLOUR);
+		m_running = true;
 	}
 
+	g_old_time = new_time;
 	return false;
 }
 

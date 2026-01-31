@@ -84,6 +84,11 @@ void GUICanvas::SetDisableInput(bool state)
 	disableInput = state;
 }
 
+void GUICanvas::SetBackgroundColour(SDL_Color colour)
+{
+	m_bgColour = colour;
+}
+
 bool GUICanvas::GetDetectedInput()
 {
 	return detectedInput;

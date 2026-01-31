@@ -31,7 +31,6 @@ protected:
 	GameScene* m_gameScene = nullptr;
 	bool m_deleted = false;
 	BLOCK_TYPE m_type = BLOCK_TYPE_NONE;
-	BLOCK_ID m_ID = BLOCK_ID_CUSTOM;
 	std::vector<MountPoint*> m_paramPoints;
 
 	SDL_Color m_colour = COLOUR_BLUE;
@@ -67,7 +66,6 @@ public:
 	MountPoint* GetConditionalMountpoint();
 
 	BLOCK_TYPE GetType();
-	BLOCK_ID GetID();
 	void SetNext(Block* next);
 	void SetPrev(Block* prev);
 	void SetConditional(Block* conditional);

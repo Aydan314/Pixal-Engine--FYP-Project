@@ -25,6 +25,8 @@ class CodeBlock : public Block
 protected:
 	GUIText* m_text;
 	int m_parameters;
+	bool m_condition = true;
+	BLOCK_ID m_ID = BLOCK_ID_CUSTOM;
 
 	std::vector<BlockSection> m_template;
 	std::vector<SpriteSheetTile> m_tailTextureTiles;
@@ -43,6 +45,7 @@ public:
 	void Run() override;
 
 	void CreateBlock() override;
+	BLOCK_ID GetID();
 
 	void CreateStartSegment(int* index);
 	void CreateConditionalStartSegment(int* index);

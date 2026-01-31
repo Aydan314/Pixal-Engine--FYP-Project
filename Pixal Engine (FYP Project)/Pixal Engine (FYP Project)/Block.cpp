@@ -259,11 +259,6 @@ BLOCK_TYPE Block::GetType()
 	return m_type;
 }
 
-BLOCK_ID Block::GetID()
-{
-	return m_ID;
-}
-
 void Block::CreateBlock()
 {
 }

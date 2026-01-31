@@ -39,7 +39,7 @@ void GameObject::Render()
 
 void GameObject::Update(float deltaTime, SDL_Event e)
 {
-
+	SetPosition(GetPosition() + (m_body.velocity * deltaTime));
 }
 
 void GameObject::SetPosition(Vector2D position)
@@ -65,6 +65,11 @@ void GameObject::SetRotation(double rotation)
 void GameObject::SetScale(Vector2D scale)
 {
 	m_transform.scale = scale;
+}
+
+void GameObject::SetVelocity(Vector2D velocity)
+{
+	m_body.velocity = velocity;
 }
 
 void GameObject::LerpToLocation(Vector2D position, int duration)
@@ -143,6 +148,11 @@ bool GameObject::GetFinishedLerp()
 double GameObject::GetRotation()
 {
 	return m_transform.rotation;
+}
+
+Vector2D GameObject::GetVelocity()
+{
+	return m_body.velocity;
 }
 
 Transform GameObject::GetTransform()

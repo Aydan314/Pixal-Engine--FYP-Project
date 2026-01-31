@@ -15,6 +15,7 @@ protected:
 	Vector2D m_size = { 0.f,0.f };
 	
 	Transform m_transform;
+	PhysicsBody m_body;
 	
 	SpriteSheetTexture m_ssTexture = SpriteSheetTexture();
 	Texture2D* m_texture = nullptr;
@@ -49,6 +50,7 @@ public:
 	void SetPosition(Vector2D position);
 	void SetRotation(double rotation);
 	void SetScale(Vector2D scale);
+	void SetVelocity(Vector2D velocity);
 
 	void SetPlayerCollision(bool state);
 	void SetVisable(bool state);
@@ -57,6 +59,7 @@ public:
 	Vector2D GetPosition();
 	Vector2D GetScale();
 	double GetRotation();
+	Vector2D GetVelocity();
 	Transform GetTransform();
 
 	Rect2D GetScreenSpaceRect() { return Rect2D(m_transform.position.x, m_transform.position.y, m_texture->GetWidth(), m_texture->GetHeight()); }

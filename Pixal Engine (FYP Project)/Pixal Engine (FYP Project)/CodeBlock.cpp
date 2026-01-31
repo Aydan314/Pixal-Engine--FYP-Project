@@ -38,6 +38,15 @@ void CodeBlock::Init(BLOCK_ID ID)
 		};
 		break;
 
+	case BLOCK_ID_SET_VELOCITY:
+		m_name = "Set Velocity Of           to X=        Y=";
+		m_colour = COLOUR_GREEN;
+		m_template =
+		{
+			{BlockSectionStart},{BlockSectionSpace,5},{BlockSectionParameter},{BlockSectionSpace,2},{BlockSectionParameter},{BlockSectionSpace,1},{BlockSectionParameter},{BlockSectionEnd}
+		};
+		break;
+
 	case BLOCK_ID_IF:
 		m_name = "If                =";
 		m_colour = COLOUR_LIGHT_GREY;
@@ -71,6 +80,15 @@ void CodeBlock::Init(BLOCK_ID ID)
 		m_template =
 		{
 			{BlockSectionStart},{BlockSectionSpace,8},{BlockSectionParameter},{BlockSectionEnd}
+		};
+		break;
+
+	case BLOCK_ID_ON_KEY:
+		m_name = "On Key";
+		m_colour = COLOUR_ORANGE;
+		m_template =
+		{
+			{BlockSectionBeginningStart},{BlockSectionSpace,2},{BlockSectionParameter},{ BlockSectionEnd }
 		};
 		break;
 
@@ -213,12 +231,37 @@ void CodeBlock::Run()
 		}
 		break;
 
+	case BLOCK_ID_SET_VELOCITY:
+		if (m_paramPoints[0]->contents)
+		{
+			float X = 0;
+			float Y = 0;
+
+			if (m_paramPoints[1]->contents) X = ((CodeBlockParameter*)m_paramPoints[1]->contents)->GetContents().number;
+			if (m_paramPoints[2]->contents) Y = ((CodeBlockParameter*)m_paramPoints[2]->contents)->GetContents().number;
+
+			std::string varName = ((CodeBlockParameter*)m_paramPoints[0]->contents)->GetContents().name;
+			CodeBlockVariableManager::Instance()->GetVariable(varName).gameObject->SetVelocity(Vector2D(X, Y));
+			std::cout << "Set Velocity of " << varName << " to " << X << "," << Y << "\n";
+		}
+		break;
+
+	case BLOCK_ID_ON_KEY:
+		m_condition = false;
+		if (m_paramPoints[0]->contents) 
+		{
+			std::string key = ((CodeBlockParameter*)m_paramPoints[0]->contents)->GetContents().string;
+			SDL_KeyCode keyPress = (SDL_KeyCode)key[0];
+			m_condition = InputManager::Instance()->IsKeyPressed(keyPress);
+		}
+		break;
+
 	default:
 		std::cout << m_name << "\n";
 		break;
 	}
 	
-	if (GetNext()) GetNext()->Run();
+	if (GetNext() && m_condition) GetNext()->Run();
 }
 
 void CodeBlock::CreateBlock()
@@ -263,6 +306,11 @@ void CodeBlock::CreateBlock()
 
 	Hitbox2D* hitbox = new Hitbox2D(&m_transform, Vector2D(m_size * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_HEIGHT * CODE_BLOCK_TILE_SIZE), Vector2D(0, 0), m_renderer);
 	m_hitboxes.push_back(hitbox);
+}
+
+BLOCK_ID CodeBlock::GetID()
+{
+	return m_ID;
 }
 
 void CodeBlock::CreateStartSegment(int* index)

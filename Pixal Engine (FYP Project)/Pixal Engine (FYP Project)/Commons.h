@@ -28,6 +28,8 @@ enum BLOCK_ID
 	BLOCK_ID_START,
 	BLOCK_ID_IF,
 	BLOCK_ID_CREATE_GAMEOBJECT,
+	BLOCK_ID_SET_VELOCITY,
+	BLOCK_ID_ON_KEY,
 
 	BLOCK_ID_END_ID
 };
@@ -54,6 +56,11 @@ struct Transform
 	Vector2D position;
 	Vector2D scale;
 	double rotation;
+};
+
+struct PhysicsBody 
+{
+	Vector2D velocity;
 };
 
 struct Rect2D
@@ -134,6 +141,7 @@ const std::vector<SpriteSheetTexture> TEXTURES_TO_LOAD =
 };
 
 const SDL_Color ENGINE_BACKGROUND_COLOUR = { 50,50,50,255 };
+const SDL_Color ENGINE_RUNNING_COLOUR = { 50,150,50,255 };
 const SDL_Color ENGINE_TEXT_COLOUR = { 255,255,255,255 };
 
 const ButtonColours ENGINE_BUTTON_COLOURS

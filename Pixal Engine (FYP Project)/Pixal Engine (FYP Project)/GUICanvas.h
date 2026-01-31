@@ -24,6 +24,7 @@ public:
 	void AddButton(GUIButton* button);
 	void AddText(GameObject* text);
 	void SetDisableInput(bool state);
+	void SetBackgroundColour(SDL_Color colour);
 
 	bool GetDetectedInput();
 	std::vector<GUIButton*> GetAttachedButtons();
