@@ -33,7 +33,7 @@ GUICanvas* EngineGUI = nullptr;
 GUICanvas* BlockSelectGUI = nullptr;
 GameScene* gameScene = nullptr;
 
-std::vector<std::vector<CodeBlock*>> BlockDrawer;
+std::vector<std::vector<Block*>> BlockDrawer;
 int blockDrawerPage = 0;
 bool m_running = false;
 
@@ -87,7 +87,7 @@ void InitGUI()
 	int page = 0;
 	BlockDrawer.push_back({});
 
-	for (int ID = 0; ID < BLOCK_ID_END_ID; ID++) 
+	for (int ID = 1; ID < BLOCK_ID_END_ID; ID++) 
 	{
 		CodeBlock* block = new CodeBlock(engine_renderer, { Vector2D(0, 0) ,Vector2D(1,1),0 }, nullptr, (BLOCK_ID)ID);
 
@@ -105,6 +105,26 @@ void InitGUI()
 		block->SetScale(Vector2D(1 / shrinkFactor, 1 / shrinkFactor));
 		BlockDrawer[page].push_back(block);
 	}
+
+	// Create page for parameter blocks //
+	page++;
+	BlockDrawer.push_back({});
+	x = blockButtonWidth;
+	float ParamShrinkFactor = 1.f;
+
+	for (int paramType = 1; paramType < DATA_TYPE_MAX - 1; paramType++) 
+	{
+		CodeBlockParameter* param = new CodeBlockParameter(engine_renderer, { Vector2D(0, 0) ,Vector2D(1,1),0 }, nullptr, (DATA_TYPE)paramType);
+
+		param->SetPosition(Vector2D(x, ENGINE_SCREEN_HEIGHT - ((ENGINE_SCREEN_HEIGHT / 8.f) - 20)) * ParamShrinkFactor);
+		x += (param->GetHitboxes()[0]->size.x) / ParamShrinkFactor;
+
+		param->SetScale(Vector2D(1 / ParamShrinkFactor, 1 / ParamShrinkFactor));
+		BlockDrawer[page].push_back(param);
+	}
+
+
+
 }
 
 bool InitEditorWindow()
@@ -229,41 +249,10 @@ bool InitAll()
 	mainScript = new CodeBlockScript(engine_renderer,gameScene);
 	mainScript->SetName("Main");
 
-	CodeBlockParameter* param = new CodeBlockParameter(engine_renderer, Transform{ {100,400},{1,1},0 }, gameScene,DATA_TYPE_NUMBER);
-	CodeBlockParameter* param0 = new CodeBlockParameter(engine_renderer, Transform{ {200,400},{1,1},0 }, gameScene, DATA_TYPE_NUMBER);
-	CodeBlockParameter* param01 = new CodeBlockParameter(engine_renderer, Transform{ {180,400},{1,1},0 }, gameScene, DATA_TYPE_NUMBER);
-	CodeBlockParameter* param02 = new CodeBlockParameter(engine_renderer, Transform{ {140,400},{1,1},0 }, gameScene, DATA_TYPE_NUMBER);
-	CodeBlockParameter* param1 = new CodeBlockParameter(engine_renderer, Transform{ {100,600},{1,1},0 }, gameScene,DATA_TYPE_STRING);
-	CodeBlockParameter* param11 = new CodeBlockParameter(engine_renderer, Transform{ {100,650},{1,1},0 }, gameScene, DATA_TYPE_STRING);
-	CodeBlockParameter* param12 = new CodeBlockParameter(engine_renderer, Transform{ {100,670},{1,1},0 }, gameScene, DATA_TYPE_STRING);
-	CodeBlockParameter* param13 = new CodeBlockParameter(engine_renderer, Transform{ {100,680},{1,1},0 }, gameScene, DATA_TYPE_STRING);
-	CodeBlockParameter* param2 = new CodeBlockParameter(engine_renderer, Transform{ {200,800},{1,1},0 }, gameScene, DATA_TYPE_VARIABLE);
-	CodeBlockParameter* param21 = new CodeBlockParameter(engine_renderer, Transform{ {200,700},{1,1},0 }, gameScene, DATA_TYPE_VARIABLE);
-	CodeBlockParameter* param22 = new CodeBlockParameter(engine_renderer, Transform{ {200,770},{1,1},0 }, gameScene, DATA_TYPE_VARIABLE);
-	CodeBlockParameter* param3 = new CodeBlockParameter(engine_renderer, Transform{ {300,800},{1,1},0 }, gameScene, DATA_TYPE_VARIABLE);
-	CodeBlockParameter* param4 = new CodeBlockParameter(engine_renderer, Transform{ {400,800},{1,1},0 }, gameScene, DATA_TYPE_VARIABLE);
-
-	mainScript->Add(param);
-	mainScript->Add(param0);
-	mainScript->Add(param01);
-	mainScript->Add(param02);
-	mainScript->Add(param1);
-	mainScript->Add(param11);
-	mainScript->Add(param12);
-	mainScript->Add(param13);
-	mainScript->Add(param2);
-	mainScript->Add(param21);
-	mainScript->Add(param22);
-	mainScript->Add(param3);
-	mainScript->Add(param4);
-
 	scripts.push_back(mainScript);
 
 	emptyScript = new CodeBlockScript(engine_renderer, gameScene);
 	emptyScript->SetName("Other Script");
-
-	CodeBlock* codeBlockE = new CodeBlock(engine_renderer, Transform{ {30,80},{1,1},0 }, gameScene, BLOCK_ID_CUSTOM);
-	emptyScript->Add(codeBlockE);
 
 	scripts.push_back(emptyScript);
 
@@ -355,18 +344,33 @@ bool Update()
 
 		Vector2D mousePos = InputManager::Instance()->GetMousePos();
 
-		for (CodeBlock* block : BlockDrawer[blockDrawerPage])
+		for (Block* block : BlockDrawer[blockDrawerPage])
 		{
 			block->Update(deltaTime, e);
-			if (block->GetHitboxes()[0]->ContainsPoint(mousePos * 2))
+			if (block->GetType() == BLOCK_TYPE_PARAMETER)
 			{
+				if (block->GetHitboxes()[0]->ContainsPoint(mousePos))
+				{
+					if (InputManager::Instance()->GetMouseLeftClicked() && !scripts[selectedScript]->IsBlockSelected())
+					{
+						CodeBlockParameter* newParam = new CodeBlockParameter(engine_renderer, { mousePos / scripts[selectedScript]->GetZoomValue(),{1,1},0 }, gameScene, ((CodeBlockParameter*)block)->GetDataType());
+
+						scripts[selectedScript]->Add(newParam);
+						scripts[selectedScript]->SelectBlock((Block*)newParam);
+					}
+				}
+			}
+			else if (block->GetHitboxes()[0]->ContainsPoint(mousePos * 2))
+			{
+
 				if (InputManager::Instance()->GetMouseLeftClicked() && !scripts[selectedScript]->IsBlockSelected())
 				{
-					CodeBlock* newBlock = new CodeBlock(engine_renderer, { mousePos / scripts[selectedScript]->GetZoomValue(),{1,1},0 }, gameScene, block->GetID());
+					CodeBlock* newBlock = new CodeBlock(engine_renderer, { mousePos / scripts[selectedScript]->GetZoomValue(),{1,1},0 }, gameScene, ((CodeBlock*)block)->GetID());
 
 					scripts[selectedScript]->Add(newBlock);
 					scripts[selectedScript]->SelectBlock((Block*)newBlock);
 				}
+
 			}
 		}
 

@@ -1,16 +1,14 @@
-﻿  Main.cpp
-C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\GameObject.h(65,137): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'Main.cpp')
+﻿  CodeBlockParameter.cpp
+C:\Users\k034281n\Documents\GitHub\Pixal-Engine--FYP-Project\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\GameObject.h(65,137): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'CodeBlockParameter.cpp')
   
-C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\GameObject.h(65,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'Main.cpp')
+C:\Users\k034281n\Documents\GitHub\Pixal-Engine--FYP-Project\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\GameObject.h(65,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'CodeBlockParameter.cpp')
   
-C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\Main.cpp(75,65): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\Main.cpp(80,66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\Main.cpp(80,168): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\Main.cpp(86,10): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\Main.cpp(99,8): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\Main.cpp(345,23): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\Main.cpp(164,1): warning C4715: 'InitGameWindow': not all control paths return a value
-C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\Main.cpp(136,1): warning C4715: 'InitEditorWindow': not all control paths return a value
-  Pixal Engine (FYP Project).vcxproj -> C:\Users\aydan\Documents\GitHub\Pixal-Engine--FYP-Project-\Pixal Engine (FYP Project)\x64\Debug\Pixal Engine (FYP Project).exe
+C:\Users\k034281n\Documents\GitHub\Pixal-Engine--FYP-Project\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\CodeBlockParameter.cpp(20,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\k034281n\Documents\GitHub\Pixal-Engine--FYP-Project\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\CodeBlockParameter.cpp(22,66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\k034281n\Documents\GitHub\Pixal-Engine--FYP-Project\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\CodeBlockParameter.cpp(50,128): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\k034281n\Documents\GitHub\Pixal-Engine--FYP-Project\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\CodeBlockParameter.cpp(50,112): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\k034281n\Documents\GitHub\Pixal-Engine--FYP-Project\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\CodeBlockParameter.cpp(74,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\k034281n\Documents\GitHub\Pixal-Engine--FYP-Project\Pixal Engine (FYP Project)\Pixal Engine (FYP Project)\CodeBlockParameter.cpp(87,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Pixal Engine (FYP Project).vcxproj -> C:\Users\k034281n\Documents\GitHub\Pixal-Engine--FYP-Project\Pixal Engine (FYP Project)\x64\Debug\Pixal Engine (FYP Project).exe

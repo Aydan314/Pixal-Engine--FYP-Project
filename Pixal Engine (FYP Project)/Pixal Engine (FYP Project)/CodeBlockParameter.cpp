@@ -9,21 +9,21 @@ CodeBlockParameter::CodeBlockParameter(SDL_Renderer* renderer, Transform transfo
 
 	m_size = 3;
 
+	m_dataContent.gameObject = nullptr;
+	m_dataContent.string = "";
+	m_dataContent.number = 0;
+	m_dataContent.name = "PARAMETER";
+
 	m_dataType = dataType;
 	Init(m_dataType);
 
-	m_text = new GUITextBox(m_renderer, Vector2D(m_size * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE), GameObjectData{ m_transform,COLLISION_NONE }, TextData{ m_defaultText,ENGINE_FONT_PATH,15,{255,255,255,255} });
+	m_text = new GUITextBox(m_renderer, Vector2D(m_size * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE), GameObjectData{ m_transform,COLLISION_NONE }, TextData{ m_defaultText,ENGINE_FONT_PATH,16,{255,255,255,255} });
 
 	m_hitboxes.push_back(new Hitbox2D(&m_transform, Vector2D(m_size * CODE_BLOCK_TILE_SIZE, CODE_BLOCK_TILE_SIZE), Vector2D(0,0), m_renderer));
 
 	m_startMountPoint = new MountPoint();
 	m_endMountPoint = new MountPoint();
 	m_conditionalMountPoint = nullptr;
-
-	m_dataContent.gameObject = nullptr;
-	m_dataContent.string = "";
-	m_dataContent.number = 0;
-	m_dataContent.name = "PARAMETER";
 
 	CreateBlock();
 }
@@ -50,6 +50,7 @@ void CodeBlockParameter::Render()
 		m_texture->Render((m_transform.position + tile.renderOffset) * m_transform.scale, SDL_FLIP_NONE, tile.cellPos.x, tile.cellPos.y, m_transform.rotation, m_transform.scale, colour);
 	}
 	m_text->Render();
+	//m_hitboxes[0]->Draw();
 }
 
 void CodeBlockParameter::Update(float deltaTime, SDL_Event e)
