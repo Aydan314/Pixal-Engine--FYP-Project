@@ -47,8 +47,26 @@ void CodeBlock::Init(BLOCK_ID ID)
 		};
 		break;
 
-	case BLOCK_ID_IF:
+	case BLOCK_ID_IF_EQUAL:
 		m_name = "If                =";
+		m_colour = COLOUR_LIGHT_GREY;
+		m_template =
+		{
+			{BlockSectionConditionalStart},{BlockSectionSpace,1},{BlockSectionParameter},{BlockSectionSpace,1},{BlockSectionParameter},{ BlockSectionEnd }
+		};
+		break;
+
+	case BLOCK_ID_IF_LESS:
+		m_name = "If                <";
+		m_colour = COLOUR_LIGHT_GREY;
+		m_template =
+		{
+			{BlockSectionConditionalStart},{BlockSectionSpace,1},{BlockSectionParameter},{BlockSectionSpace,1},{BlockSectionParameter},{ BlockSectionEnd }
+		};
+		break;
+
+	case BLOCK_ID_IF_MORE:
+		m_name = "If                >";
 		m_colour = COLOUR_LIGHT_GREY;
 		m_template =
 		{
@@ -75,11 +93,11 @@ void CodeBlock::Init(BLOCK_ID ID)
 		break;
 
 	case BLOCK_ID_CREATE_GAMEOBJECT:
-		m_name = "Create GameObject Called";
+		m_name = "Create GameObject Stored in";
 		m_colour = COLOUR_GREEN;
 		m_template =
 		{
-			{BlockSectionStart},{BlockSectionSpace,8},{BlockSectionParameter},{BlockSectionEnd}
+			{BlockSectionStart},{BlockSectionSpace,9},{BlockSectionParameter},{BlockSectionEnd}
 		};
 		break;
 
@@ -89,6 +107,33 @@ void CodeBlock::Init(BLOCK_ID ID)
 		m_template =
 		{
 			{BlockSectionBeginningStart},{BlockSectionSpace,2},{BlockSectionParameter},{ BlockSectionEnd }
+		};
+		break;
+
+	case BLOCK_ID_ON_TICK:
+		m_name = "On Tick";
+		m_colour = COLOUR_ORANGE;
+		m_template =
+		{
+			{BlockSectionBeginningStart},{BlockSectionSpace,2 },{BlockSectionEnd}
+		};
+		break;
+
+	case BLOCK_ID_GET_X:
+		m_name = "Get X Position of        Store in";
+		m_colour = COLOUR_BLUE;
+		m_template =
+		{
+			{BlockSectionStart},{BlockSectionSpace,5},{BlockSectionParameter},{BlockSectionSpace,3},{BlockSectionParameter}, { BlockSectionEnd }
+		};
+		break;
+
+	case BLOCK_ID_GET_Y:
+		m_name = "Get Y Position of        Store in";
+		m_colour = COLOUR_BLUE;
+		m_template =
+		{
+			{BlockSectionStart},{BlockSectionSpace,5},{BlockSectionParameter},{BlockSectionSpace,3},{BlockSectionParameter}, { BlockSectionEnd }
 		};
 		break;
 
@@ -200,15 +245,11 @@ void CodeBlock::Run()
 	case BLOCK_ID_SET_POSITION:
 		if (m_paramPoints[0]->contents)
 		{
-			float X = 0;
-			float Y = 0;
+			float X = GetNumberValueOfParameter(1);
+			float Y = GetNumberValueOfParameter(2);
 
-			if (m_paramPoints[1]->contents) X = ((CodeBlockParameter*)m_paramPoints[1]->contents)->GetContents().number;
-			if (m_paramPoints[2]->contents) Y = ((CodeBlockParameter*)m_paramPoints[2]->contents)->GetContents().number;
-
-			std::string varName = ((CodeBlockParameter*)m_paramPoints[0]->contents)->GetContents().name;
-			CodeBlockVariableManager::Instance()->GetVariable(varName).gameObject->SetPosition(Vector2D(X, Y));
-			std::cout << "Set position of " << varName << " to " << X << "," << Y << "\n";
+			GameObject* object = GetObjectValueOfParameter(0);
+			if (object) object->SetPosition(Vector2D(X, Y));
 		}
 		break;
 
@@ -224,25 +265,20 @@ void CodeBlock::Run()
 			m_gameScene->Add(newObject);
 
 			content.gameObject = newObject;
+			content.name = GetNameOfParameter(0);
 
-			std::string varName = ((CodeBlockParameter*)m_paramPoints[0]->contents)->GetContents().name;
-			CodeBlockVariableManager::Instance()->SetVariable(varName, content);
-			std::cout << "Create new object called: " << varName << "\n";
+			StoreValueAsVariable(content);
 		}
 		break;
 
 	case BLOCK_ID_SET_VELOCITY:
 		if (m_paramPoints[0]->contents)
 		{
-			float X = 0;
-			float Y = 0;
+			float X = GetNumberValueOfParameter(1);
+			float Y = GetNumberValueOfParameter(2);
 
-			if (m_paramPoints[1]->contents) X = ((CodeBlockParameter*)m_paramPoints[1]->contents)->GetContents().number;
-			if (m_paramPoints[2]->contents) Y = ((CodeBlockParameter*)m_paramPoints[2]->contents)->GetContents().number;
-
-			std::string varName = ((CodeBlockParameter*)m_paramPoints[0]->contents)->GetContents().name;
-			CodeBlockVariableManager::Instance()->GetVariable(varName).gameObject->SetVelocity(Vector2D(X, Y));
-			std::cout << "Set Velocity of " << varName << " to " << X << "," << Y << "\n";
+			GameObject* object = GetObjectValueOfParameter(0);
+			if (object != nullptr) object->SetVelocity(Vector2D(X, Y));
 		}
 		break;
 
@@ -250,12 +286,77 @@ void CodeBlock::Run()
 		m_condition = false;
 		if (m_paramPoints[0]->contents) 
 		{
-			std::string key = ((CodeBlockParameter*)m_paramPoints[0]->contents)->GetContents().string;
+			std::string key = GetTextValueOfParameter(0);
 			SDL_KeyCode keyPress = (SDL_KeyCode)key[0];
 			m_condition = InputManager::Instance()->IsKeyPressed(keyPress);
 		}
 		break;
 
+	case BLOCK_ID_ON_TICK:
+		break;
+
+	case BLOCK_ID_GET_X:
+		if (m_paramPoints[0]->contents && m_paramPoints[1]->contents)
+		{
+			GameObject* object = GetObjectValueOfParameter(0);
+			if (object) 
+			{
+				float X = object->GetPosition().x;
+				content.number = X;
+				content.name = GetNameOfParameter(1);
+
+				StoreValueAsVariable(content);
+			}
+		}
+		break;
+
+	case BLOCK_ID_GET_Y:
+		if (m_paramPoints[0]->contents && m_paramPoints[1]->contents)
+		{
+			GameObject* object = GetObjectValueOfParameter(0);
+			if (object)
+			{
+				float Y = object->GetPosition().y;
+				content.number = Y;
+				content.name = GetNameOfParameter(1);
+
+				StoreValueAsVariable(content);
+			}
+		}
+		break;
+
+	case BLOCK_ID_IF_EQUAL:
+		m_condition = false;
+		if (m_paramPoints[0]->contents && m_paramPoints[1]->contents) 
+		{
+			m_condition = CompareParameters(0, 1, DATA_TYPE_NUMBER) == ComparisonEqual;
+
+			if (GetConditionalMountpoint()->contents && m_condition) GetConditionalMountpoint()->contents->Run();
+			if (GetNext()) GetNext()->Run();
+		}
+		break;
+
+	case BLOCK_ID_IF_LESS:
+		m_condition = false;
+		if (m_paramPoints[0]->contents && m_paramPoints[1]->contents)
+		{
+			m_condition = CompareParameters(0, 1, DATA_TYPE_NUMBER) == ComparisonLessThan;
+
+			if (GetConditionalMountpoint()->contents && m_condition) GetConditionalMountpoint()->contents->Run();
+			if (GetNext()) GetNext()->Run();
+		}
+		break;
+
+	case BLOCK_ID_IF_MORE:
+		m_condition = false;
+		if (m_paramPoints[0]->contents && m_paramPoints[1]->contents)
+		{
+			m_condition = CompareParameters(0, 1, DATA_TYPE_NUMBER) == ComparisonMoreThan;
+
+			if (GetConditionalMountpoint()->contents && m_condition) GetConditionalMountpoint()->contents->Run();
+			if (GetNext()) GetNext()->Run();
+		}
+		break;
 	default:
 		std::cout << m_name << "\n";
 		break;
@@ -656,6 +757,134 @@ void CodeBlock::CreateTailEnd()
 
 		m_tailEndTextureTiles.push_back(tile);
 	}
+}
+
+float CodeBlock::GetNumberValueOfParameter(int param)
+{
+	CodeBlockParameter* value = (CodeBlockParameter*)(m_paramPoints[param]->contents);
+
+	if (value != nullptr) 
+	{
+		switch (value->GetDataType())
+		{
+		case DATA_TYPE_NUMBER:
+			return value->GetContents().number;
+			break;
+
+		case DATA_TYPE_VARIABLE:
+			return CodeBlockVariableManager::Instance()->GetVariable(value->GetContents().name).number;
+			break;
+
+		default:
+			return 0.0f;
+			break;
+		}
+	}
+
+	return 0.0f;
+}
+
+std::string CodeBlock::GetTextValueOfParameter(int param)
+{
+	CodeBlockParameter* value = (CodeBlockParameter*)(m_paramPoints[param]->contents);
+
+	if (value != nullptr) 
+	{
+		switch (value->GetDataType()) 
+		{
+		case DATA_TYPE_STRING:
+			return value->GetContents().string;
+			break;
+
+		case DATA_TYPE_VARIABLE:
+			return CodeBlockVariableManager::Instance()->GetVariable(value->GetContents().name).string;
+			break;
+
+		default:
+			return std::string();
+			break;
+		}
+	}
+	return std::string();
+}
+
+std::string CodeBlock::GetNameOfParameter(int param)
+{
+	CodeBlockParameter* value = (CodeBlockParameter*)(m_paramPoints[param]->contents);
+
+	if (value != nullptr)
+	{
+		return value->GetContents().name;
+	}
+	return std::string();
+}
+
+GameObject* CodeBlock::GetObjectValueOfParameter(int param)
+{
+	CodeBlockParameter* value = (CodeBlockParameter*)(m_paramPoints[param]->contents);
+
+	if (value != nullptr) 
+	{
+		switch (value->GetDataType()) 
+		{
+		case DATA_TYPE_GAMEOBJECT:
+			return value->GetContents().gameObject;
+			break;
+
+		case DATA_TYPE_VARIABLE:
+			return CodeBlockVariableManager::Instance()->GetVariable(value->GetContents().name).gameObject;
+			break;
+
+		default:
+			return nullptr;
+			break;
+		}
+	}
+	return nullptr;
+}
+
+ComparisonResult CodeBlock::CompareParameters(int A, int B, DATA_TYPE type)
+{
+	float numA = GetNumberValueOfParameter(A);
+	float numB = GetNumberValueOfParameter(B);
+
+	std::string strA = GetTextValueOfParameter(A);
+	std::string strB = GetTextValueOfParameter(B);
+
+	GameObject* objA = GetObjectValueOfParameter(A);
+	GameObject* objB = GetObjectValueOfParameter(B);
+
+	int cmp = std::strcmp(strA.c_str(), strB.c_str());
+
+	switch (type)
+	{
+	case DATA_TYPE_NUMBER:
+		if (numA == numB) return ComparisonEqual;
+		if (numA > numB) return ComparisonMoreThan;
+		if (numA < numB) return ComparisonLessThan;
+		break;
+
+	case DATA_TYPE_STRING:
+		if (cmp == 0) return ComparisonEqual;
+		if (cmp > 0) return ComparisonMoreThan;
+		if (cmp < 0) return ComparisonLessThan;
+		break;
+
+	case DATA_TYPE_GAMEOBJECT:
+		if (objA == objB) return ComparisonEqual;
+		break;
+
+	default:
+		return ComparisonNotEqual;
+		break;
+	}
+	return ComparisonNotEqual;
+}
+
+void CodeBlock::StoreValueAsVariable(DataContent value)
+{
+	std::string variableName = value.name;
+	CodeBlockVariableManager::Instance()->SetVariable(variableName, value);
 }
 
 std::vector<MountPoint*>* CodeBlock::GetParameterMountPoints()

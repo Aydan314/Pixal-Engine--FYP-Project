@@ -11,7 +11,7 @@ private:
 	std::vector<CodeBlockParameter*> m_params;
 	std::string m_name = "Script";
 	CodeBlock* m_start = nullptr;
-	std::vector<CodeBlock*> m_inputBlocks;
+	std::vector<CodeBlock*> m_activeBlocks;
 	GameScene* m_controlledScene = nullptr;
 
 	SDL_Renderer* m_renderer;

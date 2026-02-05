@@ -14,6 +14,14 @@ enum BlockSectionType
 	BlockSectionEnd
 };
 
+enum ComparisonResult 
+{
+	ComparisonNotEqual,
+	ComparisonEqual,
+	ComparisonMoreThan,
+	ComparisonLessThan
+};
+
 struct BlockSection
 {
 	BlockSectionType type;
@@ -58,6 +66,15 @@ public:
 
 	void CreateTail();
 	void CreateTailEnd();
+
+	float GetNumberValueOfParameter(int param);
+	std::string GetTextValueOfParameter(int param);
+	std::string GetNameOfParameter(int param);
+	GameObject* GetObjectValueOfParameter(int param);
+
+	ComparisonResult CompareParameters(int A, int B, DATA_TYPE type);
+
+	void StoreValueAsVariable(DataContent value);
 
 	void Init(BLOCK_ID ID);
 	void InitMountPoints();

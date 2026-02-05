@@ -5,6 +5,7 @@
 #include "GameSceneManager.h"
 #include "CodeBlockScript.h"
 #include "GUICanvas.h"
+#include "GUITextBlock.h"
 
 #include "SDL.h"
 #include "SDL_image.h"
@@ -31,11 +32,13 @@ int selectedScript = 0;
 GUIText* scriptText = nullptr;
 GUICanvas* EngineGUI = nullptr;
 GUICanvas* BlockSelectGUI = nullptr;
+GUICanvas* ConfirmQuitGUI = nullptr;
 GameScene* gameScene = nullptr;
 
 std::vector<std::vector<Block*>> BlockDrawer;
 int blockDrawerPage = 0;
 bool m_running = false;
+bool showQuitGUI = false;
 
 Uint32 g_old_time;
 float deltaTime;
@@ -123,8 +126,23 @@ void InitGUI()
 		BlockDrawer[page].push_back(param);
 	}
 
+	// Create confirmation for closing program //
+	float quitGUIsize = ENGINE_SCREEN_WIDTH / 8.f;
+	float quitButtonSize = ENGINE_SCREEN_WIDTH / 16.f;
+	ConfirmQuitGUI = new GUICanvas(engine_renderer, Vector2D(quitGUIsize + quitButtonSize, quitGUIsize), ENGINE_BUTTON_COLOURS.defaultColour, { {Vector2D((ENGINE_SCREEN_WIDTH / 2.f) - (quitGUIsize / 2.f),(ENGINE_SCREEN_HEIGHT / 2.f) - (quitGUIsize / 2.f)),Vector2D(1,1),0},COLLISION_NONE });
+	
+	GUITextBlock* confirmText = new GUITextBlock(engine_renderer, { ConfirmQuitGUI->GetPosition(),Vector2D(1,1),COLLISION_NONE }, { "= Exit Program =\nAre You Sure?",ENGINE_FONT_PATH,20,ENGINE_TEXT_COLOUR });
+	ConfirmQuitGUI->AddText((GameObject*)confirmText);
 
+	GUIText* yesText = new GUIText(engine_renderer, { {Vector2D(0,10),Vector2D(1,1),0},COLLISION_NONE }, { "Yes",ENGINE_FONT_PATH,20,ENGINE_TEXT_COLOUR });
+	GUIButton* yes = new GUIButton(engine_renderer, Vector2D(quitButtonSize, quitButtonSize), ENGINE_BUTTON_COLOURS, { {Vector2D((ENGINE_SCREEN_WIDTH / 2) - quitButtonSize,ENGINE_SCREEN_HEIGHT / 2),Vector2D(1,1),0},COLLISION_NONE });
+	yes->SetText(yesText);
+	ConfirmQuitGUI->AddButton(yes);
 
+	GUIText* noText = new GUIText(engine_renderer, { {Vector2D(0,10),Vector2D(1,1),0},COLLISION_NONE }, { "No",ENGINE_FONT_PATH,20,ENGINE_TEXT_COLOUR });
+	GUIButton* no = new GUIButton(engine_renderer, Vector2D(quitButtonSize, quitButtonSize), ENGINE_BUTTON_COLOURS, { {Vector2D((ENGINE_SCREEN_WIDTH / 2) + quitButtonSize,ENGINE_SCREEN_HEIGHT / 2),Vector2D(1,1),0},COLLISION_NONE });
+	no->SetText(noText);
+	ConfirmQuitGUI->AddButton(no);
 }
 
 bool InitEditorWindow()
@@ -296,6 +314,8 @@ void Render()
 		block->Render();
 	}
 
+	if (showQuitGUI) ConfirmQuitGUI->Render();
+
 	SDL_RenderPresent(engine_renderer);
 
 	SDL_SetRenderDrawColor(game_renderer, 0, 0, 100, 255);
@@ -325,7 +345,7 @@ bool Update()
 		{
 			// Click X to quit //
 		case SDL_WINDOWEVENT_CLOSE:
-			return true;
+			showQuitGUI = true;
 			break;
 		}
 		break;
@@ -335,6 +355,22 @@ bool Update()
 
 	scripts[selectedScript]->Update(deltaTime, e);
 	InputManager::Instance()->Update(deltaTime, e);
+
+	if (showQuitGUI) 
+	{
+		ConfirmQuitGUI->Update(deltaTime, e);
+
+		if (ConfirmQuitGUI->GetAttachedButtons()[0]->GetClicked()) 
+		{
+			ConfirmQuitGUI->GetAttachedButtons()[0]->ResetClicked();
+			return true;
+		}
+		if (ConfirmQuitGUI->GetAttachedButtons()[1]->GetClicked())
+		{
+			ConfirmQuitGUI->GetAttachedButtons()[1]->ResetClicked();
+			showQuitGUI = false;
+		}
+	}
 
 	if (!m_running)
 	{
@@ -422,7 +458,7 @@ bool Update()
 	{
 		scripts[selectedScript]->Stop();
 		EngineGUI->SetBackgroundColour(ENGINE_BACKGROUND_COLOUR);
-		m_running = true;
+		m_running = false;
 	}
 
 	g_old_time = new_time;

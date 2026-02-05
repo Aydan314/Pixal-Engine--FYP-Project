@@ -37,7 +37,7 @@ void CodeBlockScript::Update(float deltaTime, SDL_Event e)
 	{
 		m_controlledScene->Update(deltaTime, e);
 
-		for (CodeBlock* block : m_inputBlocks) 
+		for (CodeBlock* block : m_activeBlocks) 
 		{
 			block->Run();
 		}
@@ -144,7 +144,7 @@ void CodeBlockScript::Render()
 
 void CodeBlockScript::Run()
 {
-	m_inputBlocks.clear();
+	m_activeBlocks.clear();
 	m_controlledScene->Clear();
 	CodeBlockVariableManager::Instance()->Clear();
 
@@ -155,7 +155,10 @@ void CodeBlockScript::Run()
 			switch (((CodeBlock*)block)->GetID()) 
 			{
 			case BLOCK_ID_ON_KEY:
-				m_inputBlocks.push_back((CodeBlock*)block);
+				m_activeBlocks.push_back((CodeBlock*)block);
+				break;
+			case BLOCK_ID_ON_TICK:
+				m_activeBlocks.push_back((CodeBlock*)block);
 				break;
 			}
 		}
