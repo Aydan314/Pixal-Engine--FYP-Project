@@ -26,6 +26,7 @@ GameObject::GameObject(SDL_Renderer* renderer, SpriteSheetTexture ssTexture, Gam
 		m_collision_radius = m_texture->GetWidth() / 2.f;
 
 		m_size = Vector2D(m_texture->GetWidth(), m_texture->GetHeight());
+		m_hitboxes.push_back(Hitbox2D(&m_transform, m_size));
 	}
 }
 
@@ -150,6 +151,22 @@ bool GameObject::GetDeleted()
 bool GameObject::GetFinishedLerp()
 {
 	return lerpTime == 0;
+}
+
+void GameObject::SetTexture(SpriteSheetTexture texture)
+{
+	// Gets the pre loaded texture from the texture loader //
+	m_texture = new Texture2D(m_renderer);
+
+	if (!m_texture->LoadStoredTexture(texture.name, texture.cellAmount.x, texture.cellAmount.y))
+	{
+		std::cout << "!! Failed to load " << texture.name << " !!\n";
+	}
+
+	m_collision_radius = m_texture->GetWidth() / 2.f;
+
+	m_size = Vector2D(m_texture->GetWidth(), m_texture->GetHeight());
+	m_hitboxes[0] = Hitbox2D(&m_transform, m_size);
 }
 
 double GameObject::GetRotation()

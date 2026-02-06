@@ -73,6 +73,8 @@ public:
 	bool GetPlayerCollision();
 	bool GetDeleted();
 	bool GetFinishedLerp();
+
+	void SetTexture(SpriteSheetTexture texture);
 	
 };
 

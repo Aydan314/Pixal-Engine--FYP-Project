@@ -160,6 +160,9 @@ void CodeBlockScript::Run()
 			case BLOCK_ID_ON_TICK:
 				m_activeBlocks.push_back((CodeBlock*)block);
 				break;
+			case BLOCK_ID_ON_COLLISION:
+				m_activeBlocks.push_back((CodeBlock*)block);
+				break;
 			}
 		}
 	}

@@ -28,11 +28,13 @@ enum BLOCK_ID
 	BLOCK_ID_CREATE_GAMEOBJECT,
 	BLOCK_ID_SET_POSITION,
 	BLOCK_ID_SET_VELOCITY,
+	BLOCK_ID_SWITCH_SPRITE,
 	BLOCK_ID_IF_EQUAL,
 	BLOCK_ID_IF_LESS,
 	BLOCK_ID_IF_MORE,
 	BLOCK_ID_ON_KEY,
 	BLOCK_ID_ON_TICK,
+	BLOCK_ID_ON_COLLISION,
 	BLOCK_ID_GET_X,
 	BLOCK_ID_GET_Y,
 	BLOCK_ID_CREATE_TEXTOBJECT,
@@ -164,7 +166,7 @@ const std::vector<std::string> SOUNDS_TO_LOAD =
 
 const std::vector<SpriteSheetTexture> TEXTURES_TO_LOAD =
 {
-	{"Engine Images/CodeBlockSheet.png", {8,8}},{"Engine Images/EngineBackground.png",{1,1}},{"Engine Images/Sprites.png",{2,2}}
+	{"Engine Images/CodeBlockSheet.png", {8,8}},{"Engine Images/EngineBackground.png",{1,1}},{"Engine Images/Sprites.png",{2,2}},{"Engine Images/Sprites Large.png",{4,1}}
 };
 
 const SDL_Color ENGINE_BACKGROUND_COLOUR = { 50,50,50,255 };

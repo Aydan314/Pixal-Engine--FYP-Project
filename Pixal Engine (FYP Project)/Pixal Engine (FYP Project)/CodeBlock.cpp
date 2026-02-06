@@ -200,6 +200,24 @@ void CodeBlock::Init(BLOCK_ID ID)
 		};
 		break;
 
+	case BLOCK_ID_ON_COLLISION:
+		m_name = "When        Collides With";
+		m_colour = COLOUR_ORANGE;
+		m_template =
+		{
+			{BlockSectionBeginningStart},{BlockSectionParameter},{BlockSectionSpace,5},{BlockSectionParameter},{BlockSectionEnd}
+		};
+		break;
+
+	case BLOCK_ID_SWITCH_SPRITE:
+		m_name = "Switch Sprite of";
+		m_colour = COLOUR_GREEN;
+		m_template = 
+		{
+			{BlockSectionStart},{BlockSectionSpace,5},{BlockSectionParameter},{BlockSectionEnd}
+		};
+		break;
+
 	default:
 		m_name = "CODE BLOCK";
 		m_colour = COLOUR_WHITE;
@@ -543,6 +561,31 @@ void CodeBlock::Run()
 			content.name = GetNameOfParameter(2);
 
 			StoreValueAsVariable(content);
+		}
+		break;
+
+	case BLOCK_ID_ON_COLLISION:
+		m_condition = false;
+		if (m_paramPoints[0]->contents && m_paramPoints[1]->contents) 
+		{
+			GameObject* A = GetObjectValueOfParameter(0);
+			GameObject* B = GetObjectValueOfParameter(1);
+
+			if (A && B) 
+			{
+				if (A->GetHitboxes()[0].ContainsPoint(B->GetPosition() + (B->GetHitboxes()[0].size / 2.f))) m_condition = true;
+			}
+		}
+		break;
+
+	case BLOCK_ID_SWITCH_SPRITE:
+		if (m_paramPoints[0]->contents) 
+		{
+			GameObject* object = GetObjectValueOfParameter(0);
+			if (object) 
+			{
+				object->SetTexture({ "Engine Images/Sprites Large.png",{4,1},{0,0} });
+			}
 		}
 		break;
 
