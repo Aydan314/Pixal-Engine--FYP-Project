@@ -10,6 +10,8 @@ GameObject::GameObject(SDL_Renderer* renderer, SpriteSheetTexture ssTexture, Gam
 	m_ssTexture = ssTexture;
 	playerCollision = false;
 
+	m_type = OBJECT_GAMEOBJECT;
+
 	m_size = { 0,0 };
 	if (ssTexture.name != "")
 	{
@@ -123,6 +125,11 @@ Vector2D GameObject::GetScale()
 COLLISION_MODE GameObject::GetCollisionMode()
 {
 	return m_collisionMode;
+}
+
+OBJECT_TYPE GameObject::GetObjectType()
+{
+	return m_type;
 }
 
 bool GameObject::GetVisable()

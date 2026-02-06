@@ -6,6 +6,7 @@ GUITextBlock::GUITextBlock(SDL_Renderer* renderer, GameObjectData gameObjectData
 	m_text = textData.text;
 	m_size = textData.size;
 	m_fontPath = textData.fontPath;
+	m_type = OBJECT_GUITEXTBLOCK;
 
 	SetUpText();
 }

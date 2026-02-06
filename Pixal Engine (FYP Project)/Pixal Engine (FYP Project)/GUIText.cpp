@@ -7,6 +7,8 @@ GUIText::GUIText(SDL_Renderer* renderer, GameObjectData gameObjectData, TextData
 	m_size = textData.size;
 	m_colour = textData.colour;
 
+	m_type = OBJECT_GUITEXT;
+
 	LoadFont(m_fontPath, m_size);
 	ReformatText();
 }

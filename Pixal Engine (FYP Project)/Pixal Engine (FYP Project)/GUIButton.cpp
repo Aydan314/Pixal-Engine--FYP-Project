@@ -5,6 +5,7 @@ GUIButton::GUIButton(SDL_Renderer* renderer, Vector2D size, ButtonColours colour
 	m_bgColour = colours.defaultColour;
 	m_colours = colours;
 	m_size = size;
+	m_type = OBJECT_GUIBUTTON;
 
 	Hitbox2D hitbox = Hitbox2D(&m_transform, size, { 0,0 }, m_renderer);
 	m_hitboxes.push_back(hitbox);

@@ -16,6 +16,7 @@ protected:
 	
 	Transform m_transform;
 	PhysicsBody m_body;
+	OBJECT_TYPE m_type = OBJECT_UNDEFINED;
 	
 	SpriteSheetTexture m_ssTexture = SpriteSheetTexture();
 	Texture2D* m_texture = nullptr;
@@ -67,6 +68,7 @@ public:
 	float GetCollisionRadius();
 	
 	COLLISION_MODE GetCollisionMode();
+	OBJECT_TYPE GetObjectType();
 	bool GetVisable();
 	bool GetPlayerCollision();
 	bool GetDeleted();

@@ -1,5 +1,6 @@
 #pragma once
 #include "Block.h"
+#include "GUITextBlock.h"
 #include "CodeBlockParameter.h"
 #include "CodeBlockVariableManager.h"
 
@@ -70,9 +71,11 @@ public:
 	float GetNumberValueOfParameter(int param);
 	std::string GetTextValueOfParameter(int param);
 	std::string GetNameOfParameter(int param);
+	DATA_TYPE GetDataTypeOfParameter(int param);
+	std::string NumToText(float num);
 	GameObject* GetObjectValueOfParameter(int param);
 
-	ComparisonResult CompareParameters(int A, int B, DATA_TYPE type);
+	ComparisonResult CompareParameters(int A, int B);
 
 	void StoreValueAsVariable(DataContent value);
 

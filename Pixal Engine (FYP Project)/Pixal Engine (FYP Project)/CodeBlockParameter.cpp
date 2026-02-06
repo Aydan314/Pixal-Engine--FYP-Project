@@ -106,6 +106,7 @@ void CodeBlockParameter::Init(DATA_TYPE type)
 	case DATA_TYPE_STRING:
 		m_colour = COLOUR_PINK;
 		m_defaultText = "Hello";
+		m_dataContent.string = m_defaultText;
 		break;
 	}
 }

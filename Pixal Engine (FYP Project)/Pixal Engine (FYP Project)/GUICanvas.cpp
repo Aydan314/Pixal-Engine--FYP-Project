@@ -5,6 +5,7 @@ GUICanvas::GUICanvas(SDL_Renderer* renderer, Vector2D size, SDL_Color bgColour, 
 	m_size = size;
 	m_bgColour = bgColour;
 	selectedButton = 0;
+	m_type = OBJECT_GUICANVAS;
 }
 
 GUICanvas::~GUICanvas()

@@ -7,6 +7,7 @@ GUITextBox::GUITextBox(SDL_Renderer* renderer, Vector2D size, GameObjectData gam
 	m_fontPath = textData.fontPath;
 	m_fontSize = textData.size;
 	m_colour = textData.colour;
+	m_type = OBJECT_GUITEXTBOX;
 
 	Hitbox2D hitbox = Hitbox2D(&m_transform, m_size);
 	m_hitboxes.push_back(hitbox);

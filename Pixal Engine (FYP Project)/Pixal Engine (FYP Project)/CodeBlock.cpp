@@ -137,6 +137,69 @@ void CodeBlock::Init(BLOCK_ID ID)
 		};
 		break;
 
+	case BLOCK_ID_CREATE_TEXTOBJECT:
+		m_name = "Create Text Object Stored in";
+		m_colour = COLOUR_PINK;
+		m_template =
+		{
+			{BlockSectionStart},{BlockSectionSpace,9},{BlockSectionParameter},{BlockSectionEnd}
+		};
+		break;
+
+	case BLOCK_ID_SET_TEXT:
+		m_name = "Set Text of         to";
+		m_colour = COLOUR_PINK;
+		m_template =
+		{
+			{BlockSectionStart},{BlockSectionSpace,3},{BlockSectionParameter},{BlockSectionSpace,1},{BlockSectionParameter}, { BlockSectionEnd }
+		};
+		break;
+
+	case BLOCK_ID_JOIN:
+		m_name = "Join Text         With         Store in";
+		m_colour = COLOUR_PINK;
+		m_template =
+		{
+			{BlockSectionStart},{BlockSectionSpace,2},{BlockSectionParameter},{BlockSectionSpace,2},{BlockSectionParameter},{BlockSectionSpace,4},{BlockSectionParameter},{BlockSectionEnd}
+		};
+		break;
+
+	case BLOCK_ID_ADD:
+		m_name = " Do          +         Store in";
+		m_colour = COLOUR_BLUE;
+		m_template =
+		{
+			{BlockSectionStart},{BlockSectionParameter},{BlockSectionSpace,1},{BlockSectionParameter},{BlockSectionSpace,4},{BlockSectionParameter},{BlockSectionEnd}
+		};
+		break;
+
+	case BLOCK_ID_MINUS:
+		m_name = " Do          -         Store in";
+		m_colour = COLOUR_BLUE;
+		m_template =
+		{
+			{BlockSectionStart},{BlockSectionParameter},{BlockSectionSpace,1},{BlockSectionParameter},{BlockSectionSpace,4},{BlockSectionParameter},{BlockSectionEnd}
+		};
+		break;
+
+	case BLOCK_ID_TIMES:
+		m_name = " Do          x         Store in";
+		m_colour = COLOUR_BLUE;
+		m_template =
+		{
+			{BlockSectionStart},{BlockSectionParameter},{BlockSectionSpace,1},{BlockSectionParameter},{BlockSectionSpace,4},{BlockSectionParameter},{BlockSectionEnd}
+		};
+		break;
+
+	case BLOCK_ID_DIVIDE:
+		m_name = " Do          /         Store in";
+		m_colour = COLOUR_BLUE;
+		m_template =
+		{
+			{BlockSectionStart},{BlockSectionParameter},{BlockSectionSpace,1},{BlockSectionParameter},{BlockSectionSpace,4},{BlockSectionParameter},{BlockSectionEnd}
+		};
+		break;
+
 	default:
 		m_name = "CODE BLOCK";
 		m_colour = COLOUR_WHITE;
@@ -238,6 +301,7 @@ void CodeBlock::Resize()
 void CodeBlock::Run()
 {
 	GameObject* newObject = nullptr;
+	GUITextBlock* newText = nullptr;
 	DataContent content;
 
 	switch (m_ID) 
@@ -249,7 +313,15 @@ void CodeBlock::Run()
 			float Y = GetNumberValueOfParameter(2);
 
 			GameObject* object = GetObjectValueOfParameter(0);
-			if (object) object->SetPosition(Vector2D(X, Y));
+			if (object) 
+			{
+				if (m_paramPoints[1]->contents == nullptr) X = object->GetPosition().x;
+				if (m_paramPoints[2]->contents == nullptr) Y = object->GetPosition().y;
+
+				object->SetPosition(Vector2D(X, Y));
+				if (object->GetObjectType() == OBJECT_GUITEXTBLOCK) ((GUITextBlock*)object)->SetUpText();
+			}
+
 		}
 		break;
 
@@ -266,6 +338,26 @@ void CodeBlock::Run()
 
 			content.gameObject = newObject;
 			content.name = GetNameOfParameter(0);
+			content.dataType = DATA_TYPE_GAMEOBJECT;
+
+			StoreValueAsVariable(content);
+		}
+		break;
+
+	case BLOCK_ID_CREATE_TEXTOBJECT:
+		if (m_paramPoints[0]->contents)
+		{
+			newText = new GUITextBlock
+			(
+				m_gameScene->GetRenderer(),
+				GameObjectData{ Transform{ {0,0},{1,1},0 },COLLISION_NONE },
+				{ "TEXT",ENGINE_FONT_PATH,30,ENGINE_TEXT_COLOUR }
+			);
+			m_gameScene->Add((GameObject*)newText);
+
+			content.gameObject = (GameObject*)newText;
+			content.name = GetNameOfParameter(0);
+			content.dataType = DATA_TYPE_GAMEOBJECT;
 
 			StoreValueAsVariable(content);
 		}
@@ -278,7 +370,13 @@ void CodeBlock::Run()
 			float Y = GetNumberValueOfParameter(2);
 
 			GameObject* object = GetObjectValueOfParameter(0);
-			if (object != nullptr) object->SetVelocity(Vector2D(X, Y));
+			if (object != nullptr) 
+			{
+				if (m_paramPoints[1]->contents == nullptr) X = object->GetVelocity().x;
+				if (m_paramPoints[2]->contents == nullptr) Y = object->GetVelocity().y;
+
+				object->SetVelocity(Vector2D(X, Y));
+			}
 		}
 		break;
 
@@ -304,6 +402,7 @@ void CodeBlock::Run()
 				float X = object->GetPosition().x;
 				content.number = X;
 				content.name = GetNameOfParameter(1);
+				content.dataType = DATA_TYPE_NUMBER;
 
 				StoreValueAsVariable(content);
 			}
@@ -319,6 +418,7 @@ void CodeBlock::Run()
 				float Y = object->GetPosition().y;
 				content.number = Y;
 				content.name = GetNameOfParameter(1);
+				content.dataType = DATA_TYPE_NUMBER;
 
 				StoreValueAsVariable(content);
 			}
@@ -329,7 +429,7 @@ void CodeBlock::Run()
 		m_condition = false;
 		if (m_paramPoints[0]->contents && m_paramPoints[1]->contents) 
 		{
-			m_condition = CompareParameters(0, 1, DATA_TYPE_NUMBER) == ComparisonEqual;
+			m_condition = (CompareParameters(0, 1) == ComparisonEqual);
 
 			if (GetConditionalMountpoint()->contents && m_condition) GetConditionalMountpoint()->contents->Run();
 			if (GetNext()) GetNext()->Run();
@@ -340,7 +440,7 @@ void CodeBlock::Run()
 		m_condition = false;
 		if (m_paramPoints[0]->contents && m_paramPoints[1]->contents)
 		{
-			m_condition = CompareParameters(0, 1, DATA_TYPE_NUMBER) == ComparisonLessThan;
+			m_condition = CompareParameters(0, 1) == ComparisonLessThan;
 
 			if (GetConditionalMountpoint()->contents && m_condition) GetConditionalMountpoint()->contents->Run();
 			if (GetNext()) GetNext()->Run();
@@ -351,12 +451,101 @@ void CodeBlock::Run()
 		m_condition = false;
 		if (m_paramPoints[0]->contents && m_paramPoints[1]->contents)
 		{
-			m_condition = CompareParameters(0, 1, DATA_TYPE_NUMBER) == ComparisonMoreThan;
+			m_condition = CompareParameters(0, 1) == ComparisonMoreThan;
 
 			if (GetConditionalMountpoint()->contents && m_condition) GetConditionalMountpoint()->contents->Run();
 			if (GetNext()) GetNext()->Run();
 		}
 		break;
+
+	case BLOCK_ID_ADD:
+		if (m_paramPoints[2]->contents) 
+		{
+			float A = GetNumberValueOfParameter(0);
+			float B = GetNumberValueOfParameter(1);
+
+			content.number = A + B;
+			content.name = GetNameOfParameter(2);
+			content.dataType = DATA_TYPE_NUMBER;
+
+			StoreValueAsVariable(content);
+		}
+		break;
+
+	case BLOCK_ID_MINUS:
+		if (m_paramPoints[2]->contents)
+		{
+			float A = GetNumberValueOfParameter(0);
+			float B = GetNumberValueOfParameter(1);
+
+			content.number = A - B;
+			content.name = GetNameOfParameter(2);
+			content.dataType = DATA_TYPE_NUMBER;
+
+			StoreValueAsVariable(content);
+		}
+		break;
+
+	case BLOCK_ID_TIMES:
+		if (m_paramPoints[2]->contents)
+		{
+			float A = GetNumberValueOfParameter(0);
+			float B = GetNumberValueOfParameter(1);
+
+			content.number = A * B;
+			content.name = GetNameOfParameter(2);
+			content.dataType = DATA_TYPE_NUMBER;
+
+			StoreValueAsVariable(content);
+		}
+		break;
+
+	case BLOCK_ID_DIVIDE:
+		if (m_paramPoints[2]->contents)
+		{
+			float A = GetNumberValueOfParameter(0);
+			float B = GetNumberValueOfParameter(1);
+
+			if (B == 0) content.number = INFINITY;
+			else content.number = A / B;
+
+			content.name = GetNameOfParameter(2);
+			content.dataType = DATA_TYPE_NUMBER;
+
+			StoreValueAsVariable(content);
+		}
+		break;
+
+	case BLOCK_ID_SET_TEXT:
+		if (m_paramPoints[0]->contents && m_paramPoints[1]->contents) 
+		{
+			GameObject* object = GetObjectValueOfParameter(0);
+			std::string text = GetTextValueOfParameter(1);
+
+			if (object) 
+			{
+				if (object->GetObjectType() == OBJECT_GUITEXTBLOCK) 
+				{
+					((GUITextBlock*)object)->SetText(text);
+				}
+			}
+		}
+		break;
+
+	case BLOCK_ID_JOIN:
+		if (m_paramPoints[2]->contents) 
+		{
+			std::string A = GetTextValueOfParameter(0);
+			std::string B = GetTextValueOfParameter(1);
+
+			content.string = A + B;
+			content.dataType = DATA_TYPE_STRING;
+			content.name = GetNameOfParameter(2);
+
+			StoreValueAsVariable(content);
+		}
+		break;
+
 	default:
 		std::cout << m_name << "\n";
 		break;
@@ -787,6 +976,7 @@ float CodeBlock::GetNumberValueOfParameter(int param)
 std::string CodeBlock::GetTextValueOfParameter(int param)
 {
 	CodeBlockParameter* value = (CodeBlockParameter*)(m_paramPoints[param]->contents);
+	DataContent content;
 
 	if (value != nullptr) 
 	{
@@ -797,7 +987,26 @@ std::string CodeBlock::GetTextValueOfParameter(int param)
 			break;
 
 		case DATA_TYPE_VARIABLE:
-			return CodeBlockVariableManager::Instance()->GetVariable(value->GetContents().name).string;
+			content = CodeBlockVariableManager::Instance()->GetVariable(value->GetContents().name);
+			switch (content.dataType) 
+			{
+			case DATA_TYPE_STRING:
+				return content.string;
+				break;
+
+			case DATA_TYPE_NUMBER:
+				return NumToText(content.number);
+				break;
+
+			default:
+				return std::string();
+				break;
+			}
+			 
+			break;
+
+		case DATA_TYPE_NUMBER:
+			return NumToText(value->GetContents().number);
 			break;
 
 		default:
@@ -817,6 +1026,32 @@ std::string CodeBlock::GetNameOfParameter(int param)
 		return value->GetContents().name;
 	}
 	return std::string();
+}
+
+DATA_TYPE CodeBlock::GetDataTypeOfParameter(int param)
+{
+	CodeBlockParameter* value = (CodeBlockParameter*)(m_paramPoints[param]->contents);
+
+	if (value->GetDataType() == DATA_TYPE_VARIABLE) 
+	{
+		return CodeBlockVariableManager::Instance()->GetVariable(value->GetContents().name).dataType;
+	}
+	return value->GetDataType();
+}
+
+std::string CodeBlock::NumToText(float num)
+{
+	std::string numString = std::to_string(num);
+
+	int cut = numString.size();
+
+	for (int i = numString.size() - 1; i > 0; i--)
+	{
+		if (numString[i] == '.') { cut = i; break; }
+		else if (numString[i] != '0') { cut = i + 1; break; }
+	}
+	
+	return numString.substr(0, cut);
 }
 
 GameObject* CodeBlock::GetObjectValueOfParameter(int param)
@@ -843,8 +1078,10 @@ GameObject* CodeBlock::GetObjectValueOfParameter(int param)
 	return nullptr;
 }
 
-ComparisonResult CodeBlock::CompareParameters(int A, int B, DATA_TYPE type)
+ComparisonResult CodeBlock::CompareParameters(int A, int B)
 {
+	DATA_TYPE type = GetDataTypeOfParameter(A);
+
 	float numA = GetNumberValueOfParameter(A);
 	float numB = GetNumberValueOfParameter(B);
 
@@ -855,7 +1092,7 @@ ComparisonResult CodeBlock::CompareParameters(int A, int B, DATA_TYPE type)
 	GameObject* objB = GetObjectValueOfParameter(B);
 
 	int cmp = std::strcmp(strA.c_str(), strB.c_str());
-
+	
 	switch (type)
 	{
 	case DATA_TYPE_NUMBER:

@@ -90,7 +90,7 @@ void InitGUI()
 	int page = 0;
 	BlockDrawer.push_back({});
 
-	for (int ID = 1; ID < BLOCK_ID_END_ID; ID++) 
+	for (int ID = 3; ID < BLOCK_ID_END_ID; ID++) 
 	{
 		CodeBlock* block = new CodeBlock(engine_renderer, { Vector2D(0, 0) ,Vector2D(1,1),0 }, nullptr, (BLOCK_ID)ID);
 
