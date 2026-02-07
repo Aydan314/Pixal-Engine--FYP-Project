@@ -218,6 +218,15 @@ void CodeBlock::Init(BLOCK_ID ID)
 		};
 		break;
 
+	case BLOCK_ID_SET_FRICTION:
+		m_name = "Set Friction of        to";
+		m_colour = COLOUR_GREEN;
+		m_template = 
+		{
+			{BlockSectionStart},{BlockSectionSpace,4},{BlockSectionParameter},{BlockSectionSpace,1},{BlockSectionParameter},{BlockSectionEnd}
+		};
+		break;
+
 	default:
 		m_name = "CODE BLOCK";
 		m_colour = COLOUR_WHITE;
@@ -324,6 +333,9 @@ void CodeBlock::Run()
 
 	switch (m_ID) 
 	{
+	case BLOCK_ID_START:
+		break;
+
 	case BLOCK_ID_SET_POSITION:
 		if (m_paramPoints[0]->contents)
 		{
@@ -585,6 +597,18 @@ void CodeBlock::Run()
 			if (object) 
 			{
 				object->SetTexture({ "Engine Images/Sprites Large.png",{4,1},{0,0} });
+			}
+		}
+		break;
+
+	case BLOCK_ID_SET_FRICTION:
+		if (m_paramPoints[0]->contents) 
+		{
+			GameObject* object = GetObjectValueOfParameter(0);
+			float friction = GetNumberValueOfParameter(1);
+			if (object) 
+			{
+				object->SetFriction(friction);
 			}
 		}
 		break;

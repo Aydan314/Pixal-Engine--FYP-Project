@@ -94,7 +94,7 @@ void InitGUI()
 	{
 		CodeBlock* block = new CodeBlock(engine_renderer, { Vector2D(0, 0) ,Vector2D(1,1),0 }, nullptr, (BLOCK_ID)ID);
 
-		if (x + (block->GetHitboxes()[0]->size.x) / shrinkFactor >= ENGINE_SCREEN_WIDTH)
+		if (x + (block->GetHitboxes()[0]->size.x) / shrinkFactor > ENGINE_SCREEN_WIDTH - blockButtonWidth)
 		{
 			// Create new page //
 			page++;

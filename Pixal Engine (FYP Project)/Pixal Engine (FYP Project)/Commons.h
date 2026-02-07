@@ -28,6 +28,7 @@ enum BLOCK_ID
 	BLOCK_ID_CREATE_GAMEOBJECT,
 	BLOCK_ID_SET_POSITION,
 	BLOCK_ID_SET_VELOCITY,
+	BLOCK_ID_SET_FRICTION,
 	BLOCK_ID_SWITCH_SPRITE,
 	BLOCK_ID_IF_EQUAL,
 	BLOCK_ID_IF_LESS,
@@ -89,6 +90,7 @@ struct Transform
 struct PhysicsBody 
 {
 	Vector2D velocity;
+	float friction;
 };
 
 struct Rect2D

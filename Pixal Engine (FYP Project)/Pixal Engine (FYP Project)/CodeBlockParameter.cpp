@@ -116,8 +116,12 @@ void CodeBlockParameter::UpdateData()
 	switch (m_dataType)
 	{
 	case DATA_TYPE_NUMBER:
-		if (m_text->GetText() == "") m_text->SetText("0");
-		m_dataContent.number = std::stof(m_text->GetText());
+		if (ValidateNumber(m_text->GetText())) m_dataContent.number = std::stof(m_text->GetText());
+		else 
+		{
+			m_text->SetText("0");
+			m_dataContent.number = 0;
+		}
 		break;
 	case DATA_TYPE_VARIABLE:
 		m_dataContent.name = m_text->GetText();
@@ -126,6 +130,26 @@ void CodeBlockParameter::UpdateData()
 		m_dataContent.string = m_text->GetText();
 		break;
 	}
+}
+
+bool CodeBlockParameter::ValidateNumber(std::string num)
+{
+	if (num == "") return false;
+
+	bool hasNumber = false;
+
+	for (int i = 0; i < num.size(); i++) 
+	{
+		if (num[i] < '0' || num[i] > '9')
+		{
+			if (num[i] != '.' && num[i] != '-')
+			{
+				return false;
+			}
+		}
+		else hasNumber = true;
+	}
+	return hasNumber;
 }
 
 DATA_TYPE CodeBlockParameter::GetDataType()

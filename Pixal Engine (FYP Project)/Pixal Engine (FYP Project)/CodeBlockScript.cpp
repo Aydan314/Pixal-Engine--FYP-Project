@@ -169,7 +169,7 @@ void CodeBlockScript::Run()
 
 	m_running = true;
 	m_start->Run();
-	std::cout << "-----------------------\n";
+	//std::cout << "-----------------------\n";
 
 }
 

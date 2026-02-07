@@ -52,6 +52,7 @@ public:
 	void SetRotation(double rotation);
 	void SetScale(Vector2D scale);
 	void SetVelocity(Vector2D velocity);
+	void SetFriction(float friction);
 
 	void SetPlayerCollision(bool state);
 	void SetVisable(bool state);

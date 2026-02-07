@@ -35,6 +35,7 @@ public:
 	void CreateBlock() override;
 	void Init(DATA_TYPE type);
 	void UpdateData();
+	bool ValidateNumber(std::string num);
 
 	DATA_TYPE GetDataType();
 

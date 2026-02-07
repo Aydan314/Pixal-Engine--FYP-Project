@@ -43,6 +43,7 @@ void GameObject::Render()
 void GameObject::Update(float deltaTime, SDL_Event e)
 {
 	SetPosition(GetPosition() + (m_body.velocity * deltaTime));
+	m_body.velocity = m_body.velocity - (m_body.velocity * m_body.friction * deltaTime);
 }
 
 void GameObject::SetPosition(Vector2D position)
@@ -73,6 +74,11 @@ void GameObject::SetScale(Vector2D scale)
 void GameObject::SetVelocity(Vector2D velocity)
 {
 	m_body.velocity = velocity;
+}
+
+void GameObject::SetFriction(float friction)
+{
+	m_body.friction = friction;
 }
 
 void GameObject::LerpToLocation(Vector2D position, int duration)
